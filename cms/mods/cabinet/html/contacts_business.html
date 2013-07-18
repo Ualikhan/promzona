@@ -1,0 +1,381 @@
+<h1 class="ml-30 mb-25"><!--#page-title#--></h1>
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+	<div class="step-b">
+<form action="" id="contacts-edit" class="form-inline ml-10 listenThisForm" method="post">
+
+
+        <h3 class="ml--20 mb-20">Редактировать контактную информацию:</h3>
+
+		<div class="input-group">
+			<label class="left" for="contactName">
+				Имя контактного лица: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[933]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactName" name="f[Имя контактного лица]" value="<?=$this->subject['Имя контактного лица']?>">
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactPosition">
+				Должность: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[935]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactPosition" name="f[Должность]" value="<?=$this->subject['Должность']?>">
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactLocation">
+				Регион: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[937]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440 typeaheaded" autocomplete="off" data-typeaheaded="region" type="text" id="contactLocation" name="f[Регион]" value="<?=$this->subject['Регион']?>">
+			<div class="middle-tip-b">Начните вводить название города, затем выберите его из списка.</div>
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactAddress">
+				Адрес: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[939]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactAddress" name="f[Адрес]" value="<?=$this->subject['Адрес']?>">
+		</div>
+
+		<div class="phones-input-group">
+			<?if (count($this->ac->phones) <= 1) {?>
+			<div class="input-group clearfix ">
+				<label class="left" for="registerPhone">
+					Телефоны: <sup class="red">*</sup>
+					<i class="icon-question-sign icon-yellow helper-popup">
+						<div class="left-tip-b">
+							<?=$this->vars[941]?>
+						</div>
+					</i>
+				</label>
+				<input class="w-160 required phoneInput" type="text" id="registerPhone" name="f[phone][0]" value="<?=$this->subject['Телефон']?>">
+				<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+			</div>
+			<?}else{
+				foreach($this->ac->phones as $k=>$phone){
+					if ($k==0) {
+						echo '
+							<div class="input-group clearfix ">
+								<label class="left" for="registerPhone">
+									Телефоны: <sup class="red">*</sup>
+									<i class="icon-question-sign icon-yellow helper-popup"></i>
+								</label>
+								<input class="w-160 required phoneInput" type="text" id="registerPhone" name="f[phone][0]" value="'.$phone.'">
+								<button class="btn btn-white btn-smaller ml-10 removeFirstPhoneInput" type="button"><i class="icon-remove"></i></button>
+							</div>
+						';
+					}elseif ($k == (count($this->ac->phones)-1)){
+						echo '
+							<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone]['.$k.']" value="'.$phone.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+								<div class="middle-tip-b ml-0"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+							</div>
+						';
+					}else{
+						echo '
+							<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone]['.$k.']" value="'.$phone.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							</div>
+						';
+					}
+				}
+			}?>
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactSite">
+				Сайт компании:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[943]?>
+					</div>
+				</i>
+			</label>
+			<input class="w-440" type="text" id="contactSite" name="f[Сайт компании]" value="<?=$this->subject['Сайт компании']?>">
+		</div>
+
+		<div class="input-group mb-50">
+			<label class="left" for="promzonaLink">
+				Адрес на Promzona.kz: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[945]?>
+					</div>
+				</i>
+			</label>
+			<div class="input-prepend w-440">
+				<span class="add-on">http://promzona.kz/co/</span>
+				<input class="required" id="promzonaLink" type="text" name="f[url]" value="<?=!empty($this->subject['URL'])?$this->subject['URL']:$this->subject['id']?>">
+			</div>
+		</div>
+
+		<?if ($contacts = $this->ac->getContacts($this->subject['id'])){?>
+		<div class="contacts-input-group mb-25 clearfix">
+			<label class="fz-16 bold mb-10 ml--20" for="contactAddContact">
+				Контактные лица:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[949]?>
+					</div>
+				</i>
+			</label>
+			<?foreach ($contacts as $k=>$c){?>
+			<div class="oneContact">
+				<input type="hidden" name="contacts[<?=$k?>][id]" value="<?=$c['id']?>">
+				<div class="input-group">
+					<label class="left" for="contactName<?=$k?>">
+						Имя контактного лица: <sup class="red">*</sup>
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[933]?>
+							</div>
+						</i>
+					</label>
+					<input class="required w-320" type="text" id="contactName<?=$k?>" name="contacts[<?=$k?>][name]" value="<?=$c['Имя']?>">
+					<button type="button" class="btn ml-5 deleteContact"><i class="icon-remove"></i> Удалить</button>
+				</div>
+				<div class="input-group">
+					<label class="left" for="contactPosition<?=$k?>">
+						Должность: <sup class="red">*</sup>
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[935]?>
+							</div>
+						</i>
+					</label>
+					<input class="required w-320" type="text" id="contactPosition<?=$k?>" name="contacts[<?=$k?>][position]" value="<?=$c['Должность']?>">
+				</div>
+				<?$phones = explode("\n", $c['Телефон']);?>
+				<div class="phones-input-group contactPhones">
+				<?if (count($phones) <= 1){?>
+					<div class="input-group">
+						<label class="left" for="contactPhone<?=$k?>">
+							Телефоны: <sup class="red">*</sup>
+							<i class="icon-question-sign icon-yellow helper-popup">
+								<div class="left-tip-b">
+									<?=$this->vars[941]?>
+								</div>
+							</i>
+						</label>
+						<input class="w-160 required phoneInput" type="text" id="contactPhone<?=$k?>" name="contacts[<?=$k?>][phone][0]" value="<?=$c['Телефон']?>">
+						<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+					</div>
+				
+				<?}else{
+				foreach ($phones as $kk=>$ff){
+					if ($kk==0) echo '
+						<div class="input-group">
+							<label class="left" for="contactPhone'.$k.'">
+								Телефоны: <sup class="red">*</sup>
+								<i class="icon-question-sign icon-yellow helper-popup"></i>
+							</label>
+							<input class="w-160 required phoneInput" type="text" id="contactPhone'.$k.'" name="contacts['.$k.'][phone][0]" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removeFirstPhoneInput" type="button"><i class="icon-remove"></i></button>
+						</div>
+					';
+					elseif ($kk == (count($phones)-1)) echo'
+						<div class="input-group ml-220 clearfix">
+							<input class="w-160 required phoneInput" type="text" name="contacts['.$k.'][phone]['.$kk.']" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+							<div class="middle-tip-b ml-0"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+						</div>
+					';
+					else echo '
+						<div class="input-group ml-220 clearfix">
+							<input class="w-160 required phoneInput" type="text" name="contacts['.$k.'][phone]['.$kk.']" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+						</div>
+					';
+				}?>
+			<?}?>
+				</div>
+				<div class="input-group">
+					<label class="left" for="contactEmail<?=$k?>">
+						Электронная почта:
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[947]?>
+							</div>
+						</i>
+					</label>
+					<input class="w-320" type="email" id="contactEmail<?=$k?>" name="contacts[<?=$k?>][email]" value="<?=$c['email']?>">
+				</div>
+				<hr class="mr-30">
+			</div>
+			<?}?>
+			<div class="input-group">
+				<button type="button" class="btn" id="contactAddContact">Добавить контактное лицо</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+		<?}else{?>
+		<div class="contacts-input-group mb-25 clearfix">
+			<label class="fz-16 bold mb-10 ml--20" for="contactAddContact">
+				Контактные лица:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[949]?>
+					</div>
+				</i>
+			</label>
+			<div class="input-group">
+				<button type="button" class="btn" id="contactAddContact">Добавить контактное лицо</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+		<?}?>
+
+		<?if ($branches = $this->ac->getFilials($this->subject['id'])){?>
+		<div class="branches-input-group mb-25 clearfix">
+			<label class="fz-16 bold mb-10 ml--20" for="contactAddBranch">
+				Филиалы:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[951]?>
+					</div>
+				</i>
+			</label>
+			<?foreach ($branches as $k=>$b){?>
+			<div class="oneBranch">
+				<input type="hidden" name="branches[<?=$k?>][id]" value="<?=$b['id']?>">
+				<div class="input-group">
+					<label class="left" for="branchRegion<?=$k?>">
+						Регион филиала: <sup class="red">*</sup>
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[937]?>
+							</div>
+						</i>
+					</label>
+					<input class="required w-320 typeaheaded handled" autocomplete="off" data-typeaheaded="region" type="text" id="branchRegion0" name="branches[<?=$k?>][name]" value="<?=$b['Регион']?>">
+					<button type="button" class="btn ml-5 deleteBranch"><i class="icon-remove"></i> Удалить</button>
+					<div class="middle-tip-b">Начните вводить название города, затем выберите его из списка.</div>
+				</div>
+				<div class="input-group">
+					<label class="left" for="branchAddress<?=$k?>">
+						Адрес филиала: <sup class="red">*</sup>
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[939]?>
+							</div>
+						</i>
+					</label>
+					<input class="required w-320" type="text" id="branchAddress<?=$k?>" name="branches[<?=$k?>][address]" value="<?=$b['Адрес']?>">
+				</div>
+				<?$phones = explode("\n", $b['Телефон']);?>
+				<div class="phones-input-group branchPhones">
+				<?if (count($phones)<=1){?>
+					<div class="input-group">
+						<label class="left" for="contactPhone<?=$k?>">
+							Телефоны: <sup class="red">*</sup>
+							<i class="icon-question-sign icon-yellow helper-popup">
+								<div class="left-tip-b">
+									<?=$this->vars[941]?>
+								</div>
+							</i>
+						</label>
+						<input class="w-160 required phoneInput" type="text" id="contactPhone<?=$k?>" name="branches[<?=$k?>][phone][0]" value="<?=$b['Телефон']?>">
+						<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+					</div>
+				<?}else{
+				foreach ($phones as $kk=>$ff){
+					if ($kk==0) echo '
+						<div class="input-group">
+							<label class="left" for="contactPhone'.$k.'">
+								Телефоны филиала: <sup class="red">*</sup>
+								<i class="icon-question-sign icon-yellow helper-popup"></i>
+							</label>
+							<input class="w-160 required phoneInput" type="text" id="contactPhone'.$k.'" name="branches['.$k.'][phone][0]" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removeFirstPhoneInput" type="button"><i class="icon-remove"></i></button>
+						</div>
+					';
+					elseif ($kk == (count($phones)-1)) echo'
+						<div class="input-group ml-220 clearfix">
+							<input class="w-160 required phoneInput" type="text" name="branches['.$k.'][phone]['.$kk.']" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+							<div class="middle-tip-b ml-0"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+						</div>
+					';
+					else echo '
+						<div class="input-group ml-220 clearfix">
+							<input class="w-160 required phoneInput" type="text" name="branches['.$k.'][phone]['.$kk.']" value="'.$ff.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+						</div>
+					';
+				}}?>
+				</div>
+				<div class="input-group">
+					<label class="left" for="branchContactName<?=$k?>">
+						Имя контактного лица:
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[933]?>
+							</div>
+						</i>
+					</label>
+					<input class="w-320" type="text" id="branchContactName<?=$k?>" name="branches[<?=$k?>][contactName]" value="<?=$b['Имя контактного лица']?>">
+				</div>
+				<div class="input-group">
+					<label class="left" for="branchContactPosition0">
+						Должность:
+						<i class="icon-question-sign icon-yellow helper-popup">
+							<div class="left-tip-b">
+								<?=$this->vars[935]?>
+							</div>
+						</i>
+					</label>
+					<input class="w-320" type="text" id="branchContactPosition0" name="branches[<?=$k?>][contactPosition]" value="<?=$b['Должность']?>">
+				</div>
+				<hr class="mr-30">
+			</div>
+			<?}?>
+			<div class="input-group">
+				<button type="button" id="contactAddBranch" class="btn">Добавить филиал</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+		<?}else{?>
+		<div class="branches-input-group mb-25 clearfix">
+			<label class="fz-16 bold mb-10 ml--20" for="contactAddBranch">
+				Филиалы:
+				<i class="icon-question-sign icon-yellow helper-popup"></i>
+			</label>
+			<div class="input-group">
+				<button type="button" id="contactAddBranch" class="btn">Добавить филиал</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+		<?}?>
+
+        <div class="submit-group mr-30 ml--20">
+                <button type="submit" class="btn btn-grey btn-grand ml--20" disabled>Сохранить изменения</button>
+        </div>
+
+	</div>
+
+</form>

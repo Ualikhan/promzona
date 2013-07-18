@@ -1,0 +1,281 @@
+<div class="public-breadcrumbs ml-30 mb-10">
+        <a class="bd-beige bold" href="/companies/">Каталог компаний</a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+</div>
+<?=!empty($this->obj['Логотип']) ?
+'<a href="#" target="_blank" class="pull-right link-logo">
+    <img src="'._UPLOADS_.'/'.$this->obj['Логотип'].'" />
+</a>':''
+?>
+
+<h1 class="ml-30 mb-10"><?=$this->obj['Название компании']?></h1>
+
+<div class="company-description">
+    <div class="company-location">
+        <dl>
+            <dt>Регион:</dt>
+            <dd><b><?=$this->getFlag($this->obj['Регион'])?> <?=$this->obj['Регион']?></b></dd>
+
+            <dt>Тип деятельности:</dt>
+            <dd><b><?=$this->obj['Тип деятельности']?></b></dd>
+        </dl>
+    </div>
+    <div class="company-about clearfix">
+        <div class="pull-right">
+            <?if (!empty($this->obj['Лизинг']) && ($finCom = $this->objects->getFullObject($this->obj['Лизинг'])) ) {?>
+            <h3>Финансирование и лизинг:</h3>
+            <ul class="suppliers-list">
+                <li><a href="/finance/<?=$finCom['id']?>" class="bd-beige pseudo"><?=!empty($finCom['Логотип'])?'<img src="'._IMGR_.'?w=50&h=40&image='._UPLOADS_.'/'.$finCom['Логотип'].'" />':''?> <span><b><?=$finCom['Название']?></b></span></a></li>
+            </ul>
+            <?}?>
+            <?if (!empty($this->obj['Логистика']) && ($finCom = $this->objects->getFullObject($this->obj['Логистика'])) ) {?>
+            <h3>Транспортировка:</h3>
+            <ul class="suppliers-list">
+                <li><a href="/finance/<?=$finCom['id']?>" class="bd-beige pseudo"><?=!empty($finCom['Логотип'])?'<img src="'._IMGR_.'?w=50&h=40&image='._UPLOADS_.'/'.$finCom['Логотип'].'" />':''?> <span><b><?=$finCom['Название']?></b></span></a></li>
+            </ul>
+            <?}?>
+        </div>
+        <h3>Описание компании:</h3>
+        <p><?=$this->obj['Описание']?></p>
+    </div>
+    <div class="company-contacts clearfix">
+        <h2>Контактная информация</h2>
+        <dl>
+            <dt>Контактное лицо:</dt>
+            <dd><b><?=$this->obj['Имя контактного лица']?></b>, <?=$this->obj['Должность']?></dd>
+
+            <dt>Телефоны:</dt>
+            <dd><b><?=join(", ",explode("\n",$this->obj['Телефон']))?></b></dd>
+
+            <dt>Адрес:</dt>
+            <dd><?=$this->obj['Адрес']?></dd>
+
+            <dt>Электронная почта:</dt>
+            <dd><a href="mailto:<?=$this->obj['Email']?>" class="bd-beige pseudo"><span><?=$this->obj['Email']?></span></a></dd>
+
+            <dt>Сайт компании:</dt>
+            <dd><a href="<?=!empty($this->obj['Сайт компании'])?'http://'.$this->obj['Сайт компании']:'#'?>" class="bd-beige pseudo"><span><?=$this->obj['Сайт компании']?></span></a></dd>
+        </dl>
+        <?if ($this->contacts){?>
+        <?foreach ($this->contacts as $c){?>
+        <dl>
+            <dt>Контактное лицо:</dt>
+            <dd><b><?=$c['Имя']?></b>, <?=$c['Должность']?></dd>
+
+            <dt>Телефоны:</dt>
+            <dd><b><?=join(", ",explode("\n",$c['Телефон']))?></b></dd>
+
+            <dt>Электронная почта:</dt>
+            <dd><a href="mailto:<?=$c['email']?>" class="bd-beige pseudo"><span><?=$c['email']?></span></a></dd>
+        </dl>
+        <?}?>
+        <?}?>
+<?if ($this->branches){?>
+        <h3>Филиалы:</h3>
+        <?foreach ($this->branches as $b){?>
+        <dl>
+            <dt>Регион филиала:</dt>
+            <dd><b><?=$this->getFlag($b['Регион'])?> <?=$b['Регион']?></b></dd>
+
+            <dt>Телефоны филиала:</dt>
+            <dd><b><?=join(", ",explode("\n",$b['Телефон']))?></b></dd>
+
+            <dt>Контактное лицо:</dt>
+            <dd><b><?=$b['Имя контактного лица']?></b>, <?=$b['Должность']?></dd>
+
+            <dt>Адрес филиала:</dt>
+            <dd><?=$b['Адрес']?></dd>
+        </dl>
+        <?}?>
+    </div>
+<?}?>
+<?if ($this->ads || $this->news){?>
+    <div class="company-tabs">
+        <ul class="nav nav-tabs" id="companyTabs">
+            <?if ($this->ads){?>
+            <li class="active"><a href="#advs" data-toggle="tab"><span>Объявления компании</span> <sup><?=count($this->ads)?></sup></a></li>
+            <?}?>
+            <?if ($this->news){?>
+            <li class="<?=$this->ads?'':'active'?>"><a href="#news" data-toggle="tab"><span>Новости компании</span> <sup><?=count($this->news)?></sup></a></li>
+            <?}?>
+        </ul>
+        <div class="tab-content">
+            <?if ($this->ads){?>
+            <div class="tab-pane fade in active" id="advs">
+                <div class="main-catalog">
+                    <?foreach ($this->ads as $k=>$ad){?>
+                    <div class="item <?=$this->getItemColor($ad['Тип'])?> <?=$ad['Горячее предложение']==1?'item-hot':''?> clearfix">
+                        <div class="photo">
+                            <a href="#"><img src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-medium.png'?>" alt=""></a>
+                            <?=$this->objects->getObjectsCount($ad['object_id'],4)?> фото <!-- + <b>видео</b> -->
+                            <?=$ad['Акция'] == 1 ? '<img src="/img/action.gif" alt="Акция" title="Акция" style="width:100px;height:38px;">' : ''?>
+                        </div>
+                        <div class="desc">
+                            <h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>"><?=$ad['Название']?></a></h3>
+                            <div class="category"><a class="bd-beige" href="/catalog/<?=$ad['head']?>/"><?=$this->getCatNameById($ad['head'])?></a></div>
+                            <div class="condition"><?=$ad['Местоположение товара']?>, <?=$ad['Год']?> г., <?=$this->condition[$ad['Состояние товара']]?></div>
+                            <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="<?$_SERVER['REQUEST_URI']?>"><?=$this->obj['Название компании']?></a></div>
+                            <div class="place"><?=$this->getFlag($ad['Местоположение товара'])?><?=$ad['Местоположение товара']?></div>
+                            <div class="date">Дата размещения: <?=$this->strings->date($ad['Дата добавления'])?></div>
+                            <?if (!empty($ad['Дата поднятия']) && ($ad['Дата поднятия']!='0000-00-00')){?>
+                            <div class="date">Дата обновления: <?=$this->strings->date($ad['Дата поднятия'])?>  <i class="icon-arrow-up icon-grey"></i></div>
+                            <?}?>
+                        </div>
+                        <div class="contacts">
+                            <div class="price"><?=$ad['Цена']?> <span><?=$this->money[$ad['Валюта']]?></span></div>
+                            <div class="presence"><?=$this->is_got[$ad['Наличие товара']]?></div>
+                            <div class="phones" data-toggle="phones">
+                                <img class="ico phone-ico" src="/img/phone.png" alt="">
+                                <div class="all">
+                                    <?$phones = explode("\n",$this->obj['Телефон'])?>
+                                    <span><?=$phones[0]?></span>
+                                </div>
+                                <div class="order-call"><a class="dashed" href="#modal-call-id<?=$ad['id']?>" data-toggle="modal">Заказать звонок</a></div>
+                                <div class="all-contacts"><a class="dashed" href="#modal-contacts-id<?=$ad['id']?>" data-toggle="modal">Контакты поставщика</a></div>
+                            </div>
+                        </div>
+                        <?=$ad['Горячее предложение']==1?'<div class="hot">Горячее предложение!</div>':''?>
+                        <div id="modal-call-id<?=$ad['id']?>" class="modal hide fade promzona-modal">
+                            <form action="" class="phone-order" method="post">
+                            <div class="modal-header">
+                                <button type="button" class="close red" data-dismiss="modal">×</button>
+                                <h3>Заказ обратного звонка</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-20">
+                                    <div class="d-ib mr-20 va-t">
+                                        <a href="/ads/<?=$ad['object_id']?>/"><img class="modal-img" src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-small.png'?>" alt=""></a>
+                                    </div>
+                                    <div class="d-ib">
+                                        <h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>/"><?=$ad['Название']?></a></h3>
+                                        <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#"><?=$this->obj['Название компании']?></a></div>
+                                        <div class="place"><?=$this->getFlag($this->obj['Регион'])?><?=$this->obj['Регион']?></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="input-group">
+                                        <div class="inputs-desc">
+                                            <b>Оставьте ваш номер телефона</b><br>
+                                            и с вами свяжется представитель компании поставщика:
+                                        </div>
+                                        <div class="inputs-self phones-separated-group">
+                                            <input type="text" class="one" name="phone[0]" value="+7"><input type="text" name="phone[1]" class="two"><input type="text" class="three" name="phone[2]">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="inputs-desc sorter">
+                                            <b>Можете также указать время,</b><br>
+                                            в которое вам будет удобно
+                                            принять звонок:
+                                        </div>
+                                        <div class="inputs-self time-separated-input">
+                                            <label><input type="radio" name="order-call-time-id1" checked value="anytime"> В любое время</label>
+                            <label><input type="radio" name="order-call-time-id1" value="Время"> <input type="text" maxlength="2" class="onlyNum" value="10" name="time[0][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[0][m]"> — <input type="text" maxlength="2" class="onlyNum" value="19" name="time[1][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[1][m]"></label>
+                            <input type="hidden" name="ad_name" value="<?=$ad['Название']?>">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="email" value="<?=$this->obj['Email']?>">
+                            <div class="modal-footer ta-l">
+                                <button class="btn btn-grey btn-grand mr-15" name="order_call" value="1">Заказать звонок</button>
+                                <button class="btn btn-white btn-grand" data-dismiss="modal">Отменить</button>
+                            </div>
+                            </form>
+                        </div>
+                        <div id="modal-contacts-id<?=$ad['id']?>" class="modal hide fade promzona-modal w-690">
+                            <div class="modal-header">
+                                <button type="button" class="close red" data-dismiss="modal">×</button>
+                                <h3>Контактная информация поставщика</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-20 clearfix">
+                                    <div class="pull-left w-120 mr-30 va-t">
+                                        <a href="/ads/<?=$ad['object_id']?>/"><img class="modal-img" src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-small.png'?>" alt=""></a>
+                                    </div>
+                                    <div>
+                                        <h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>"><?=$ad['Название']?></a></h3>
+                                        <div class="price"><?=$ad['Цена']?> <span><?=$this->money[$ad['Валюта']]?></span></span></div>
+                                        <div class="presence"><?=$this->is_got[$ad['Наличие товара']]?></div>
+                                    </div>
+                                </div>
+                                <ul class="contacts-list reset">
+                                    <li>
+                                        <div>Компания:</div>
+                                        <div><a class="bd-beige bold" href="#"><?=$this->obj['Название компании']?></a></div>
+                                    </li>
+                                    <li>
+                                        <div>Регион:</div>
+                                        <div><?=$this->getFlag($this->obj['Регион'])?><b><?=$this->obj['Регион']?></b></div>
+                                    </li>
+                                    <li>
+                                        <div>Контактное лицо:</div>
+                                        <div><b><?=$this->obj['Имя контактного лица']?>,</b> <?=$this->obj['Должность']?></div>
+                                    </li>
+                                    <li>
+                                        <div>Телефоны:</div>
+                                        <div><b><?=join(", ",explode("\n",$this->obj['Телефон']))?></b></div>
+                                    </li>
+                                    <li>
+                                        <div>Адрес:</div>
+                                        <div><?=$this->obj['Адрес']?></div>
+                                    </li>
+                                    <li>
+                                        <div>Электронная почта:</div>
+                                        <div><a class="bd-beige" href="mailto:<?=$this->obj['Email']?>"><?=$this->obj['Email']?></a></div>
+                                    </li>
+                                    <?if (!empty($this->obj['Сайт компании'])){?>
+                                    <li>
+                                        <div>Сайт компании:</div>
+                                        <div><a class="bd-beige" href="http://<?=$this->obj['Сайт компании']?>">http://<?=$this->obj['Сайт компании']?></a></div>
+                                    </li>
+                                    <?}?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?}?>
+                </div>
+            </div>
+            <?}?>
+            <?if ($this->news){?>
+            <div class="tab-pane fade in <?=empty($this->ads)?'active':''?>" id="news">
+                <div class="company-news-list">
+                    <table>
+                        <colgroup>
+                            <col width="120" />
+                            <col width="*" />
+                        </colgroup>
+                        <tbody>
+                            <?foreach($this->news as $k=>$n){?>
+                            <tr>
+                                <td>
+                                    <div class="date"><?=$this->strings->date($n['Дата'],'sql','date')?></div>
+                                    <?=!empty($n['Изображение'])?'<img src="'._UPLOADS_.'/'.$n['Изображение'].'" />':''?>
+                                </td>
+                                <td>
+                                    <div class="company-news-item">
+                                        <div class="company-name">
+                                            <b>Компания:</b> <a href="#" class="bd-beige pseudo"><span><?=$this->obj['Название компании']?></span></a>
+                                        </div>
+                                        <div class="company-location">
+                                            <?=$this->getFlag($this->obj['Регион'])?> <?=$this->obj['Регион']?>
+                                        </div>
+                                        <div class="company-news-item-name">
+                                            <a href="/company_news/<?=$n['id']?>/" class="as-text bd-grey"><b><?=$n['Название']?></b></a>
+                                        </div>
+                                        <div class="company-news-item-in">
+                                            <p><?=$n['Анонс']?></p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?}?>
+                        </tbody>
+                    </table>
+                </div>                            
+            </div>
+            <?}?>
+        </div> 
+    </div>
+<?}?>
+</div>

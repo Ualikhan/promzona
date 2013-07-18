@@ -1,0 +1,100 @@
+<form>
+<div class="pull-right">
+  <div class="pager">
+
+    <select class="span1 autoSubmitForm" name="on_page">
+      <option value="10" <?=$this->ac->on_page==10?'selected="selected"':''?>>10</option>
+        <option value="25" <?=$this->ac->on_page==25?'selected="selected"':''?>>25</option>
+        <option value="50" <?=$this->ac->on_page==50?'selected="selected"':''?>>50</option>
+    </select>
+
+    объявлений на стр.
+  </div>
+</div>
+</form>
+
+<h1 class="ml-30 mb-10"><?=$this->title?></h1>
+
+<div class="moderation-form main-catalog">
+
+<div class="title">Требуют рассмотрения: <b class="orange"><?=$this->news_count?> новости</b></div>
+
+<form action="" class="interrelated-container" method="post">
+
+  <table class="table company-news-list">
+    <colgroup>
+        <col width="60" />
+        <col width="120" />
+        <col width="*" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="3">
+          <label class="checkbox"><input type="checkbox" class="interrelated-amount-checkbox"> Выбрать<br /> все</label>
+          <button type="button" name="approve" value="1" class="btn btn-approve" data-action="approve"><i class="icon icon-ok"></i> Одобрить</button>
+          <button type="button" class="btn btn-remove btn-reject" data-action="reject"><i class="icon icon-remove"></i> Отклонить</button>
+          <button type="button" class="btn btn-remove btn-remove" data-action="remove"><i class="icon icon-trash"></i> Удалить новость</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <?foreach ($this->ac->news as $n){?>
+        <tr>
+            <td>
+                <label class="checkbox"><input type="checkbox" name="o[<?=$n['n_object_id']?>]" value="1" class="interrelated-checkbox"></label>
+            </td>
+            <td>
+                <div class="date"><?=$this->strings->date($n['Дата'],'sql','date')?></div>
+                <img src="<?=!empty($n['Изображение'])?_UPLOADS_.'/'.$n['Изображение']:'/img/nophoto-medium.png'?>" />
+            </td>
+            <td>
+                <div class="company-news-item">
+                    <?/*<div class="btn-group pull-right">
+                      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Действия <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                            <li>
+                              <a type="button" name="approve" value="1" class="btn-approve"><i class="icon icon-ok"></i>Одобрить</a>
+                            </li>
+                            <li>
+                              <a type="button" class="btn-reject" data-action="reject"><i class="icon icon-remove"></i> Отклонить</a>
+                            </li>
+                            <li>
+                              <a type="button" class="btn-remove" data-action="remove"><i class="icon icon-trash"></i> Удалить</a>
+                            </li>
+                      </ul>
+                    </div>*/?>
+                    <div class="company-name">
+                        <b>Компания:</b> <a href="#" class="bd-beige pseudo"><span><?=$n['Название компании']?></span></a>
+                    </div>
+                    <div class="company-location">
+                        <img src="/img/dumm/icon-kz.png" /> <?=$n['Регион']?>
+                    </div>
+                    <div class="company-news-item-name">
+                        <a href="/company_news/<?=$n['n_object_id']?>/" class="as-text bd-grey"><b><?=$n['Название']?></b></a>
+                    </div>
+                    <div class="company-news-item-in">
+                        <p><?=$n['Анонс']?></p>
+                    </div>
+                </div>                                    
+            </td>
+        </tr>
+        <?}?>
+    </tbody>
+  </table>
+
+
+    <?if ($this->ac->pages['count_pages']>1){?>
+    <div class="pagination pagination-centered pagination-promzona">
+        <ul>
+            <li <?=!$this->ac->pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+            <?for ($i=1; $i<intval($this->ac->pages['count_pages'])+1;$i++){?>
+            <li <?=($i==$this->ac->pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->ac->pgHref($i)?>><?=$i?></a></li>
+            <?}?>
+            <li <?=!$this->ac->pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+        </ul>
+    </div>
+    <?}?>
+
+</form>
+
+</div>

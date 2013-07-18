@@ -1,0 +1,24 @@
+<?class News extends api{
+	
+	function __construct(){
+	      parent::__construct();
+	}
+	
+	# DB ЗАПРОСЫ
+	
+	function getLastNews($num){
+		ob_start();
+		$title = ' <h2 class="">Новости <a href="#" class="as-text bd-grey">компаний</a>:</h2>';
+		
+		#
+		# Здесь выводим новые предложения!
+		#
+		
+		include('news.html');
+		$out = ob_get_contents();	    
+		ob_end_clean();
+		return $out;
+	}
+
+		
+}?>

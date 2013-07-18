@@ -1,0 +1,64 @@
+<div class="public-breadcrumbs ml-30 mb-10">
+    <a class="bd-beige bold" href="/<?=$_GET['mod']?>/"><?=$this->title?></a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+</div>
+
+<?if (!empty($this->obj['Логотип'])){?>
+<a href="#" target="_blank" class="pull-right link-logo">
+    <img src="<?=_UPLOADS_.'/'.$this->obj['Логотип']?>" />
+</a>
+<?}?>
+<h1 class="ml-30 mb-10"><?=$this->obj['Название']?></h1>
+
+<div class="company-description">
+    <div class="company-location">
+        <dl>
+            <dt>Регион:</dt>
+            <dd><b><img src="/img/dumm/icon-kz.png" /> <?=$this->obj['Регион']?></b></dd>
+
+            <dt>Тип деятельности:</dt>
+            <dd><b><?=(!empty($this->obj['Тип деятельности'])) ? $this->types[$this->obj['Тип деятельности']] : ''?></b></dd>
+        </dl>
+    </div>
+    <div class="company-about row">
+        <div class="pull-left span7">
+            <h3>Описание компании:</h3>
+            <?=$this->obj['Описание']?>
+        </div>
+    </div>
+    <?if ($files = $this->getFiles($this->obj['id'])){?>
+    <div class="company-files row">
+        <div class="pull-left span7">
+            <h3>Прикреплённые файлы:</h3>
+            <ul class="unstyled">
+                <?foreach ($files as $f){?>
+                <li><a href="<?=_UPLOADS_.'/'.$f['Ссылка']?>" class="bd-beige pseudo"><i class="icon-file icon-yellow"></i> <span><?=$f['Название']?>.<?=$this->fileExt($f['Ссылка'])?></span></a> <sup>(<?=$this->filesize_get('cms/uploads/'.$f['Ссылка'])?>)</sup></li>
+                <?}?>
+            </ul>
+        </div>
+    </div>
+    <?}?>
+    <div class="company-contacts clearfix">
+        <h2>Контактная информация</h2>
+        <dl>
+            <dt>Контактное лицо:</dt>
+            <dd><b><?=$this->obj['Контактное лицо']?></b></dd>
+
+            <dt>Телефоны:</dt>
+            <dd><b><?=join(", ",explode("\n",$this->obj['Телефоны']))?></b></dd>
+
+            <dt>Адрес:</dt>
+            <dd><?=$this->obj['Адрес']?></dd>
+
+            <dt>Электронная почта:</dt>
+            <dd><a href="mailto:<?=$this->obj['Электронная почта']?>" class="bd-beige pseudo"><span><?=$this->obj['Электронная почта']?></span></a></dd>
+
+            <dt>Сайт компании:</dt>
+            <dd><a href="#" class="bd-beige pseudo"><span><?=$this->obj['Сайт компании']?></span></a></dd>
+        </dl>
+    </div>
+    <form action="/<?=$_GET['mod']?>/" method="get">
+        <input type="hidden" value="<?=$_GET['mod']?>" name="order">
+        <input type="hidden" value="<?=$this->obj['id']?>" name="id">
+        <button type="submit" class="btn btn-grey btn-grand">Отправить заявку на финансирование</button>
+    </form>
+</div>

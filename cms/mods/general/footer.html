@@ -1,0 +1,163 @@
+
+    <footer id="footer">
+
+      <section class="inner">
+
+        <div class="lists-wrapper clearfix">
+
+         <!--#menu-footer1#-->
+
+		 <!--#menu-footer2#-->
+
+		 <!--#menu-footer3#-->
+
+		 <!--#menu-footer4#-->
+
+		 <!--#menu-footer5#-->
+
+
+
+          <div class="go-web">
+            <span>Создание сайта:</span>
+            <a class="pseudo" href="http://go-web.kz/" target="_blank"><img src="/img/go-web.png" alt="go-web.kz" /></a>
+          </div>
+
+          <div class="footer-copyright grey tsha-white-down"><!--object:[225][18]--></div>
+
+          <div style="position:absolute; bottom:-2px; right:0;" class="hotlog">
+          </div>
+
+        </div>
+
+      </section>
+
+    </footer>
+	
+	<!-- ФОРМА РЕГИСТРАЦИИ И ВХОДА -->
+	
+        <div class="modal hide fade" id="modal-auth">
+
+			<div class="header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<ul class="nav nav-tabs">
+					<li><a class="pseudo dashed" href="#modal-login" data-toggle="tab"><span>Вход с паролем</span></a></li>
+					<li><a class="pseudo dashed" href="#modal-register" data-toggle="tab"><span>Регистрация</span></a></li>
+				</ul>
+			</div>
+
+			<div class="body">
+
+				<div class="tab-content">
+
+					<div id="modal-login" class="tab-pane">
+						<form action="http://<?=$_SERVER['HTTP_HOST']?>/login">
+                            <div class="alert alert-error normalize hide" style="margin:10px -40px;">
+                                <button type="button" class="close" data-close="alert">×</button>
+                                <strong>Пользователь с такими данными не зарегистрирован.</strong><br>
+                                Проверьте раскладку клавиатуры, не нажата ли клавиша «Caps Lock» и попробуйте ввести логин и пароль еще раз.
+                            </div>
+							<div class="input-group">
+								<label for="inpMail">Электронная почта:</label><input name="email" type="email" id="inpMail" class="required" />
+							</div>
+							<div class="input-group">
+								<label for="inpPass">Пароль:</label><input name="password" type="password" id="inpPass" class="required" />
+							</div>
+							<div class="submit-group">
+								<button class="btn btn-grey btn-grand submit-btn">Войти</button>
+								<a class="dashed" href="#modal-reset-password" data-toggle="tab">Забыли пароль?</a>
+							</div>
+						</form>
+					</div>
+
+					<div id="modal-reset-password" class="tab-pane hide">
+						<form action="/login" method="post">
+                            <div class="alert alert-error normalize hide" style="margin:10px -40px;">
+                                <button type="button" class="close" data-close="alert">×</button>
+                                <strong>Пользователь с такими данными не зарегистрирован.</strong><br>
+                                Проверьте раскладку клавиатуры, не нажата ли клавиша «Caps Lock» и попробуйте ввести логин и пароль еще раз.
+                            </div>
+							<div class="description">Если вы забыли свой пароль, введите электронную почту, указанную при регистрации, и нажмите кнопку «<b>Восстановить</b>». После этого вам будет выслано письмо с вашим новым паролем.</div>
+							<div class="input-group">
+								<label for="inpRecoverMail">Электронная почта:</label><input type="email"  name="email" id="inpRecoverMail" class="required" />
+							</div>
+							<div class="submit-group">
+								<button class="btn btn-grey btn-grand submit-btn">Восстановить</button>
+								<a class="dashed" href="#modal-login" data-toggle="tab">Вернуться к форме входа</a>
+							</div>
+						</form>
+					</div>
+
+					<div id="modal-register" class="tab-pane">
+
+						<table>
+
+							<colgroup>
+								<col width="335" />
+								<col width="345" />
+							</colgroup>
+
+							<tbody>
+
+								<tr>
+									<td>
+										<h2>Регистрация компании:</h2>
+										<div>Зарегистрировавшись как компания на нашей площадке вам будут доступны функции:</div>
+										<ul>
+											<li>Размещение информации о компании с логотипом в каталоге компаний;</li>
+											<li>Публикация объявлений о продаже, покупке и аренде оборудования и спецтехники вашей компании в соответствующих разделах;</li>
+											<li>Получение заказов на опубликованные объявления вашей компании через систему заявок Promzona.kz;</li>
+											<li>Публикация новостей вашей компании в разделе новости компаний;</li>
+											<li>Публикация баннеров вашей компании на страницах площадки.</li>
+										</ul>
+									</td>
+									<td>
+										<h2>Регистрация пользователя:</h2>
+										<div>Зарегистрировавшись как пользователь на нашей площадке вам будут доступны следующие функции:</div>
+										<ul>
+											<li>Заказ оборудования и спецтехники у поставщиков через систему заявок Promzona.kz;</li>
+											<li>Публикация объявлений по поиску и аренде спецтехники и оборудования;</li>
+											<li>Возможность добавить информацию о компании и начать продавать, а также получить доступ ко всему функционалу, доступному компаниям на Promzona.kz;</li>
+										</ul>
+									</td>
+								</tr>
+
+								<tr>
+									<td>
+										<a href="<?echo _WWW_?>/registration/company/" class="btn btn-grey">Зарегистрировать компанию</a>
+									</td>
+									<td>
+										<a href="<?echo _WWW_?>/registration/user/" class="btn btn-grey">Зарегистрировать пользователя</a>
+									</td>
+								</tr>
+
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37992526-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>

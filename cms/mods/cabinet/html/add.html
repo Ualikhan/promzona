@@ -1,0 +1,311 @@
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <!-- <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4 class="alert-heading">Объявление успешно размещено.</h4>
+    <div class="lh-22">Объявление размещено на площадке и доступно по ссылке: http://promzona.kz/spec/2343242 Напоминаем, что ваше объявления пройдёт обязательную модерацию, о результатах которой мы оповестим вас по электронной почте.</div> -->
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<div class="pull-right mr-20">
+    <span class="ml-10 d-ib pull-right"><a href="#" class="bd-beige bold">Правила размещения <br>объявлений</a></span>
+    <i class="icon-info-sign icon-yellow"></i>
+</div>
+<h1 class="ml-30">Размещение объявления</h1>
+<?if ($this->subject['Роль']=='company'){?>
+<div class="ml-30 mb-40 bold">Срок размещения объявления в пакете «Стартовый»: <span class="orange">14 дней</span>
+    <i class="icon-question-sign icon-yellow helper-popup">
+        <div class="soft fz-18"><?=$this->vars['871']?></div>
+    </i>
+</div>
+<?}?>
+
+<form id="ad-placement" class="form-inline ml-30" action="" method="post" enctype="multipart/form-data">
+
+    <div class="step-b" data-step="1">
+
+        <h3><i class="step-number">1</i>Выберите тип объявления: <sup class="red">*</sup></h3>
+
+        <div class="input-group clearfix required adTypeGroup">
+           <label class="radio mr-20"><input value="0" name="adType" class="notRent notSearch" type="radio">Продам</label>
+           <label class="radio mr-20"><input value="1" name="adType" class="notRent search" type="radio">Куплю</label>
+           <label class="radio mr-20"><input value="2" name="adType" class="rent notSearch" type="radio">Сдам в аренду</label>
+           <label class="radio mr-20"><input value="3" name="adType" class="rent search" type="radio">Возьму в аренду</label>
+           <?/*=$this->ac->adsType()*/?>
+        </div>
+
+        <div class="blinds"></div>
+
+    </div>
+
+    <div class="step-b disabled-el" data-step="2">
+
+        <h3><i class="step-number">2</i>Выберите раздел для размещения объявления: <sup class="red">*</sup></h3>
+
+        <div class="input-group clearfix required productSectionGroup">
+            <!-- <div class="input-group clearfix required productSectionGroup">
+                <div class="mb-5"><label class="radio"><input name="adCategory" data-root-id="cat-007" checked type="radio">Спецтехника</label></div>
+                <div class="mb-5"><label class="radio"><input name="adCategory" data-root-id="cat-666" disabled type="radio">Оборудование</label></div>
+                <div class="mb-5"><label class="radio disabled-el"><input name="adCategory" disabled type="radio">Бизнес-магазин</label> <span class="ml-10">(доступно только обладателям пакета <a class="bd-beige bold psevdo" href="#">«<span>Бизнес</span>»</a>)</span></div>
+            </div> -->
+            <?=$this->ac->rootCatsList()?>
+        </div>
+
+        <div class="blinds"></div>
+
+    </div>
+
+    <div class="step-b disabled-el" data-step="3">
+
+        <h3><i class="step-number">3</i>Выберите категорию объявления: <sup class="red">*</sup></h3>
+
+        <div id="catSelector">
+            <span class="ml-10">Поиск по ключевому слову:</span>
+            <div class="input-append ml-10">
+                <input type="text" class="catSearchInput" placeholder="Например: экскаваторы">
+                <button type="button" class="btn btn-smaller catSearchBtn">Найти категории</button>
+            </div>
+
+            <div class="render-wrapper">
+
+                <div class="catRender render clearfix"></div>
+
+            </div>
+
+            <input type="text" name="productCategory" class="hide required catHiddenInput">
+
+        </div>
+
+        <div class="cat-selector-crumbs">
+            <b>Выбранная категория:</b>
+            <span class="append"></span>
+        </div>
+
+        <div class="ad-category-dummy bold fz-16">
+            Сначала выберите раздел для размещения объявления
+        </div>
+
+        <div class="cat-selector-crumbs">
+            <b>Выбранная категория:</b>
+        </div>
+
+        <div class="blinds"></div>
+
+    </div>
+
+    <div class="step-b disabled-el" data-step="4">
+
+        <h3><i class="step-number">4</i>Заполните информацию о товаре:</h3>
+        <?$fields = $this->objects->getClassFields(31)?>
+        <div class="input-group clearfix">
+            <label class="left bold" for="productName">
+                Наименование товара: <sup class="red">*</sup>
+            </label>
+            <input class="required w-440" disabled type="text" id="productName" name="f[Название]" />
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productCondiiton">
+                Состояние товара: <sup class="red">*</sup>
+            </label>
+            <select disabled class="required w-210" disabled name="f[Состояние товара]" id="productCondiiton">
+                <option class="default">Выбрать состояние</option>
+                <?=$this->ac->conditionOptions($fields[8])?>
+                <!-- <option>Новое</option>
+                <option>Другое состояние</option>
+                <option>Ещё состояние</option> -->
+            </select>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productBrand">
+                Марка: <sup class="red">*</sup>
+            </label>
+            <select class="required w-210" disabled name="f[Марка]" id="productBrand">
+                <option class="default">Выбрать марку</option>
+                <?=$this->ac->markOptions($fields[9])?>
+                <!-- <option>ABCD</option>
+                <option>Другая марка</option>
+                <option>Ещё марка</option> -->
+            </select>
+            <input type="text" name="selfmark" value="" class="ml-20" placeholder="Своя марка..." />
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productModel">
+                Модель:
+            </label>
+            <input class="w-210" type="text" id="productModel" name="f[Модель]" />
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productCountry">
+                Страна производитель: <sup class="red">*</sup>
+            </label>
+            <input class="required w-210 typeaheaded" autocomplete="off" data-typeaheaded="country" disabled type="text" id="productCountry" name="f[Страна производитель]" />
+            <div class="middle-tip-b">Начните вводить название страны, затем выберите её из списка.</div>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productYear">
+                Год выпуска: <sup class="red">*</sup>
+            </label>
+            <select class="required w-80" disabled name="f[Год]" id="productYear">
+                <option class="default">----</option>
+                <?echo $years = $this->ac->yearsList()?>
+                <!-- <option>1989</option>
+                <option>1980</option>
+                <option>705</option> -->
+            </select>
+            <span class="slash-sep forSearch">—</span>
+            <select disabled name="" class="w-80 forSearch" id="productYearTo">
+                <option class="default">----</option>
+                <?=$years?>
+                <!-- <option>1989</option>
+                <option>1980</option>
+                <option>705</option> -->
+            </select>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left bold" for="productDesc">
+                Описание товара: <sup class="red">*</sup>
+            </label>
+            <div class="left-tip-b">
+                <?=$this->subject['Роль']=='company'?$this->vars[873]:$this->vars[909]?>
+            </div>
+            <textarea class="required w-440 mb-10" disabled id="productDesc" name="f[Описание товара]"></textarea>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productSpecs">
+                Технические характеристики:
+            </label>
+            <textarea class="w-440 mb-10" id="productSpecs" name="f[Технические характеристики]"></textarea>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left">
+                Фотографии товара:
+                <i class="icon-question-sign icon-yellow helper-popup">
+                    <div class="soft fz-18"><?=$this->subject['Роль']=='company'?$this->vars['875']:$this->vars['907']?></div>
+                </i>
+            </label>
+            <div class="photoUploader photo-uploader"></div>
+            <div class="w-200 mr-20 fz-12 pull-left">Фотографии товара значительно повышают интерес покупателей и товары продаются быстрее.</div>
+        </div>
+
+        <div class="ml-220 input-group photoUploaderResponse clearfix photo-uploader-response hide">
+            <input type="hidden" class="mainPhotoInput" name="mainPhoto" value="">
+        </div>
+
+        <div class="input-group clearfix noPhotoDummy">
+            <div class="pull-left ml-220 mr-20 w-440 fz-12">
+                <img src="/img/nophoto-small.png" class="pull-left mr-20" alt="" style="margin-top:2px;">
+                <i>Рекомендуем добавить как минимум одну фотографию для товара, иначе рядом c описанием вашего товара будет картинка с текстом «Нет фотографии».</i>
+            </div>
+        </div>
+
+        <?if ($this->subject['Роль'] == 'business'){?>
+        <div class="input-group clearfix">
+            <label class="left" for="productDistributor">
+                Видео:
+            </label>
+            <input class="w-440" type="text" id="productDistributor" name="f[Видео]" />
+            <div class="middle-tip-b">Вставьте ссылку на видео с портала youtube.com</div>
+        </div>
+        <?}?>
+
+        <div class="input-group clearfix">
+            <label class="left bold" for="productPrice">
+                <span class="forSearch hide">Бюджет:</span><span class="notForSearch">Цена:</span> <sup class="red">*</sup>
+            </label>
+            <div class="mb-10">
+                <label class="radio mr-20"><input type="radio" name="f[priceType]" class="notContractual" checked>  <span>Указать цену:</span></label>
+                <label class="radio mr-20"><input type="radio" name="f[priceType]" class="contractual">  <span>Договорная цена</span></label>
+            </div>
+            <div class="ml-220">
+                <input class="required w-210 bold sepThousands onlyNum notForContractual" disabled type="text" id="productPrice" name="f[Цена]">
+                <select name="f[Валюта]" id="productCurrency" class="w-120 notForContractual">
+                    <?=$this->ac->conditionOptions($fields[16])?>
+                    <!-- <option>Тенге (KZT)</option>
+                  <option>Тенге (KZT)</option>
+                  <option>Тенге (KZT)</option> -->
+                </select>
+                <span class="slash-sep forRent fz-18">/</span>
+                <select id="rentDuration" disabled name="f[Срок аренды]" class="w-90 forRent notForContractual">
+                    <?=$this->ac->srokOptions($fields[25])?>
+                    <!-- <option>Месяц</option>
+                    <option>Неделя</option>
+                    <option>День</option> -->
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left bold" for="productAvailability">
+                Наличие товара: <sup class="red">*</sup>
+            </label>
+            <select class="required w-210" disabled name="f[Наличие товара]" id="productAvailability">
+                <?=$this->ac->conditionOptions($fields[17])?>
+                <!-- <option>В наличии</option>
+                <option>Не так</option>
+                <option>Другое</option>
+                <option>Ещё</option> -->
+            </select>
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left bold" for="productLocation">
+                Местоположение товара: <sup class="red">*</sup>
+            </label>
+            <input class="required w-210 typeaheaded" autocomplete="off" data-typeaheaded="region" disabled type="text" id="productLocation" name="f[Местоположение товара]" />
+            <div class="middle-tip-b">Начните вводить название города, затем выберите его из списка.</div>
+        </div>
+
+        <div class="blinds"></div>
+
+    </div>
+
+    <div class="step-b disabled-el" data-step="5">
+
+        <h3><i class="step-number">5</i>Дополнительная информация:</h3>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productDistributor">
+                Поставщик оборудования:
+            </label>
+            <input class="w-440" type="text" id="productDistributor" name="f[Поставщик оборудования]" />
+        </div>
+
+        <div class="input-group clearfix">
+            <label class="left" for="productDistributorSite">
+                Сайт поставщика:
+            </label>
+            <input class="w-440" type="text" id="productDistributorSite" name="f[Сайт поставщика]" />
+        </div>
+
+        <div class="submit-group">
+            <div class="margin-wrapper">
+                <button type="submit" class="btn btn-grey btn-grand submitAd">Разместить объявление</button>
+                <button type="button" class="btn btn-grand previewAdBtn">Предварительный просмотр</button>
+            </div>
+            <div class="fz-12 grey">Объявление пройдёт обязательную проверку модератором.</div>
+        </div>
+
+        <div class="blinds"></div>
+
+    </div>
+
+</form>
+
+<input type="hidden" id="company-name" value="<?=$this->subject['Название компании']?>">
+<input type="hidden" id="company-email" value="<?=$this->subject['Email']?>">
+<input type="hidden" id="company-type" value="<?=$this->subject['Тип деятельности']?>">
+<input type="hidden" id="company-description" value="<?=$this->subject['Описание']?>">
+<input type="hidden" id="company-logo" value="<?=$this->subject['Логотип']?>">
+<input type="hidden" id="company-contactName" value="<?=$this->subject['Имя контактного лица']?>">
+<input type="hidden" id="company-region" value="<?=$this->subject['Регион']?>">
+<input type="hidden" id="company-region-icon" value="<?=$this->getFlagUrl($this->subject['Регион'])?>">
+<input type="hidden" id="company-address" value="<?=$this->subject['Адрес']?>">
+<input type="hidden" id="company-phone" value="<?=$this->subject['Телефон']?>">
+<input type="hidden" id="company-site" value="<?=$this->subject['Сайт компании']?>">

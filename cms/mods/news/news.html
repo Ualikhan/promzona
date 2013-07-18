@@ -1,0 +1,59 @@
+<h1 class="ml-30 mb-15"><?=$this->title?></h1>
+<?if (!empty($this->news)){?>
+<div class="company-block">
+    <div class="company-block-title clearfix">
+        <h3 class="pull-left"><?=count($this->news)?> новостей</h3>
+        <div class="pager pull-right">
+            <form action="">
+                <select class="span1 autoSubmitForm" name="on_page">
+                    <option value="10">10</option>
+                    <option value="25" <?=isset($_GET['on_page']) && ($_GET['on_page']==25)?'selected':''?>>25</option>
+                    <option value="50" <?=isset($_GET['on_page']) && ($_GET['on_page']==50)?'selected':''?>>50</option>
+                </select>
+                новости на стр.
+            </form>
+        </div>
+    </div>
+    <div class="company-news-list">
+        <table class="table">
+            <colgroup>
+                <col width="120" />
+                <col width="*" />
+            </colgroup>
+            <tbody>
+                <?foreach ($this->news as $n){?>
+                <tr>
+                    <td>
+                        <div class="date"><?=$this->strings->date($n['Дата'],'sql','date')?></div>
+                        <img src="<?=!empty($n['Изображение'])?_UPLOADS_.'/'.$n['Изображение']:'/img/nophoto-medium.png'?>" />
+                    </td>
+                    <td>
+                        <div class="company-news-item">
+                            <div class="company-news-item-name">
+                                <a href="/news/<?=$n['id']?>/" class="as-text bd-grey"><b><?=stripslashes($n['Название'])?></b></a>
+                            </div>
+                            <div class="company-news-item-in">
+                                <p><?=stripslashes($n['Анонс'])?></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <?}?>
+            </tbody>
+        </table>
+    </div>
+    <?if ($this->pages['count_pages']>1){?>
+    <div class="pagination pagination-centered pagination-promzona">
+        <ul>
+            <li><a href="/news/?pg=<?=$this->pages['curent_page']-1?>&on_page=<?=$this->on_page?>" <?=empty($this->pages['prev']) ? 'class="disabled"' : 'class="pseudo soft"'?>>← <span>Предыдущая</span></a></li>
+            <?for ($i=1; $i<intval($this->pages['count_pages'])+1;$i++){?>
+            <li <?=($i==$this->pages['curent_page'] ? 'class="active"' : '')?>><a href="/news/?pg=<?=$i?>&on_page=<?=$this->on_page?>"><?=$i?></a></li>
+            <?}?>
+            <li><a href="/news/?pg=<?=$this->pages['curent_page']+1?>&on_page=<?=$this->on_page?>" <?=!isset($this->pages['next']) ? 'class="disabled"' : 'class="pseudo soft"'?>><span>Следующая</span> →</a></li>
+        </ul>
+    </div>
+    <?}?>
+</div>
+<?}else{?>
+    <p>Новости отсуствуют</p>
+<?}?>

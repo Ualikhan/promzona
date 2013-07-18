@@ -1,0 +1,46 @@
+<?$roots = $cats->getRoots()?>
+<?$mod = isset($_GET['mod']) ? $_GET['mod'] : 'buy'?>
+<?$ads_type = $cats->getTypeByMod($mod);?>
+<div class="tab-header"><span><?=(int)$cats->adsCountByType(-1, $cats->getTypeByMod($mod), 261)?> </span> объявлений <?=$cats->title?> <a href="#" class="as-text bd-grey">оборудования</a></div>
+
+<div class="lists-wrapper">
+
+	<ul class="col-1">
+
+<?if ($list = $cats->objects->getFullObjectsListByClass($roots[1]['id'],$cats->class_id)){?>
+
+	<?foreach ($list as $k=>$o){?>
+		<li class="item">
+			<?$subcats = $cats->objects->getFullObjectsListByClass($o['id'],$cats->class_id)?>
+			<?/*$adsCount = !empty($subcats) ? $cats->adsCountInSubCats($subcats) : 0;*/?>
+			<div class="wrapper">
+				<div class="overflow">
+					<i class="icon-tech-<?=$cats->getIconByName($o['Название'])?>"></i><a href="/<?=$mod?>/catalog/<?=$o['id']?>/" class="bd-beige <?/*=empty($adsCount)?'empty':''*/?>"><?=$o['Название']?></a><sup><?/*=!empty($subcats) ? $adsCount : '0' */?></sup>
+				</div>
+				<?if ($subcats){?>
+				<ul>
+					<?foreach ($subcats as $key=>$cat){?>
+						<?$subCount = $cats->adsCountInSubCats(array($cat), $ads_type);?>
+						<li><a href="/<?=$mod?>/catalog/<?=$cat['id']?>/" class="as-text bd-grey <?=$subCount < 1 ?'empty':''?>"><?=$cat['Название']?></a></li>
+						<?if ($key == 4){?>
+						<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+						<?}if ($key == (count($subcats)-1) && (count($subcats) >= 5)){?>
+						<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						<?}?>
+					<?}?>
+				</ul>
+				<?}?>
+			</div>
+		</li>
+		<?if ($k == ceil((count($list)-1)/2)){?>
+			</ul>
+			<ul class="col-2"> 
+		<?}?>
+	<?}?>
+<?}?>
+
+	</ul>
+
+</div>

@@ -1,0 +1,117 @@
+<form>
+<div class="pull-right">
+  <div class="pager">
+
+    <select class="span1 autoSubmitForm" name="on_page">
+      <option value="10" <?=$this->ac->on_page==10?'selected="selected"':''?>>10</option>
+        <option value="25" <?=$this->ac->on_page==25?'selected="selected"':''?>>25</option>
+        <option value="50" <?=$this->ac->on_page==50?'selected="selected"':''?>>50</option>
+    </select>
+
+    объявлений на стр.
+  </div>
+</div>
+</form>
+
+<h1 class="ml-30 mb-10"><?=$this->title?></h1>
+
+<div class="moderation-form main-catalog">
+
+  <div class="title">Требуют рассмотрения: <b class="orange"><?=$this->ads_count?> объявлений</b></div>
+
+  <form action="" class="interrelated-container" method="post">
+
+    <table class="table adv-list">
+      <thead>
+        <tr>
+          <th>
+            <label class="checkbox"><input type="checkbox" class="interrelated-amount-checkbox"> Выбрать<br /> все</label>
+            <button type="submit" name="approve" value="1" class="btn btn-approve"><i class="icon icon-ok"></i> Одобрить</button>
+            <button type="button" class="btn btn-remove btn-reject" data-action="reject"><i class="icon icon-remove"></i> Отклонить</button>
+            <button type="button" class="btn btn-remove btn-remove" data-action="remove"><i class="icon icon-trash"></i> Удалить объявление</button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <?foreach ($this->ac->ads as $ad){?>
+        <tr>
+          <td>
+              <div class="item clearfix">
+                  <label class="checkbox"><input type="checkbox" name="o[<?=$ad['object_id']?>]" value="1" class="interrelated-checkbox"></label>
+                  <div class="photo">
+                      <a href="/ads/<?=$ad['object_id']?>/"><img src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-medium.png'?>" alt=""></a>
+                      <?=$this->objects->getObjectsCount($ad['object_id'],4) + (!empty($ad['Изображение'])?1:0)?> фото <?=!empty($ad['Видео'])?'+ <b>видео</b>':''?>
+                  </div>
+                  <div class="desc">
+                      <h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>/"><?=$ad['Название']?></a></h3>
+                      <div class="category"><a class="bd-beige" href="/catalog/<?=$ad['head']?>"><?=$ad['category_name']?></a></div>
+                      <div class="condition"><?=$ad['Местоположение товара']?>, <?=$ad['Год']?> г., <?=isset($this->ac->conditions[$ad['Состояние товара']])?$this->ac->conditions[$ad['Состояние товара']]:''?></div>
+                      <?if (!empty($ad['Название компании'])){?>
+                      <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="/co/<?=$ad['user_id']?>/"><?=$ad['Название компании']?></a></div>
+                      <?}?>
+                      <?if (!empty($ad['Регион'])){?>
+                      <div class="place"><?=$this->getFlag($ad['Регион'])?><?=$ad['Регион']?></div>
+                      <?}?>
+                      <div class="date">Дата размещения:  <?=$this->strings->date($ad['Дата добавления'])?></div>
+                      <?if (!empty($ad['Дата поднятия']) && ($ad['Дата поднятия']!='0000-00-00')){?>
+                      <div class="date">Дата обновления:   <?=$this->strings->date($ad['Дата поднятия'])?>  <i class="icon-arrow-up icon-grey"></i></div>
+                      <?}?>
+                  </div>
+                  <div class="contacts">
+                      <div class="price"><?=$ad['Цена']?> <span><?=$this->ac->money[$ad['Валюта']]?></span></div>
+                      <div class="presence"><?=isset($this->ac->is_got[$ad['Наличие товара']])?$this->ac->is_got[$ad['Наличие товара']]:''?></div>
+                      <div class="phones" data-toggle="phones">
+                          <img class="ico phone-ico" src="/img/phone.png" alt="">
+                          <?$phones = explode("\n", $ad['Телефон']);?>
+                          <?if (count($phones) <= 1 ){?>
+                          <div class="all">
+                              <span><?=$ad['Телефон']?></span>
+                          </div>
+                          <?}else{?>
+                          <a class="as-text bd-grey dashed toggle" href="#"><?=$phones[0]?></a>
+                          <div class="all hide">
+                              <?foreach ($phones as $p){?>
+                              <span><?=$p?></span>
+                              <?}?>
+                          </div>
+                          <?}?>
+                      </div>
+                      <?/*
+                      <div class="btn-group">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-cog"></i> Действия <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a type="button" name="approve" value="1" class="btn-approve"><i class="icon icon-ok"></i>Одобрить</a>
+                          </li>
+                          <li>
+                              <a type="button" class="btn-reject" data-action="reject"><i class="icon icon-remove"></i> Отклонить</a>
+                          </li>
+                          <li>
+                              <a type="button" class="btn-remove" data-action="remove"><i class="icon icon-trash"></i> Удалить</a>
+                          </li>
+                        </ul>
+                      </div>
+                      */?>
+                  </div>
+              </div>                        
+          </td>
+        </tr>
+        <?}?>
+      </tbody>
+    </table>
+
+    <?if ($this->ac->pages['count_pages']>1){?>
+    <div class="pagination pagination-centered pagination-promzona">
+        <ul>
+            <li <?=!$this->ac->pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+            <?for ($i=1; $i<intval($this->ac->pages['count_pages'])+1;$i++){?>
+            <li <?=($i==$this->ac->pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->ac->pgHref($i)?>><?=$i?></a></li>
+            <?}?>
+            <li <?=!$this->ac->pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+        </ul>
+    </div>
+    <?}?>
+
+  </form>
+
+</div>

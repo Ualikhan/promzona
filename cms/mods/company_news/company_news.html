@@ -1,0 +1,67 @@
+<h1 class="ml-30 mb-15">Новости компаний</h1>
+<?if (!empty($this->news)){?>
+<div class="company-block">
+	<div class="company-block-title clearfix">
+		<h3 class="pull-left"><?=count($this->news)?> новостей</h3>
+		<div class="pager pull-right">
+			<form action="">
+                <select class="span1 autoSubmitForm" name="on_page">
+                    <option value="10">10</option>
+                    <option value="25" <?=isset($_GET['on_page']) && ($_GET['on_page']==25)?'selected':''?>>25</option>
+                    <option value="50" <?=isset($_GET['on_page']) && ($_GET['on_page']==50)?'selected':''?>>50</option>
+                </select>
+                новости на стр.
+			</form>
+		</div>
+	</div>
+	<div class="company-news-list">
+		<table class="table">
+			<colgroup>
+				<col width="120" />
+				<col width="*" />
+			</colgroup>
+			<tbody>
+				<?foreach ($this->news as $n){?>
+				<tr>
+					<?if (!empty($n['Изображение'])){?>
+					<td>
+						<div class="date"><?=$this->strings->date($n['Дата'],'sql','date')?></div>
+						<img src="<?=_UPLOADS_.'/'.$n['Изображение']?>" />
+					</td>
+					<?}?>
+					<td <?=empty($n['Изображение'])?'colspan="2"':''?>>
+						<div class="company-news-item">
+							<div class="company-name">
+								<b>Компания:</b> <a href="<?=$this->getComURL($this->companies[$n['head']])?>" class="bd-beige pseudo"><span><?=$this->companies[$n['head']]['Название компании']?></span></a>
+							</div>
+							<div class="company-location">
+								<?=$this->getFlag($this->companies[$n['head']]['Регион'])?> <?=$this->companies[$n['head']]['Регион']?>
+							</div>
+							<div class="company-news-item-name">
+								<a href="/company_news/<?=$n['id']?>/" class="as-text bd-grey"><b><?=$n['Название']?></b></a>
+							</div>
+							<div class="company-news-item-in">
+								<p><?=$n['Анонс']?></p>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<?}?>
+			</tbody>
+		</table>
+	</div>
+	<?if ($this->pages['count_pages']>1){?>
+	<div class="pagination pagination-centered pagination-promzona">
+		<ul>
+			<li><a href="/company_news/?pg=<?=$this->pages['curent_page']-1?>&on_page=<?=$this->on_page?>" <?=empty($this->pages['prev']) ? 'class="disabled"' : 'class="pseudo soft"'?>>← <span>Предыдущая</span></a></li>
+			<?for ($i=1; $i<intval($this->pages['count_pages'])+1;$i++){?>
+			<li <?=($i==$this->pages['curent_page'] ? 'class="active"' : '')?>><a href="/company_news/?pg=<?=$i?>&on_page=<?=$this->on_page?>"><?=$i?></a></li>
+			<?}?>
+			<li><a href="/company_news/?pg=<?=$this->pages['curent_page']+1?>&on_page=<?=$this->on_page?>" <?=!isset($this->pages['next']) ? 'class="disabled"' : 'class="pseudo soft"'?>><span>Следующая</span> →</a></li>
+		</ul>
+	</div>
+	<?}?>
+</div>
+<?}else{?>
+	<p>Новости отсуствуют</p>
+<?}?>

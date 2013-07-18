@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--[if lt IE 10]>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if (window.PIE) {
+				$('.pie').each(function() {
+					PIE.attach(this);
+				});
+			}
+		});
+	</script>
+<![endif]-->
+</head>
+<body>
+<div style="position: absolute;">
+	<!--smart:{
+		id:5,
+		title:"названия сайта",
+		actions:["edit"],
+		css:{
+			marginTop:20
+		}
+	}-->
+	<!--smart:{
+		id:6,
+		title:"keywords",
+		actions:["edit"],
+		css:{
+			marginTop:20
+		}
+	}-->
+	<!--smart:{
+		id:7,
+		title:"description",
+		actions:["edit"],
+		css:{
+			marginTop:20
+		}
+	}-->
+	<!--smart:{
+		id:16,
+		title:"email администратора",
+		actions:["edit"],
+		css:{
+			marginTop:20
+		}
+	}-->
+</div>
+<div id="wrapper">
+	<div id="header">
+		Header
+		<div class="auth" style="margin: 20px 0;">
+			<?if(!@$_SESSION['auth']['u']){?>
+				<a class="login" id="user_login_link" href="<?='/'.$this->lang.'/login/'?>">Войти</a>
+				<a class="reg" href="<?='/'.$this->lang.'/register/'?>">Зарегится</a>
+			<?} else {?>
+				<a href="<?='/'.$this->lang.'/edit/'?>"><?=$_SESSION['auth']['u']['name']?></a>
+				<a href="#выход" onclick="return exit()">Выход</a>
+				<div><?=$_SESSION['auth']['u']['roul']?></div>
+			<?}?>
+		</div>
+	</div><!-- #header-->
+	<!--#langs#-->
+	<div id="middle">
+		<div id="container">
+			<?echo '<div class="breadcrumbs" style="float: right;">';
+				if (@$_GET['id'])
+					$b = $_GET['id'];
+				elseif (@$_GET['cat'])
+					$b = $_GET['cat'];
+				echo 'мы тут: '.$this->bread(((@$b)?@$b:@$_GET['bread']));
+			echo '</div><div style="clear: both;"></div>';?>
+			<div id="content">
+			<h2>Поиск</h2>
+			<div>
+				<!--#search#-->
+			</div>
+			<br>
+			<h1 id="page-title"><!--#page-title#--></h1>
+			#CONTENT#
+			<br>
+			<br>
+			</div><!-- #content-->
+		</div><!-- #container-->
+
+		<div class="sidebar" id="sideLeft">
+		<!--#auth-block#-->
+		<br>
+		<h2>Меню</h2>
+		<!--#menu#-->
+		<br>
+		<h2>Новости</h2>
+		<div><!--#news-list#--></div>
+		<br>
+		<h2>Опросник</h2>
+		<!--#voting-block#-->
+		<br>
+		
+		<h2>Баннеры</h2>
+		
+		<!--#banners-list-1#-->
+
+		</div><!-- .sidebar#sideLeft -->
+
+	</div><!-- #middle-->
+
+</div><!-- #wrapper -->
+
+<div id="footer">
+	<br>
+	<div>
+		<input id="subscribe-mail" type="text" value="введите ваш e-mail" title="введите ваш e-mail" onfocus="if(this.value==this.title) this.value=''" onblur="if(this.value=='') this.value=this.title;" />
+		<button id="subscribe-add">Подписаться</button>
+	</div>
+	
+</div><!-- #footer -->
+<?
+  # БЛОК АВТОРИЗАЦИИ
+  if(empty($_SESSION['auth']['u']) || !is_array($u = $_SESSION['auth']['u']))
+  {
+   echo '<div id="login_win" title="'.$this->v('Авторизация пользователя').'" style="display:none">
+    <div class="login_form_container">
+     <table class="login_form" width="100%">
+     <tr>
+      <td width="70">E-mail</td><td><input id="login_email" type="text" value="" /></td>  
+     </tr>
+     <tr>
+      <td>'.$this->v('Пароль').'</td><td><input id="login_pass" type="password" value="" /></td>
+     </tr>
+	 <tr>
+		<td colspan="2"><a href="/'.$this->lang.'/forgot/">'.$this->v('Забыли пароль?').'</a></td>
+	 </tr>
+     </table>
+     <div id="login_msg" style="display:none; padding-left: 3px; padding-top: 13px;"></div>
+    </div>
+   </div>'; 
+  }?>
+</body>
+</html>

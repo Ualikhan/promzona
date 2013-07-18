@@ -1,0 +1,50 @@
+<section id="content" class="clearfix">
+	<aside id="cabinet-left-b">
+		<div class="meta-b-wrapper">
+			<?if ($this->subject['Роль'] == 'company'){?>
+			<div class="meta-b">
+				<div><b class="white"><?=$this->subject['Название компании']?></b></div>
+				<div class="fz-13 break-word"><a href="<?=$this->getCompanyUrl($this->subject)?>" class="yellow">http://<?=$_SERVER['HTTP_HOST'].$this->getCompanyUrl($this->subject)?></a></div>
+				<div class="fz-13">Пакет: «<span class="underlined">Стандарт</span>» <a href="/cabinet/business/" class="yellow fz-12"><i>улучшить</i></a>.</div>
+			</div>
+			<?}elseif ($this->subject['Роль'] == 'business'){?>
+			<div class="meta-b">
+				<?$end_date = $this->getBusinessEndDate()?>
+                <div><b class="white"><?=$this->subject['Название компании']?></b></div>
+                <div class="fz-13 break-word"><a href="<?=$this->getCompanyUrl($this->subject)?>" class="yellow">http://<?=$_SERVER['HTTP_HOST'].$this->getCompanyUrl($this->subject)?></a></div>
+                <div class="fz-13 bold">Пакет: <a class="yellow pseudo" href="/cabinet/business/">«<span>Бизнес</span>»</a><?=!empty($end_date)?'<br /> активен до: '.$this->strings->date($end_date,"sql","date"):''?></div>
+            </div>
+			<?}elseif ($this->subject['Роль'] == 'user'){?>
+			<div class="meta-b">
+                <div><b class="white"><?=$this->subject['Фио']?></b></div>
+                <div class="fz-13 break-word"><?=$this->subject['Email']?></div>
+                <a class="btn btn-orange" href="/cabinet/company_info/">Добавить компанию</a>
+            </div>
+            <?}?>
+		</div>
+
+		<div id="cab-nav">
+			<ul class="reset">
+				<!-- <li class="active"><a href="#">Личный кабинет</a></li>
+				<li><a href="#">Мои объявления</a></li>
+				<li><a href="#">Заказы</a></li>
+				<li><a href="#">Избранное</a></li>
+				<li><a href="#">Информация о компании</a></li>
+				<li><a href="#">Контактная информация</a></li>
+				<li><a href="#">Пакет «Бизнес»</a></li>
+				<li><a href="#">Счета<span class="credit-count">0 кр.</span></a></li>
+				<li><a href="#">Настройка аккаунта</a></li>
+				<li><a href="#">Служба поддержки</a></li> -->
+				<?=$this->cabMenu()?>
+			</ul>
+		</div>
+
+	</aside>
+
+	<section id="cabinet-right-b">
+
+		#CONTENT#
+
+	</section>
+
+</section>

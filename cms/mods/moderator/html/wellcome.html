@@ -1,0 +1,15 @@
+<h1 class="ml-30 mb-20"><?=$this->title?></h1>
+<div class="moderation-wellcome">
+  <div class="title">Добро пожаловать, <b><?=$this->subject['Фио']?></b></div>
+  <a href="/moderator/leasing?do=add" class="btn"><i class="icon-plus-sign"></i> Добавить лизинговую компанию</a>
+  <a href="/moderator/logistics?do=add" class="btn"><i class="icon-plus-sign"></i> Добавить транспортную компанию</a>
+</div>
+
+<div class="moderation-list">
+  <h3 class="orange"><i class="icon-warning-sign icon-yellow"></i> Требуют рассмотрения:</h3>
+  <ul class="unstyled">
+  	<?foreach ($this->counts as $k=>$c) { if ($c['count']>0) {?>
+    <li><a href="/moderator/<?=$k?>" class="bd-beige"><?=$c['count']?> <?=$c['name']?></a></li>
+    <?}}?>
+  </ul>
+</div>

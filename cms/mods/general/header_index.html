@@ -1,0 +1,143 @@
+ <!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="google-site-verification" content="4PzEB1IHLBcT0xI8xDdc8-8V7AxTldUWJD-kU_EROpA" />
+    <script type="text/javascript">
+        var currentInfo = {
+            'typeahead': {
+                'countries': [<?=$this->getACCountiesList()?>],
+                'regions': [<?=$this->getACRegionsList()?>]
+            }
+        };
+        var year = <?=date("Y")?>;
+    </script>
+    <script type='text/javascript'>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type='text/javascript'>
+googletag.cmd.push(function() {
+googletag.defineSlot('/39438597/ГлавнаяСтр_240*400_1', [240, 400], 'div-gpt-ad-1371682529762-0').addService(googletag.pubads());
+googletag.defineSlot('/39438597/ГлавнаяСтр_240*400_2', [240, 400], 'div-gpt-ad-1371682529762-1').addService(googletag.pubads());
+googletag.defineSlot('/39438597/ГлавнаяСтр_240*400_3', [240, 400], 'div-gpt-ad-1371682529762-2').addService(googletag.pubads());
+googletag.defineSlot('/39438597/ГлавнаяСтр_240*400_4', [240, 400], 'div-gpt-ad-1371682529762-3').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();
+googletag.enableServices();
+});
+</script>
+</head>
+
+<body>
+  <div id="layout">
+
+    <div class="banner-w1000">
+      <!--#banners-list-1#-->
+    </div>
+
+    <div id="top-stripe"></div>
+
+    <header id="header">
+
+      <section id="top-line">
+
+        <div id="logo-b">
+         <a href="/"><img src="<?=_UPLOADS_?>/<!--object:[177][9]-->" alt="<!--object:[177][8]-->" /></a>
+        </div>
+
+        <?/*<div id="search-b">
+         <!--#search#-->	
+          <div class="wrapper"><a href="#" class="as-text fz-13 tsha-white-down dashed">Расширенный поиск</a></div>
+        </div>*/?>
+        <?include_once(_MODS_ABS_.'/general/search.html');?>
+
+        <div id="auth-b">
+          <div class="input-append btn-group">
+          <?if(!$this->logged){?>
+            <button class="btn btn-grand" id="modal-open-login"><i class="icon-lock"></i> Вход</button>
+            <button class="btn btn-grand btn-grey" id="modal-open-register">Регистрация</button>
+			<?}else{
+			
+			$credi = (!empty($_SESSION['u']) && ($_SESSION['u']['role'] == 'business')) ? '<!--object:['.$_SESSION['u']['id'].'][171]-->' : '0';
+
+			?>
+						<button class="btn dropdown-toggle btn-grand soft" data-toggle="dropdown">
+							<i class="icon-user"></i> Личный кабинет
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="/cabinet/">Перейти в кабинет</a></li>
+							<li><a href="/login/out/">Выход</a></li>	
+						</ul>
+			
+			 <a href="<?=$_SESSION['u']['role'] == 'business'? '/cabinet/refill/' : 'javascript:void(0)'?>" class="btn-orange btn btn-grand balance-btn soft"><?=$credi;?> <span class="fz-13">кр.</span></a>
+			 
+			<?}?>
+			            
+          </div>
+<!--           <div id="cart-b">
+            <div class="icon-cart"><span class="tsha-white-down">0</span></div>
+            <a href="#" class="as-text bd-grey-outside">Корзина заказов</a>
+          </div> -->
+        </div>
+
+      </section>
+
+      <section id="index-call-to-b">
+
+        <div class="inner">
+
+          <h2 class="top">
+            Промзона.kz — это площадка объявлений о продаже, покупке и аренде промышленного оборудования и спецтехники в Казахстане
+          </h2>
+
+          <div class="bottom">
+            <a class="btn btn-orange btn-grand" href="/cabinet/add/">Разместить объявление</a>
+            <?if (empty($_SESSION['u'])){?>
+            <span>Требуется <a href="/registration/company/">регистрация</a>. Это займёт всего 5 минут</span>
+            <?}?>
+          </div>
+
+        </div>
+
+      </section>
+
+      <nav id="nav">
+       <!--#menu#-->	
+      </nav>
+
+    </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

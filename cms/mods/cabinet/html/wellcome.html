@@ -1,0 +1,63 @@
+<?$this->ac->getObject($this->subject)?>
+<a href="/cabinet/add/" class="btn btn-orange pull-right btn-narrow mr-20"><b>Разместить объявление</b></a>
+<h1 class="ml-30"><!--#page-title#--></h1>
+<div class="welcome-wrapper cleafix ml-30 mr-20">
+    <div class="info-b-right pull-right">
+        Статус вашей компании: <br />
+        <i class="icon-warning-sign icon-yellow"></i> <b class="orange"><?=$this->ac->companyStatus()?></b>
+        <?if ($this->subject['Роль'] != 'user'){?>
+         <div class="grey fz-12">
+            <?=$this->ac->companyStatusText()?>
+         </div>
+         <?}?>
+    </div>
+
+    <div class="promo-b-left">
+        <h2>Добро пожаловать, <?=$this->ac->userName()?>!</h2>
+        <!--object:[333][57]-->
+    </div>
+
+</div>
+<?if ($this->subject['Роль']=='company'){?>
+<div class="pack-promo-b">
+    <?=$this->vars[611]?>
+</div>
+ <?}?>
+
+<h2 class="ml-30">Статистика</h2>
+
+<table class="personal-statistics">
+    <colgroup>
+        <col width="200" />
+        <col width="180" />
+        <col width="180" />
+        <col width="" />
+    </colgroup>
+    <tbody>
+        <tr>
+            <td><b>Дата регистрации:</b></td>
+            <td><?=$this->ac->regDate()?></td>
+            <td><b>Статус компании:</b></td>
+            <td><?=$this->ac->companyStatus()?></td>
+        </tr>
+        <tr>
+            <td><b>Количество объявлений:</b></td>
+            <td><?=$this->ac->adsCount()?></td>
+            <td><b>Новости компании:</b></td>
+            <td><?=$this->ac->companyNewsCount()?></td>
+            
+        </tr>
+        <?/*<tr>
+            <td><b>Заказы в работе:</b></td>
+            <td><?=$this->ac->ordersInWork()?></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>Завершенные заказы:</b></td>
+            <td><?=$this->ac->ordersDone()?></td>
+            <td></td>
+            <td></td>
+        </tr>*/?>
+    </tbody>
+</table>

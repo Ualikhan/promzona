@@ -1,0 +1,88 @@
+<?$this->ac->object=$this->subject?>
+<?$this->ac->editAcount()?>
+<?$this->ac->deleteAcount()?>
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <!-- <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4 class="alert-heading">Объявление успешно размещено.</h4>
+    <div class="lh-22">Объявление размещено на площадке и доступно по ссылке: http://promzona.kz/spec/2343242 Напоминаем, что ваше объявления пройдёт обязательную модерацию, о результатах которой мы оповестим вас по электронной почте.</div> -->
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<h1 class="ml-30 mb-25"><!--#page-title#--></h1>
+
+<form action="" id="account-edit" class="form-inline ml-10 listenThisForm" method="post">
+
+	<h3 class="ml-20 mb-20">Электронная почта и пароль для входа на сайт:</h3>
+
+	<div class="step-b">
+
+		<div class="input-group">
+			<label class="left">
+				Электронная почта для входа:
+			</label>
+			<div class="pt-5 bold"><?=$this->subject['Email']?></div>
+		</div>
+
+		<div class="input-group">
+			<div class="right-tip-b w-210">
+				Длина пароля от 5 до 30 символов. Можно использовать цифры, латинские буквы, символы «-», «.», «_», «$»
+			</div>
+			<label class="left" for="passInput">
+				Новый пароль: <sup class="red">*</sup>
+			</label>
+			<input class="w-210" type="password" id="passInput" name="f[pass]" maxlength="30">
+
+		</div>
+
+		<div class="input-group matchPasswords">
+			<label class="left" for="passConfirmInput">
+				Повторите пароль: <sup class="red">*</sup>
+			</label>
+			<input class="w-210" type="password" id="passConfirmInput" name="f[pass2]" maxlength="30">
+			<div class="middle-tip-b error hide" id="passMatchError">Пароли не совпадают.</div>
+			<div class="middle-tip-b error hide" id="passRulesError">Можно использовать только цифры, латинские буквы, символы «-», «.», «_», «$»</div>
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="currentPassword">
+				Текущий пароль: <sup class="red">*</sup>
+			</label>
+			<input class="w-210" type="password" id="currentPassword" name="f[oldpass]">
+			<div class="middle-tip-b">Нужен для внесения изменений.</div>
+		</div>
+
+	</div>
+
+	<div class="step-b">
+
+		<h3 class="ml--20">Подписка на рассылки и сообщения:</h3>
+
+		<div class="input-group">
+			<label class="checkbox mb-5">
+				<input type="checkbox"> Хочу получать рассылку новостей от администрации проекта.
+			</label>
+			<label class="checkbox mb-5">
+				<input type="checkbox"> Хочу получать рекоммендации службы поддержки.
+			</label>
+			<label class="checkbox mb-5">
+				<input type="checkbox"> Разрешить пользователям отправлять письма со страниц объявлений.
+			</label>
+		</div>
+
+		<div class="submit-group mr-30 ml--20 mb-50">
+			<button type="submit" class="btn btn-grey btn-grand ml--20" disabled>Сохранить изменения</button>
+		</div>
+
+	</div>
+
+</form>
+
+<form action="" class="ml-30 mb-50" method="post" name="delete_form">
+	<h3 class="red">Удаление аккаунта:</h3>
+	<div class="ml-20 mb-20" style="width:500px;"><!--object:[609][57]--></div>
+	<div class="input-append">
+		<input type="text" style="width:130px;" name="delete_word">
+		<button class="btn soft" name="delete_acount" value="1">Подтвердить</button>
+	</div>
+</form>

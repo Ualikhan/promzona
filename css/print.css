@@ -1,0 +1,209 @@
+body {
+  background: white !important;
+  color: black !important;
+}
+
+#top-stripe {
+  display: none !important;
+}
+
+#header {
+  display: none !important;
+}
+
+#footer {
+  display: none !important;
+}
+
+header, footer {
+  display: none !important;
+}
+
+label {
+  color: black !important;
+}
+
+dl, dt, dd {
+  color: black !important;
+}
+
+a {
+  text-decoration: none;
+  cursor: default !important;
+  color: black !important;
+  border-bottom: none !important;
+}
+a span {
+  border-bottom: none !important;
+}
+
+a:not(.btn) {
+  color: black !important;
+}
+a:not(.btn) span {
+  color: black !important;
+}
+
+#layout {
+  width: 860px;
+  padding: 30px 0 0;
+  margin: 0 auto;
+}
+
+#content {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background: none !important;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.public-breadcrumbs {
+  margin: 0 0 10px;
+}
+
+.item-page h1 {
+  margin-left: 0;
+}
+
+.wrapper-video {
+  display: none;
+}
+
+.item-page-share > div {
+  display: none;
+}
+
+.main-catalog {
+  display: none;
+}
+
+.item-page {
+  padding-bottom: 0;
+}
+
+.item-page-block > .pull-left {
+  width: 615px;
+}
+
+.item-page figure.item-page-block {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.item-page-info-desc {
+  width: 400px;
+}
+.item-page-info-desc .item-yellow {
+  background: none;
+  border-color: #CDCDCD;
+  border-width: 2px;
+}
+.item-page-info-desc .price .price-in small {
+  color: #000;
+}
+.item-page-info-desc .buttons {
+  display: none;
+}
+.item-page-info-desc .contacts .pull-right {
+  display: none;
+}
+.item-page-info-desc .contacts .phones-in .link-toggle {
+  color: black !important;
+  cursor: default;
+}
+.item-page-info-desc .contacts .phones-in .link-toggle:after {
+  display: none;
+}
+.item-page-info-desc .contacts .phones-in .link-toggle b {
+  border-bottom: 0;
+}
+.item-page-info-desc .contacts .phones-in .toggle {
+  display: block;
+}
+
+.item-page-info-photo {
+  width: 200px;
+}
+.item-page-info-photo .photo-in {
+  padding: 0;
+  border: 0;
+}
+.item-page-info-photo .photo-in img {
+  cursor: default !important;
+}
+
+.logo-print {
+  display: block;
+}
+
+.order-print {
+  width: 700px;
+  margin: 0 auto;
+  font-size: 13px;
+  line-height: 20px;
+  color: #000;
+  padding: 20px 0;
+}
+.order-print p {
+  margin-bottom: 10px;
+}
+.order-print .text-block {
+  margin-bottom: 20px;
+}
+.order-print .text-block p {
+  margin-bottom: 5px;
+}
+.order-print table {
+  border-color: #000;
+  margin-bottom: 40px;
+}
+.order-print table caption {
+  text-align: left;
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+.order-print table th, .order-print table td {
+  vertical-align: top;
+  border-color: #000;
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+}
+.order-print table thead th {
+  text-align: center;
+}
+.order-print table thead th:first-child {
+  text-align: left;
+}
+.order-print table td {
+  text-align: center;
+}
+.order-print table td:first-child {
+  text-align: left;
+}
+.order-print table.order-description {
+  margin-bottom: 20px;
+}
+.order-print table.order-description td {
+  text-align: left;
+  padding-bottom: 10px;
+}
+.order-print h1 {
+  font-size: 18px;
+  line-height: 20px;
+  border-bottom: 2px solid black;
+  padding: 0 0 10px;
+  margin: 0 0 20px;
+}
+.order-print .order table tfoot th {
+  text-align: center;
+}
+.order-print .order table tfoot th:first-child {
+  text-align: right;
+}
+.order-print .order table tfoot tr:last-child th {
+  text-align: left;
+}

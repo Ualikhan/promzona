@@ -1,0 +1,10 @@
+<h1 class="ml-30 mb-15"><?=$this->object['Название']?></h1>
+<div class="company-block">
+	<div class="date"><?=$this->strings->date($this->object['Дата'],'sql','date')?></div>
+    <div class="company-block-in">
+        <?if (!empty($this->object['Изображение'])){?>
+        <img src="<?=_UPLOADS_.'/'.$this->object['Изображение']?>" />
+        <?}?>
+        <?=stripslashes($this->object['Текст'])?>
+    </div>
+</div>

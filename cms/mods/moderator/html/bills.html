@@ -1,0 +1,75 @@
+<form>
+<div class="pull-right">
+  <div class="pager">
+    <select class="span1 autoSubmitForm" name="on_page">
+      <option value="10" <?=$this->ac->on_page==10?'selected="selected"':''?>>10</option>
+        <option value="25" <?=$this->ac->on_page==25?'selected="selected"':''?>>25</option>
+        <option value="50" <?=$this->ac->on_page==50?'selected="selected"':''?>>50</option>
+    </select>
+    счетов на стр.
+  </div>
+</div>
+</form>
+
+<h1 class="ml-30 mb-10"><?=$this->title?></h1>
+
+<div class="moderation-form">
+
+<div class="title">Требуют рассмотрения: <b class="orange"><?=$this->bills_count?> счетов</b></div>
+
+<form action="" class="interrelated-container" method="post">
+
+  <table class="table company-bills-list">
+    <colgroup>
+        <col width="60" />
+        <col width="*" />
+        <col width="100" />
+        <col width="150" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="4">
+          <label class="checkbox"><input type="checkbox" class="interrelated-amount-checkbox"> Выбрать<br /> все</label>
+          <button type="submit" class="btn btn-approve" name="approve" value="1"><i class="icon icon-ok"></i> Подтвердить</button>
+          <button type="button" class="btn btn-remove btn-reject" data-action="reject"><i class="icon icon-remove"></i> Анулировать</button>
+          <button type="button" class="btn btn-remove btn-remove" data-action="remove"><i class="icon icon-trash"></i> Удалить</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+            <?if (!empty($this->ac->bills) && is_array($this->ac->bills)){
+                foreach ($this->ac->bills as $k=>$o){
+                    echo '
+                        <tr>
+                            <td>
+                                <label class="checkbox"><input type="checkbox" class="interrelated-checkbox" name="o['.$o['id'].']" value="1"></label>
+                            </td>
+                            <td>
+                                <i class="'.($o['Оплачен']==0 ? 'icon-time icon-yellow' : 'icon-ok icon-grey').' fz-13"></i> 
+                                <a class="link-modal-bill '.($o['Оплачен']==0 ? 'bd-beige' : 'grey').'" href="javascript:void(0);" rel="'.$o['id'].'" >№'.$o['Номер'].'. '.$o['Название'].'</a>
+                            </td>
+                            <td> <b>'.$o['Сумма'].'</b> <span class="fz-11">KZT</span></td>
+                            <td><span class="fz-13">'.date("d.m.Y H:i", $o['sort']).'</span></td>
+                        </tr>
+                    ';
+                }
+                // onclick="openWindow(\'/print.php?action=invoices&n='.$o['id'].'\',900,700);"
+            }?>
+    </tbody>
+  </table>
+
+    <?if ($this->ac->pages['count_pages']>1){?>
+    <div class="pagination pagination-centered pagination-promzona">
+        <ul>
+            <li <?=!$this->ac->pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+            <?for ($i=1; $i<intval($this->ac->pages['count_pages'])+1;$i++){?>
+            <li <?=($i==$this->ac->pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->ac->pgHref($i)?>><?=$i?></a></li>
+            <?}?>
+            <li <?=!$this->ac->pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($this->ac->pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+        </ul>
+    </div>
+    <?}?>
+
+</form>
+
+</div>

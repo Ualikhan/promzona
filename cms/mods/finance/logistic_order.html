@@ -1,0 +1,112 @@
+<div class="public-breadcrumbs ml-30 mb-10">
+    <a class="bd-beige bold" href="/<?=$_GET['mod']?>/"><?=$this->title?></a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+</div>
+
+<h1 class="ml-30 mb-10">Заявка на транспортировку <?=isset($coms)?'выбранным компаниям':''?></h1>
+
+<div class="bid-form row-fluid">
+    <?if (isset($obj)){?>
+    <div class="company-info clearfix">
+        <?if (!empty($obj['Логотип'])){?>
+        <a href="/logistic/<?=$obj['id']?>/" target="_blank" class="pull-left link-logo">
+           <img src="<?=_UPLOADS_.'/'.$obj['Логотип']?>" />
+        </a>
+        <?}?>
+        <a href="/logistic/<?=$obj['id']?>/" class="link-company"><span><b><?=$obj['Название']?></b></span></a>
+        <div class="location">
+            <img src="/img/dumm/icon-kz.png" /> <?=$obj['Регион']?>
+        </div>
+    </div>
+    <?}?>
+    <form action="" class="required-container" method="post">
+        <div class="control-group">
+            <div class="control-label"><span><b>Ссылка на объявление</b></span></div>
+            <div class="controls">
+                <input type="text" class="span9" value="<?=!empty($_GET['ad_id'])?'http://'.$_SERVER['HTTP_HOST'].'/ads/'.$_GET['ad_id'].'/':''?>" name="f[Ссылка на объявление]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Тип перевозимого оборудования</b> (например: Тракторы)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span9" name="f[Тип перевозимого оборудования]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Габаритная длина оборудования</b> (например: 3,1 m)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span3" name="f[Габаритная длина оборудования]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Габаритная ширина оборудования</b> (например: 1,9 m)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span3" name="f[Габаритная ширина оборудования]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Габаритная высота оборудования</b> (например: 2,7 m)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span3" name="f[Габаритная высота оборудования]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Приблизительный вес оборудования</b> (например: 12 тонн)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span3" name="f[Приблизительный вес оборудования]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Пункт погрузки</b> (например: Казахстан, Алматы)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span5" name="f[Пункт погрузки]" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Уточните, располагаете ли вы местом погрузки или подъемным оборудованием<br /> в пункте отправления:</b></span></div>
+            <div class="controls">
+                <input type="text" class="span9" name="f[Уточните, располагаете ли вы местом погрузки или подъемным оборудованием в пункте отправления]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Пункт выгрузки</b> (например: Казахстан, Астана)</span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span5" name="f[Пункт выгрузки]" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Уточните, располагаете ли вы местом выгрузки или подъемным оборудованием<br /> в пункте прибытия:</b></span></div>
+            <div class="controls">
+                <input type="text" class="span9" name="f[Уточните, располагаете ли вы местом выгрузки или подъемным оборудованием в пункте прибытия]" />
+            </div>
+        </div>
+        <div class="control-group required group-date">
+            <div class="control-label"><span><b>Дата погрузки и/или cрочность перевозки</b></span></div>
+            <div class="controls">
+                <div class="input-append datepicker date" data-date="2013-04-22" data-date-format="yyyy-mm-dd">
+                    <input class="span2" size="16" type="text" value="2013-04-22" name="f[Дата погрузки]" />
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                </div>                            
+                <label class="radio"><input type="radio" name="f[Срочность перевозки]" value="Срочно (в течение 10 дней)" checked> Срочно (в течение 10 дней);</label>
+                <label class="radio"><input type="radio" name="f[Срочность перевозки]" value="Не срочно (в течение 30 дней)"> Не срочно (в течение 30 дней);</label>
+                <label class="radio"><input type="radio" name="f[Срочность перевозки]" value="Без разницы"> Без разницы;</label>
+                <label class="radio inline"><input type="radio" name="f[Срочность перевозки]" value="Другое"> Другое, уточните:</label>
+                <input type="text" class="span7" name="f[Срочность перевозки]" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Ваши примечания:</b></span></div>
+            <div class="controls">
+                <textarea class="span9" rows="4" name="f[Примечания]"></textarea>
+            </div>
+        </div>
+        <div class="form-controls">
+            <label class="checkbox"><input type="checkbox" class="required-checkbox"> <b>Отправляя заявку, вы подтверждаете свою заинтересованность в покупке выбранной техники.</b></label>
+            <p>Банки/Лизинговые компании, получив запрос, определят условия ее кредитования. Чтобы получить исчерпывающий ответ на свою заявку, заполните все поля сообщения.</p>
+            <p>
+                <b>Все заявки обрабатываются сотрудниками банка и лизинговой компании, к которым вы можете обратиться за помощью в оформлении заказа по указанным контактам на странице компании.</b><br /> 
+                После того, как ваша заявка будет рассмотрена, с вами свяжется специалист по кредиту/лизингу. Если сообщение осталось без внимания, сообщите об этом в «Книгу жалоб» портала.
+            </p>
+            <button type="submit" class="btn btn-grey btn-grand required-btn" disabled>Отправить заявку на транспортировку</button>
+        </div>
+    </form>
+</div>

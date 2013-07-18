@@ -1,0 +1,144 @@
+.fe-smart-menu{
+	display:block;
+	position:relative;
+	float:left;
+	border:1px solid #990000;
+	padding:7px 10px;
+	z-index:1001;
+	background:#CC0000 url(../cms/files/i/fe_bg.jpg) repeat-x left top;;
+	font:normal 13px Arial;
+	color:white;
+}
+
+.fe-smart-menu .fe-smart-menu-items {
+	position:absolute;
+	display:none;
+	top:30px;
+	left:-1px;
+	border:0px;
+	border-top:0px;
+	background:#666;/* url(../cms/files/i/popup_menu_bg.jpg) repeat-y left top;*/
+	text-align:left;
+}
+
+.fe-smart-menu .fe-smart-menu-items a:link, .fe-smart-menu .fe-smart-menu-items a:visited{
+	position:relative;
+	display:block;
+	font:normal 12px Arial;
+	padding:7px 15px;
+	padding-left:35px;
+	text-decoration:none;
+	border-bottom:1px solid #999;
+	color: white;
+}
+
+.fe-smart-menu .fe-smart-menu-items a:link .fe-ico, .fe-smart-menu .fe-smart-menu-items a:visited .fe-ico{
+	position:absolute;
+	top:7px;
+	left:10px;
+	width:16px;
+	height:16px;
+	background-image:url(../cms/files/appends/ckeditor/skins/kama/icons.png);
+}
+
+.fe-smart-menu .fe-smart-menu-items a:hover{
+	background:#CC0000;/* url(../cms/files/i/popup_menu_bg_a.jpg) repeat-y left top;*/
+	color:white;
+}
+
+.fe-modal-conteiner{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	z-index:5000;
+}
+
+.fe-modal-conteiner .fe-face{
+	position:absolute;
+	display:none;
+	background-color:white;
+	border:1px dashed #666;
+	left:50%;
+}
+
+.fe-modal-conteiner .fe-face h1, .fe-modal-conteiner .fe-face .h1{
+	font:normal 22px Arial;
+	color:black;
+}
+
+.fe-modal-conteiner .fe-face h2, .fe-modal-conteiner .fe-face .h2{
+	font:normal 18px Arial;
+	color:black;
+	margin-bottom:5px;
+}
+
+.fe-modal-conteiner .fe-face a:link, .fe-modal-conteiner .fe-face a:visited{
+	font:normal 13px Arial;
+	color:#0099FF;
+}
+
+.fe-modal-conteiner .fe-face a:hover{
+	color:red;
+}
+
+.fe-modal-conteiner .fe-face .input-row{
+	margin-bottom:20px;
+}
+
+.fe-modal-conteiner .fe-face .input-row .title{
+	font:normal 18px Arial;
+	color:black;
+	margin-bottom:5px;
+}
+
+.fe-modal-conteiner .fe-face .wrong-input{
+	border:1px solid red;
+}
+
+.fe-modal-conteiner .fe-face .button{
+	font:normal 14px Arial;
+	padding:10px 5px;
+	margin-right:10px;
+}
+
+.fe-modal-conteiner .fe-face .approve{
+	color:#0F8F19;
+}
+
+.fe-modal-conteiner .fe-face .cancel{
+	color:#CC0000;
+}
+
+.fe-modal-conteiner .fe-background{
+	display:none;
+	background:black;
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+}
+
+a.fe-link:link, a.fe-link:visited{
+	border:1px solid #990000;
+	padding:7px 10px;
+	background:#CC0000 url(../cms/files/i/fe_bg.jpg) repeat-x left top;;
+	font:normal 13px Arial;
+	color:white;
+}
+
+a.fe-link:hover{
+	text-decoration:none;
+}
+
+ul.ul-none{
+	list-style-type:none;
+}
+
+ul.ul-none li{
+	margin:10px 0px;
+}
+
+.hidden{
+	display:none;
+}

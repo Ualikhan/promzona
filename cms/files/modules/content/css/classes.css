@@ -1,0 +1,140 @@
+.class-item{
+	padding:10px;
+	padding-left:0px;
+}
+
+.class-item .name{
+	font:normal bold 14px Arial;
+	color:#666;
+}
+
+.class-item .info{
+	font:normal 11px Arial;
+	color:#999;
+}
+
+.class-item .menu{
+	position:relative;
+	width:25px;
+	height:26px;
+	background:url(../../../i/c2.gif) no-repeat left top;
+}
+
+.class-item .menu .menu-items {
+	position:absolute;
+	top:0px;
+	left:15px;
+	border:1px solid #CCC;
+	background:#EEE url(../../../i/popup_menu_bg.jpg) repeat-y left top;
+	text-align:left;
+}
+
+.class-item .menu .menu-items a:link, .class-item .menu .menu-items a:visited{
+	display:block;
+	font:normal 12px Arial;
+	padding:7px 15px;
+	padding-left:30px;
+	text-decoration:none;
+	color: black;
+}
+
+.class-item .menu .menu-items a:hover{
+	background:#999 url(../../../i/popup_menu_bg_a.jpg) repeat-y left top;
+	color:white;
+}
+
+.class-item table.class-row{
+	border-collapse:collapse;
+}
+
+.class-item table.class-row td{
+	padding:0px;
+	margin:0px;
+}
+
+.class-item table.class-row td.menu-td{
+	width:30px;
+	text-align:left;
+}
+
+.class-card{
+	float:left;
+	padding:10px;
+	border:1px solid #CCC;
+	background-color:#EEE;
+	margin-bottom:20px;
+}
+
+.newfield-card{
+	float:left;
+	padding:10px;
+	border:1px solid #CCC;
+	background-color:#E6E6E6;
+	margin-top:20px;
+}
+
+.newfield-card .params-div{
+	padding:10px;
+	background-color:#EEE;
+	margin-bottom:15px;
+}
+
+.newfield-card .params-div div{
+	margin:5px 0px;
+}
+
+.newfield-card button{
+	padding:5px 0px;
+}
+
+.fields-list{
+	border-collapse:collapse;
+}
+
+.fields-list th{
+	background-color:#666;
+	background:url(../../../i/bgt.jpg) repeat-x top left;
+	color:#999;
+	font:normal 13px Arial;
+}
+
+.fields-list th, .fields-list td{
+	padding:10px 20px;
+	border:1px solid #CCC;
+}
+
+.fields-list td.id-td{
+	color:#CCC;
+}
+
+.fields-list tr.editing td{
+	background-color:green;
+	color:white;
+}
+
+.none{
+	border:0px !important;
+	background:none !important;
+	color:black !important;
+}
+.nowrap-hidden-line{
+	position:relative;
+	width:200px; 
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.nowrap-hidden-line img{
+	display:block;
+	position:absolute;
+	top:0px;
+	right:0px;
+	height:18px;
+	width:50px;
+	border:0px;
+	
+}
+
+.cutted .nowrap-hidden-line img, .copied .nowrap-hidden-line img, .selected .nowrap-hidden-line img{
+	display:none;
+}

@@ -1,0 +1,71 @@
+.parents-div{
+	margin:20px 0px;
+}
+
+.object-item{
+	padding:10px;
+	padding-left:0px;
+}
+
+.object-item .name{
+	font:bold 14px Arial;
+}
+
+.object-item .info{
+	font:normal 13px Arial;
+	color:#999;
+}
+
+.object-item .menu{
+	position:relative;
+	width:25px;
+	height:26px;
+	background:url(../../i/c2.gif) no-repeat left top;
+}
+
+.menu-items {
+	position:absolute;
+	top:0px;
+	left:15px;
+	border:1px solid #CCC;
+	background-color:#EEE;
+	text-align:left;
+}
+
+.menu-items a:link, .menu-items a:visited{
+	display:block;
+	font:normal 12px Arial;
+	padding:7px 15px;
+	text-decoration:none;
+	color: black;
+}
+
+.menu-items a:hover{
+	color:white;
+	background-color:#666;
+}
+
+.object-item table.object-row{
+	border-collapse:collapse;
+}
+
+.object-item table.object-row th{
+	padding:10px;
+	border:1px solid #CCC;
+	background:url(../../i/bgt.jpg) repeat-x top left;
+	color:#666;
+	text-align:center;
+	font:normal 13px Arial;
+}
+
+.object-item table.object-row td{
+	padding:5px 10px;
+	margin:0px;
+	border:1px solid #CCC;
+	text-align:center;
+}
+
+.object-item table.object-row tr.cutted td{
+	background-color:#EEE;
+	color:#999;
+}

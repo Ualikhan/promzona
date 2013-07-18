@@ -1,0 +1,266 @@
+<div class="pull-right mr-20">
+		<a class="btn btn-orange btn-narrow" href="/cabinet/add/">Разместить объявление</a>
+</div>
+<h1 class="ml-30 mb-25"><?=$this->ac->title?></h1>
+<?//if (!empty($this->ac->adsList)){?>
+<form action="" id="cabinet-filter-form" class="ml-30 mr-15">
+
+		<div id="cabinet-filter-b" class="clearfix form-horizontal">
+
+				<div class="pull-left name control-label">
+						<b>Фильтр объявлений:</b>
+				</div>
+
+				<div class="pull-right filters">
+
+			<div class="item">
+				<input value="all" type="radio" name="sort-filter" id="filter-all" <?=$this->ac->ads->checked == 'all' ? 'checked' : ''?>/>
+				<label for="filter-all">Все <span><?=$this->ac->adsCount?></span></label>
+			</div>
+
+<?foreach ($this->ac->ads->types as $k=>$t){
+	echo '
+		<div class="item">
+			<input type="radio" name="sort-filter" id="filter-'.$k.'" value="'.$k.'" '.(($this->ac->ads->checked == $k) && is_numeric($this->ac->ads->checked) ? 'checked' : '').' />
+			<label for="filter-'.$k.'">'.$t.' <span>'.$this->ac->getAdsCountByType($k).'</span></label>
+		</div>
+	';
+}?>
+
+				</div>
+
+		</div>
+
+		<div id="cabinet-category-b" class="clearfix form-horizontal">
+
+				<div class="control-label name pull-left">
+						<b>Раздел и категория:</b>
+				</div>
+
+				<div class="pull-right categories">
+
+			<select name="cat" class="span2">
+				<option <?=$this->ac->ads->cat == 'all' ? 'selected="selected"' : ''?>>Все разделы</option>
+				<?foreach ($this->ac->ads->cats as $c){
+					echo '<option value="'.$c['id'].'" '.($this->ac->ads->cat==$c['id']?'selected="selected"':'').'>'.$c['Название'].'</option>';
+					}?>
+			</select>
+
+			<select name="subcat" class="span3">
+				<option value="all" <?=$this->ac->ads->subcat == 'all' ? 'selected="selected"' : ''?>>Все категории</option>
+				<?foreach ($this->ac->ads->subcats as $s){
+					echo '<option value="'.$s['id'].'" '.($this->ac->ads->subcat==$s['id']?'selected="selected"':'').'>'.$s['Название'].'</option>';
+				}?>
+			</select>
+
+				</div>
+
+		</div>
+
+		<div class="group-sort control-group clearfix form-horizontal">
+
+				<div class="control-label">
+						<b>Сортировать по:</b>
+				</div>
+
+				<div class="controls clearfix">
+						<div class="group-sort-in pull-left">
+								<ul>
+									<li><a href="<?=$this->ac->sortHref('date')?>" class="<?=$this->ac->sort == 'date' ? 'sort-up active' : ($this->ac->sort == 'date_desc' ? 'sort-down active' : '')?>"><span>дате размещения</span></a></li>
+									<li><a href="<?=$this->ac->sortHref('price')?>" class="<?=$this->ac->sort == 'price' ? 'sort-up active' : ($this->ac->sort == 'price_desc' ? 'sort-down active' : '')?>"><span>цене</span></a></li>
+								</ul>
+						</div>
+						<div class="pager pull-right">
+			<select name="on_page" class="span1">
+				<option value="10" <?=$this->ac->ads->on_page==10?'selected="selected"':''?>>10</option>
+				<option value="25" <?=$this->ac->ads->on_page==25?'selected="selected"':''?>>25</option>
+				<option value="50" <?=$this->ac->ads->on_page==50?'selected="selected"':''?>>50</option>
+			</select>
+							объявлений на стр.
+						</div>
+				</div>
+
+		</div>
+
+</form>
+
+<?if (!empty($this->ac->adsList)){?>
+<div class="edit-adv-form">
+	<form action="" class="interrelated-container" method="post">
+		<?if (!empty($this->ac->adsList) && ($list = $this->ac->adsList)){?>
+		<table class="table main-catalog">
+			<thead>
+				<tr>
+					<th>
+						<label class="checkbox"><input type="checkbox" class="interrelated-amount-checkbox"> Выбрать<br /> все</label>
+						<button type="button" class="btn btn-remove"><i class="icon icon-trash"></i> Удалить из избранного</button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?foreach ($list as $k=>$ad){?>
+				<tr>
+					<td>
+							<div class="item <?=$ad['Цвет']!='0'?$this->ac->getItemColor($ad['Цвет']):''?> <?=$ad['Горячее предложение']==1?'item-hot':''?> clearfix">
+									<label class="checkbox"><input type="checkbox" class="interrelated-checkbox" name="ad[<?=$ad['object_id']?>]"></label>
+									<div class="photo">
+											<a href="/ads/<?=$ad['object_id']?>/"><img src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-medium.png'?>" alt=""></a>
+											<?=$this->objects->getObjectsCount($ad['object_id'],4)?> фото
+									</div>
+									<div class="desc">
+											<h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>/"><?=$ad['Название']?></a></h3>
+											<div class="category"><a class="bd-beige" href="/ads/<?=$ad['id']?>/"><?=$this->ac->ads->subcats[$ad['category_id']]['Название']?></a></div>
+											<div class="condition"><?=$ad['Местоположение товара']?>, <?=$ad['Год']?> г., <?=$this->ac->condition[$ad['Состояние товара']]?></div>
+											<div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#"><?=$ad['Поставщик оборудования']?></a></div>
+											<div class="place"><img class="ico" src="/img/dumm/icon-kz.png" alt=""><?=$ad['Местоположение товара']?></div>
+											<div class="date">Дата размещения:  <?=$this->strings->date($ad['Дата добавления'])?></div>
+											<?if (!empty($ad['Дата поднятия']) && ($ad['Дата поднятия']!='0000-00-00')){?>
+											<div class="date">Дата обновления:   <?=$this->strings->date($ad['Дата поднятия'])?>  <i class="icon-arrow-up icon-grey"></i></div>
+											<?}?>
+									</div>
+									<div class="contacts">
+											<div class="price"><?=$ad['Цена']?> <span><?=$this->ac->ads->money[$ad['Валюта']]?></span></div>
+											<?if (isset($this->ac->ads->is_got[$ad['Наличие товара']])){?>
+											<div class="presence"><?=$this->ac->ads->is_got[$ad['Наличие товара']]?></div>
+											<?}?>
+											<div class="phones" data-toggle="phones">
+													<img class="ico phone-ico" src="/img/phone.png" alt="">
+													<div class="all">
+															<span><?=$this->ac->companyTel($ad['user_id'])?></span>
+													</div>
+													<div class="order-call"><a class="dashed" href="#modal-call-<?=$ad['object_id']?>" data-toggle="modal">Заказать звонок</a></div>
+													<div class="all-contacts"><a class="dashed" href="#modal-contacts-<?=$ad['object_id']?>" data-toggle="modal">Контакты поставщика</a></div>
+											</div>
+									</div>
+									<?=$ad['Горячее предложение']=='1'?'<div class="hot">Горячее предложение!</div>':''?>
+									<div id="modal-call-<?=$ad['object_id']?>" class="modal hide fade promzona-modal">
+											<form action="" class="phone-order" method="post" >
+											<div class="modal-header">
+													<button type="button" class="close red" data-dismiss="modal">×</button>
+													<h3>Заказ обратного звонка</h3>
+											</div>
+											<div class="modal-body">
+													<div class="mb-20">
+															<div class="d-ib mr-20 va-t">
+																	<a href="#"><img class="modal-img" src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-small.png'?>" alt=""></a>
+															</div>
+															<div class="d-ib">
+																	<h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>"><?=$ad['Название']?></a></h3>
+																	<div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#"><?=$ad['Поставщик оборудования']?></a></div>
+																	<div class="place"><img class="ico" src="/img/dumm/icon-kz.png" alt=""><?=$ad['Местоположение товара']?></div>
+															</div>
+													</div>
+													<div>
+															<div class="input-group">
+																	<div class="inputs-desc">
+																			<b>Оставьте ваш номер телефона</b><br>
+																			и с вами свяжется представитель компании поставщика:
+																	</div>
+																	<div class="inputs-self phones-separated-group">
+																			<input type="text" class="one" name="phone[0]" value="+7"><input type="text" name="phone[1]" class="two"><input type="text" class="three" name="phone[2]">
+																	</div>
+															</div>
+															<div class="input-group">
+																	<div class="inputs-desc sorter">
+																			<b>Можете также указать время,</b><br>
+																			в которое вам будет удобно
+																			принять звонок:
+																	</div>
+																	<div class="inputs-self time-separated-input">
+																			<label><input type="radio" name="order-call-time-id1" checked value="anytime"> В любое время</label>
+							<label><input type="radio" name="order-call-time-id1" value="Время"> <input type="text" maxlength="2" class="onlyNum" value="10" name="time[0][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[0][m]"> — <input type="text" maxlength="2" class="onlyNum" value="19" name="time[1][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[1][m]"></label>
+																	</div>
+															</div>
+													</div>
+											</div>
+			<?if (isset($this->ac->companies[$ad['user_id']])){?>
+				<input type="hidden" name="email" value="<?=$this->ac->companies[$ad['user_id']]['Email']?>">
+			<?}else{?>
+				<input type="hidden" name="email" value="asd_2000@mail.ru">
+			<?}?>
+											<div class="modal-footer ta-l">
+													<button class="btn btn-grey btn-grand mr-15" name="order_call" value="1">Заказать звонок</button>
+													<button class="btn btn-white btn-grand" data-dismiss="modal">Отменить</button>
+											</div>
+											</form>
+									</div>
+									<div id="modal-contacts-<?=$ad['object_id']?>" class="modal hide fade promzona-modal w-690">
+											<div class="modal-header">
+													<button type="button" class="close red" data-dismiss="modal">×</button>
+													<h3>Контактная информация поставщика</h3>
+											</div>
+											<div class="modal-body">
+													<div class="mb-20 clearfix">
+															<div class="pull-left w-120 mr-30 va-t">
+																	<a href="/ads/<?=$ad['object_id']?>/"><img class="modal-img" src="<?=!empty($ad['Изображение'])?_UPLOADS_.'/'.$ad['Изображение']:'/img/nophoto-small.png'?>" alt=""></a>
+															</div>
+															<div>
+																	<h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$ad['object_id']?>"><?=$ad['Название']?></a></h3>
+																	<div class="price"><?=$ad['Цена']?> <span><?=isset($this->ac->ads->money[$ad['Валюта']])?$this->ac->ads->money[$ad['Валюта']]:''?></span></div>
+																	<div class="presence"><?=isset($this->ac->ads->is_got[$ad['Наличие товара']])?$this->ac->ads->is_got[$ad['Наличие товара']]:''?></div>
+															</div>
+													</div>
+													<?if (isset($this->ac->companies[$ad['user_id']])){?>
+													<ul class="contacts-list reset">
+															<li>
+																	<div>Компания:</div>
+																	<div><a class="bd-beige bold" href="/co/<?=!empty($this->ac->companies[$ad['user_id']]['URL'])?$this->ac->companies[$ad['user_id']]['URL']:$this->ac->companies[$ad['user_id']]['id']?>"><?=$this->ac->companies[$ad['user_id']]['Название компании']?></a></div>
+															</li>
+															<li>
+																	<div>Регион:</div>
+																	<div><img class="ico" src="/img/dumm/icon-kz.png" alt=""><b><?=$this->ac->companies[$ad['user_id']]['Регион']?></b></div>
+															</li>
+															<li>
+																	<div>Контактное лицо:</div>
+																	<div><b><b><?=$this->ac->companies[$ad['user_id']]['Имя контактного лица']?>,</b> <?=$this->ac->companies[$ad['user_id']]['Должность']?></div>
+															</li>
+															<li>
+																	<div>Телефоны:</div>
+																	<?$phones = explode("\n",$this->ac->companies[$ad['user_id']]['Телефон'])?>
+																	<div><b><?=join(",",$phones)?></b></div>
+															</li>
+															<li>
+																	<div>Адрес:</div>
+																	<div><?=$this->ac->companies[$ad['user_id']]['Регион']?>, <?=$this->ac->companies[$ad['user_id']]['Адрес']?></div>
+															</li>
+															<li>
+																	<div>Электронная почта:</div>
+																	<div><a class="bd-beige" href="#"><?=$this->ac->companies[$ad['user_id']]['Email']?></a></div>
+															</li>
+															<?if (!empty($this->ac->companies[$ad['user_id']]['Сайт компании'])){?>
+															<li>
+																	<div>Сайт компании:</div>
+																	<div><a class="bd-beige" href="http://<?=$this->ac->companies[$ad['user_id']]['Сайт компании']?>"><?=$this->ac->companies[$ad['user_id']]['Сайт компании']?></a></div>
+															</li>
+															<?}?>
+													</ul>
+													<?}?>
+											</div>
+									</div>
+							</div>                        
+					</td>
+				</tr>
+				<?}?> 
+			</tbody>
+		</table>
+		<?}else{?>
+			<p>Объявления отсутсвуют</p>
+		<?}?> 
+		<?$pages = $this->ac->pages?>
+		<?if ($pages['count_pages']>1){?>
+		<div class="pagination pagination-centered pagination-promzona">
+			<ul>
+				<li <?=!$pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->ads->pgHref($pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+				<?for ($i=1; $i<intval($pages['count_pages'])+1;$i++){?>
+				<li <?=($i==$pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->ac->ads->pgHref($i)?>><?=$i?></a></li>
+				<?}?>
+				<li <?=!$pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->ads->pgHref($pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+			</ul>
+		</div>
+		<?}?>
+
+	</form>
+</div>
+<?}else{?>
+	<p>Объявления отсутсвуют</p>
+<?}?>

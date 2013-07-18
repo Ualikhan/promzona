@@ -1,0 +1,76 @@
+.object-item table.object-row{
+	border-collapse:collapse;
+}
+
+.object-item table.object-row th{
+	padding:10px 20px;
+	border:1px solid #CCC;
+	background:url(../../../i/bgt.jpg) repeat-x top left;
+	color:#999;
+	text-align:center;
+	font:normal 14px Arial;
+}
+
+.object-item table.object-row td{
+	padding: 11px 14px;
+	margin:0px;
+	border:1px solid #CCC;
+	text-align:center;
+	font:normal 13px Arial;
+}
+
+.object-item table.object-row td.children-td a:link, .object-item table.object-row td.children-td a:visited{
+	font:normal 14px Arial;
+}
+
+.object-item table.object-row td.class-name{
+	color:#CCC;
+}
+
+.object-item table.object-row td.sort a:link, .object-item table.object-row td.sort a:visited{
+	text-decoration:none;
+	font:normal 16pt Arial;
+}
+
+.object-item table.object-row tr:hover{
+	background-image:url('../i/bg_blue.png');
+} 
+
+.object-item table.object-row tr:hover .nowrap-hidden-line img{
+	display: none;
+}
+
+.object-item table.object-row tr.cutted td{
+	background-color:#DDD;
+	color:#777;
+}
+.object-item table.object-row tr.selected td{
+	background-image:url('../i/bg_blue.png');
+	color:#777;
+	border: 1px solid #26A0DA;
+}
+.object-item table.object-row tr.selected{
+	
+}
+.object-item table.object-row tr.copied td{
+	background-color:#EEE;
+	color:#999;
+}
+.object-item table.object-row tr.not-active td{
+	color:#999;
+}
+.object-item a.createBackup{
+	margin-bottom: 15px;
+	display: block;
+	background: url(/cms/files/modules/backup/i/new.gif) no-repeat 0 0;
+	padding-left: 25px;
+	padding-top: 2px;
+	height: 20px;
+}
+.object-item table.object-row td a.deleteBackup{
+	display: block;
+	background: url(/cms/files/modules/backup/i/delete.gif) no-repeat 0 0;
+	padding-left: 25px;
+	padding-top: 2px;
+	height: 20px;
+}

@@ -1,0 +1,124 @@
+<?
+/*if (isset($_POST['user']) && ($_POST['user']==1)){
+	$user = $this->objects->getFullObject(329);
+	$_SESSION['u']['id'] = $user['id'];
+	$_SESSION['u']['email'] = $user['Email'];
+	$_SESSION['u']['telephone'] = $user['Телефон'];
+	$_SESSION['u']['fullname'] = $user['Фио'];
+	$_SESSION['u']['region'] = $user['Город'];
+	$_SESSION['u']['credits'] = $user['Кредиты'];
+	$_SESSION['u']['role'] = $user['Роль'];
+	header("location: ".$_SERVER['REQUEST_URI']);
+}elseif (isset($_POST['company']) && ($_POST['company']==1)){
+	$company = $this->objects->getFullObject(335);
+	$_SESSION['u']['id'] = $company['id'];
+	$_SESSION['u']['role'] = $company['Роль'];
+	$_SESSION['u']['email'] = $company['Email'];
+	$_SESSION['u']['telephone'] = $company['Телефон'];
+	$_SESSION['u']['fullname'] = $company['Название компании'];
+	$_SESSION['u']['region'] = $company['Регион'];
+	$_SESSION['u']['address'] = $company['Адрес'];
+	$_SESSION['u']['credits'] = $company['Кредиты'];
+	header("location: ".$_SERVER['REQUEST_URI']);
+}elseif (isset($_POST['business']) && ($_POST['business']==1)){
+	$company = $this->objects->getFullObject(419);
+	$_SESSION['u']['id'] = $company['id'];
+	$_SESSION['u']['role'] = $company['Роль'];
+	$_SESSION['u']['email'] = $company['Email'];
+	$_SESSION['u']['telephone'] = $company['Телефон'];
+	$_SESSION['u']['fullname'] = $company['Название компании'];
+	$_SESSION['u']['region'] = $company['Регион'];
+	$_SESSION['u']['address'] = $company['Адрес'];
+	$_SESSION['u']['credits'] = $company['Кредиты'];
+	header("location: ".$_SERVER['REQUEST_URI']);
+}*/
+?>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    
+
+<script type="text/javascript">
+	var currentInfo = {
+	    'user': {
+	        'balance': <?=!empty($this->subject['Кредиты'])?$this->subject['Кредиты']:'0'?>
+	    },
+	    'prices': {
+	        'riseAds': 100,
+	        'highlightAds': 200,
+	        'hotAds': 300
+	    },
+	    'typeahead': {
+	        'countries': [<?=$this->getACCountiesList()?>],
+	        'regions': [<?=$this->getACRegionsList()?>]
+	    }
+	};
+	var year = <?=date("Y")?>;
+</script>
+</head>
+
+<body>
+
+<?/*<div class="banner-w1000">
+    <!--#banners-list-1#-->
+</div>*/?>
+<?/*
+<style>
+	#login-switcher { position:fixed; top:200px; left:0px; z-index:1000; padding:10px 10px 0; border-radius:10px; background:#a3ffa4; border:1px solid black;}
+</style>
+<div id="login-switcher">
+	<form action="" method="post">
+		<div class="control-group">
+			<button class="btn <?=$_SESSION['u']['role']=='user'?'btn-success':''?> soft btn-smaller" name="user" value="1">Пользователь</button>
+		</div>
+		<div class="control-group">
+			<button class="btn <?=$_SESSION['u']['role']=='company'?'btn-success':''?> soft btn-smaller" name="company" value="1">Компания</button>
+		</div>
+		<div class="control-group">
+			<button class="btn <?=$_SESSION['u']['role']=='business'?'btn-success':''?> soft btn-smaller" name="business" value="1">Бизнес пакет</button>
+		</div>
+	</form>
+</div>
+<script>
+
+</script>
+*/?>
+
+
+  <div id="layout">
+
+      <div id="top-stripe"></div>
+
+      <header id="header">
+
+          <section id="top-line">
+
+              <div id="logo-b">
+                  <a href="/"><img src="<?=_UPLOADS_?>/<!--object:[177][9]-->" alt="<!--object:[177][8]-->"/></a>
+              </div>
+
+              <?include_once(_MODS_ABS_.'/general/search.html');?>
+
+              <div id="auth-b">
+                  <div class="input-append btn-group">
+                      <button class="btn btn-grand dropdown-toggle btn-smaller soft" data-toggle="dropdown">
+                          <i class="icon-user"></i> Личный кабинет
+                          <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu">
+                      		<li><a href="/cabinet/">Перейти в кабинет</a></li>
+							<li><a href="/login/out/">Выход</a></li>
+                      </ul>
+                      <a href="<?=$this->subject['Роль']=='business'?'/cabinet/refill/':'javascript:void(0)'?>" class="btn-orange btn btn-grand soft balance-btn"><?=!empty($this->subject['Кредиты'])?$this->subject['Кредиты']:'0'?> <span class="fz-13">кр.</span></a>
+                  </div>
+<!--                   <div id="cart-b">
+                      <div class="icon-cart"><span class="tsha-white-down">0</span></div>
+                      <a href="#" class="as-text bd-grey-outside">Корзина заказов</a>
+                  </div> -->
+              </div>
+
+          </section>
+
+      </header>

@@ -1,0 +1,149 @@
+// Helpers
+// --------------------
+@import "compass/css3";
+@import "compass/utilities";
+
+// Colors
+// -------------------------
+$white:                 #FFFFFF;
+$whiteDarker:           #F5F5F5;
+$beigeLighter:          #FFF5D9;
+$beige:                 #FFE2A4;
+$yellow:                #FBCC10;
+$orangeLight:           #F69F00;
+$orange:                #F26901;
+$redLight:              #FF6666;
+$red:                   #FC4B10;
+$redSaturated:          #DC3506;
+$greyDarker:            null;
+$grey:                  #898989;
+$greyLighterBit:        #ACACAC;
+$greyLighter:           #C8C8C8;
+$greyLight:             #E6E6E6;
+$blackMain:             #464646;
+$blackMainDarker:       darken($blackMain, 20%);
+
+// Fonts
+// -------------------------
+$mainFontFamily:        Arial, Helvetica, sans-serif;
+
+// Links
+// -------------------------
+$linkColor:             $orange;
+$linkColorVisited:      $linkColor;
+$linkColorHover:        $redLight;
+$linkFontFamily:        null;
+
+// Bootstrap buttons
+// -------------------------
+@mixin btn($class, $colorTop, $colorBottom, $colorFont) {
+    #{$class} {
+        color:$colorFont;
+        text-shadow:0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color:darken($colorTop, 3%);
+        *background-color:$colorBottom;
+        background-image:-webkit-gradient(linear, 0 0, 0 100%, from($colorTop), to($colorBottom));
+        background-image:-webkit-linear-gradient(top, $colorTop, $colorBottom);
+        background-image:-o-linear-gradient(top, $colorTop, $colorBottom);
+        background-image:linear-gradient(top bottom, $colorTop, $colorBottom);
+        background-image:-moz-linear-gradient(top, $colorTop, $colorBottom);
+        background-repeat:repeat-x;
+        border-color:$colorBottom $colorBottom darken($colorBottom, 15%) !important;
+        border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        filter: progid:dximagetransform.microsoft.gradient(startColorstr = '#{$colorTop}', endColorstr = '#{$colorBottom}', GradientType = 0);
+        filter: progid:dximagetransform.microsoft.gradient(enabled = false);
+    }
+    #{$class}:hover,
+    #{$class}:active,
+    #{$class}.active,
+    #{$class}.disabled,
+    #{$class}[disabled] {
+        color:$colorFont;
+        background-color:$colorBottom;
+        *background-color:$colorBottom;
+    }
+    #{$class}:active,
+    #{$class}.active {
+        background-color:darken($colorBottom, 15%) \9;
+    }
+    #{$class}.active {
+        color:rgba(255, 255, 255, 0.75); //?
+    }
+    .btn-group.open #{$class}.dropdown-toggle {
+        background-color:$colorBottom;
+    }
+    #{$class} .caret {
+        border-top-color:$colorFont;
+        border-bottom-color:$colorFont;
+    }
+}
+
+// Links
+// --------------------
+@mixin linkColor($class, $linkColor, $linkColorHover, $borderColor:$linkColor, $borderColorHover:$linkColorHover) {
+  a#{$class} {color:$linkColor; border-bottom-color:$borderColor;
+//    &:visited {color:$linkColor; border-bottom-color:$borderColor;}
+    &:hover {color:$linkColorHover; border-bottom-color:$borderColorHover;}
+    &.pseudo {
+        span {color:$linkColor; border-bottom-color:$borderColor;}
+        &:visited span {color:$linkColor; border-bottom-color:$borderColor;}
+        &:hover span {color:$linkColorHover; border-bottom-color:$borderColorHover;}
+    }
+  }
+}
+@mixin linkBorderColor($class, $borderColor, $borderColorHover) {
+  a#{$class} {border-bottom-color:$borderColor;
+//    &:visited {border-bottom-color:$borderColor;}
+    &:hover {border-bottom-color:$borderColorHover;}
+    &.pseudo {
+        span {border-bottom-color:$borderColor;}
+        &:visited span {border-bottom-color:$borderColor;}
+        &:hover span {border-bottom-color:$borderColorHover;}
+    }
+  }
+}
+
+// Bacground and size
+// --------------------
+//@mixin bg($name) {width:image-width('t/'+$name+'.png'); height:image-height('t/'+$name+'.png'); background: sprite($t, $name);}
+@mixin bg($name) {width:image-width('../img/'+$name+'.png'); height:image-height('../img/'+$name+'.png'); background: url('../img/'+$name+'.png');}
+
+// Other
+// --------------------
+@mixin multiline-ellipsis($height, $lineheight, $ellipsiswidth) {
+
+  $ellipsiswidth: 3em !default;
+
+  .ellipsis {
+    overflow: hidden;
+    height: $height;
+    line-height: $lineheight; }
+
+  .ellipsis:before {
+    content:"";
+    float: left;
+    width: 5px; height: $height; }
+
+  .ellipsis > *:first-child {
+    float: right;
+    width: 100%;
+    margin-left: -5px; }
+
+  .ellipsis:after {
+    content: "\02026";
+
+    float: right; position: relative;
+    top: -25px; left: 100%;
+    width: $ellipsiswidth; margin-left: -$ellipsiswidth;
+    padding-right: 5px;
+
+    text-align: right;
+    background: white;
+    background: -webkit-gradient(linear, left top, right top,
+    from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
+    background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white)
+  }
+}

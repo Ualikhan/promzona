@@ -1,0 +1,93 @@
+.subscribe-form{
+}
+
+.subscribe-form h2{
+	margin-bottom:10px;
+}
+
+.subscribe-form #theme{
+	font:normal 14px Arial;
+	width:99%;
+	color:#666;
+	padding:0px;
+}
+
+.subscribe-form .basename{
+	font:normal 14px Arial;
+	color:green;
+}
+
+#files-list{
+	margin-bottom:10px;
+	list-style-type:decimal;
+}
+
+#files-list li{
+	margin:10px 0px;
+}
+
+#files-list li .filename{
+	color:purple;
+	display:none;
+}
+
+#files-list li a:link, #files-list li a:visited{
+	font:normal 11px Arial;
+}
+
+.nowrap-hidden-line{
+	position:relative;
+	width:200px; 
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.nowrap-hidden-line img{
+	display:block;
+	position:absolute;
+	top:0px;
+	right:0px;
+	height:18px;
+	width:50px;
+	border:0px;
+	
+}
+
+table.form-table{
+}
+
+table.form-table tr td{
+	margin:0px;
+	padding:0px;
+}
+
+table.form-table tr td.left-part{
+	vertical-align:top;
+	width:600px;
+}
+
+table.form-table tr td.right-part{
+	vertical-align:top;
+	padding-left:25px;
+}
+
+table.list-table{
+	border-collapse:collapse;
+}
+
+table.list-table th{
+	padding:10px 20px;
+	border:1px solid #CCC;
+	background:url(../../../i/bgt.jpg) repeat-x top left;
+	color:#999;
+	text-align:center;
+	font:normal 14px Arial;
+}
+
+table.list-table td{
+	padding:5px 10px;
+	margin:0px;
+	border:1px solid #CCC;
+	text-align:center;
+	font:normal 13px Arial;
+}

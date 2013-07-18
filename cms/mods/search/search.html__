@@ -1,0 +1,307 @@
+﻿<h1 class="header ml-20 mb-25"><?=$this->title?></h1>
+
+<?if (!empty($this->ads)){?>
+
+    <form action="">
+
+        <input id="searchQueryClone" type="hidden" name="what" value="<?=$this->search_word?>" />
+
+	    <div id="searchFilters">
+
+		    <div class="catalog-lists clearfix">
+			    <div class="header">В категориях:</div>
+			    <?if ($this->cats) {?>
+			        <ul class="list reset">
+				        <?foreach ($this->cats as $k=>$o){?>
+				            <li class="item"><a href="/catalog/<?=$o['object_id']?>" class="bd-beige pseudo"><span><?=$o['Название']?></span> <sup class="grey"><?=$this->getAdsCountIncat($o['object_id'])?></sup></a></li>
+				            <?if ( ($k+1) == ceil((count($this->cats)/2)) )
+					        echo '
+					</ul>
+					<ul class="list reset">
+					    ';
+				        ?>
+				        <?}?>
+			        </ul>
+			    <?}?>
+		    </div>
+
+            <div class="catalog-filter form-inline">
+                <div class="form-horizontal search-response-filters-form">
+                    <div class="header">Фильтр:</div>
+                    <div class="control-group">
+                        <div class="control-label">Тип объявления:</div>
+                        <div class="controls">
+                            <div class="btn-group btn-group-radio" data-toggle="buttons-radio">
+                                <label class="radio btn btn-white <?=!isset($_GET['type']) || !is_numeric($_GET['type'])?'active':''?>"><input type="radio" name="type" value="all" <?=!isset($_GET['type']) || !is_numeric($_GET['type'])?'checked':''?>>Все</label>
+                                <label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']=='0')?'active':''?>"><input type="radio" name="type" value="0" <?=isset($_GET['type']) && ($_GET['type']==0)?'checked':''?>>Продам</label>
+                                <label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==1)?'active':''?>"><input type="radio" name="type" name="type" value="1" <?=isset($_GET['type']) && ($_GET['type']==1)?'checked':''?>>Куплю</label>
+                                <label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==2)?'active':''?>"><input type="radio" name="type" name="type" value="2" <?=isset($_GET['type']) && ($_GET['type']==2)?'checked':''?>>Сдам в аренду</label>
+                                <label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==3)?'active':''?>"><input type="radio" name="type" name="type" value="3" <?=isset($_GET['type']) && ($_GET['type']==3)?'checked':''?>>Возьму в аренду</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="control-label">Раздел:</div>
+                        <div class="controls">
+                            <div class="btn-group btn-group-radio" data-toggle="buttons-radio">
+                                <label class="radio btn btn-white <?=empty($_GET['section']) || !is_numeric($_GET['section'])?'active':''?>"><input type="radio" name="section" value="0" <?=empty($_GET['section']) || !is_numeric($_GET['section'])?'checked':''?>>Все</label>
+                                <label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==258)?'active':''?>"><input type="radio" name="section" value="258" <?=isset($_GET['section']) && ($_GET['section']==258)?'checked':''?>>Спецтехника</label>
+                                <label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==261)?'active':''?>"><input type="radio" name="section" value="261" <?=isset($_GET['section']) && ($_GET['section']==261)?'checked':''?>>Оборудование</label>
+                                <label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==267)?'active':''?>"><input type="radio" name="section" value="267" <?=isset($_GET['section']) && ($_GET['section']==267)?'checked':''?>>Бизнес-магазин</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+		    </div>
+
+		    <div class="catalog-filter form-inline">
+            	<a href="#" class="pull-right cur-p bd-beige pseudo dashed catalog-filter-toggle catalogFilterToggle">
+		            <?=empty($_GET['condition']) && empty($_GET['country']) && empty($_GET['y1']) && empty($_GET['y2'])?'<span class="off">Ещё</span> <i class="icon-chevron-down icon-yellow"></i>':'<span >Скрыть</span> <i class="icon-chevron-up icon-yellow"></i>'?>
+	            </a>
+	            <div class="shown">
+		            <label class="w-200 mr-30">
+			            <span>Регион:</span>
+                        <select class="ml-30 jsRegionList region <?=empty($_GET['condition']) && empty($_GET['country']) && empty($_GET['y1']) && empty($_GET['y2'])?'autoSubmitForm':''?>" style="display:none;">
+                            <option value="">Все регионы</option>
+                            <?foreach ($this->regions as $k=>$r){
+                                echo '<option value="'.$r['Название'].'" '.(isset($_GET['region'])&&($_GET['region']==$r['Название'])? 'selected' : '').'>'.$r['Название'].'</option>';
+                            }?>
+                        </select>
+		            </label>
+                    <label class="mr-10">
+                        <span class="d-ib w-100 mr-10">Марка:</span>
+                        <select class="manufacturer <?=empty($_GET['condition']) && empty($_GET['country']) && empty($_GET['y1']) && empty($_GET['y2'])?'autoSubmitForm':''?>" name="mark">
+                            <option value="">Все марки</option>
+                            <?foreach ($this->marks as $k=>$m){
+                                echo '<option value="'.$m['Название'].'" '.(isset($_GET['mark'])&&($_GET['mark']==$m['Название'])? 'selected' : '').'>'.$m['Название'].'</option>';
+                            }?>
+                        </select>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="with_photo" <?=isset($_GET['with_photo'])&&($_GET['with_photo']=='on') ? 'checked' : ''?>>
+                        <span>С фото</span>
+                    </label>
+	            </div>
+	            <div class="extended <?=empty($_GET['condition']) && empty($_GET['country']) && empty($_GET['y1']) && empty($_GET['y2'])?'hide':''?> clearfix">
+                    <div class="w-200 mr-30 period pull-left">
+                        <label for="filter-date-from" class="mb-5">Год выпуска:</label>
+                        <div class="mb-5">
+                            <input id="filter-date-from" class="year" type="text" name="y1" value="<?=isset($_GET['y1'])?$_GET['y1']:''?>"> — <input class="year" type="text" name="y2" value="<?=isset($_GET['y2'])?$_GET['y2']:''?>">
+                        </div>
+                        <span>
+                            <input name="itemAge" class="pseudo-radio-link" id="less-than-3_" type="radio" value="<?=intval(date('Y'))-3?>"><label for="less-than-3_"><a class="bd-beige dashed">до 3</a></label>
+                            <input name="itemAge" class="pseudo-radio-link" id="less-than-5_" type="radio" value="<?=intval(date('Y'))-5?>"><label for="less-than-5_"><a class="bd-beige dashed">до 5</a></label>
+                            <input name="itemAge" class="pseudo-radio-link" id="more-than-7_" type="radio" value="<?=intval(date('Y'))-8?>"><label for="more-than-7_"><a class="bd-beige dashed">старше 7</a></label>
+                        </span>
+                        <div class="w-200 mr-30 mb-20 price">
+                            <label for="filter-date-from" class="mb-5">Цена:</label>
+                            <div class="mb-5">
+                                <input id="filter-price-from" type="text" name="price1" value="" class="inp-price" /> &mdash; <input id="filter-price-to" type="text" name="price2" value="" class="inp-price" />
+                                <select class="span1 currency">
+                                    <option>KZT</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix mt-10">
+                            <button class="btn soft">Найти объявления</button>
+                        </div>
+                    </div>
+                    <div class="pull-left ml-5 mt-10">
+                        <div class="mb-15">
+                            <label>
+                                <span class="d-ib w-100 mr-10">Состояние:</span>
+                                <select name="condition">
+                                    <option value="">В любом состоянии</option>
+                                    <?foreach ($this->condition as $k=>$c){
+                                        echo '<option value="'.$k.'" '.(isset($_GET['condition'])&&($_GET['condition']==$k)?'selected':'').'>'.$c.'</option>';
+                                    }?>
+                                </select>
+                            </label>
+                        </div>
+                        <label>
+                            <span class="d-ib w-160 mr-10">Страна производитель:</span>
+                            <select name="country" class="w-160">
+                                <option value="">Любая</option>
+                                <?foreach ($this->countries as $k=>$c){
+                                    echo '<option value="'.$c['id'].'" '.(isset($_GET['country'])&&($_GET['country']==$c['id'])?'selected':'').'>'.$c['Значение'].'</option>';
+                                }?>
+                            </select>
+                        </label>
+                    </div>
+	            </div>
+		    </div>
+
+	    </div>
+
+        <div class="catalog-sorter ml-20 mr-30 mb-20 form-inline">
+	        <div class="pull-right">
+		        <label>
+			        <select name="on_page" class="w-80">
+                        <option value="10" <?=isset($_GET['on_page']) && ($_GET['on_page']=='10')?'selected':''?>>10</option>
+                        <option value="25" <?=isset($_GET['on_page']) && ($_GET['on_page']=='25')?'selected':''?>>25</option>
+                        <option value="50" <?=isset($_GET['on_page']) && ($_GET['on_page']=='50')?'selected':''?>>50</option>
+        			</select>
+        			<span class="fz-13 grey help-inline">объявлений на стр.</span>
+		        </label>
+	        </div>
+            <div class="sort-by">
+                <b>Сортировать по:</b>
+                <a class="<?=$this->isSortActive('date') || $this->isSortActive('date_desc')?'active':'bd-beige dashed'?>" href="<?=$this->isSortActive('date')?$this->sortHref('date_desc'):$this->sortHref('date')?>">дате размещения <?=$this->isSortActive('date')?'<span class="orange">&darr;</span>':($this->isSortActive('date_desc')?'<span class="orange">&uarr;</span>':'')?></a>
+                <a class="<?=$this->isSortActive('price') || $this->isSortActive('price_desc')?'active':'bd-beige dashed'?>" href="<?=$this->isSortActive('price')?$this->sortHref('price_desc'):$this->sortHref('price')?>">цене <?=$this->isSortActive('price')?'<span class="orange">&darr;</span>':($this->isSortActive('price_desc')?'<span class="orange">&uarr;</span>':'')?></a>
+                <a class="<?=$this->isSortActive('year') || $this->isSortActive('year_desc')?'active':'bd-beige dashed'?>" href="<?=$this->isSortActive('year')?$this->sortHref('year_desc'):$this->sortHref('year')?>">году выпуска <?=$this->isSortActive('year')?'<span class="orange">&darr;</span>':($this->isSortActive('year_desc')?'<span class="orange">&uarr;</span>':'')?></a>
+            </div>
+        </div>
+
+    </form>
+
+	<h2 class="ml-20 mb-20">Найдено <?=$this->count?> объявлений</h2>
+
+<div class="main-catalog">
+	
+	<?foreach ($this->ads as $k=>$i){?>
+	<div class="item <?=$this->getItemColor($i['field_106'])?> <?=$i['field_211']==1?'item-hot':''?> clearfix">
+		<div class="photo">
+			<a href="/ads/<?=$i['object_id']?>/"><img src="<?=!empty($i['field_163'])?_UPLOADS_.'/'.$i['field_163']:'/img/nophoto-medium.png'?>" alt=""></a>
+			<?=$this->objects->getObjectsCount($i['object_id'],4)?> фото <!-- + <b>видео</b> -->
+		</div>
+		<div class="desc">
+			<h3 class="header"><a class="as-text bd-grey" href="/ads/<?=$i['object_id']?>/"><?=$i['field_107']?></a></h3>
+			<div class="category"><a class="bd-beige" href="/catalog/<?=$i['head']?>/"><?=$this->getCatNameById($i['head'])?></a></div>
+			<div class="condition"><?=$i['field_111']?>, <?=$i['field_112']?> г., <?=$this->condition[$i['field_108']]?></div>
+			<div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#"><?=$i['field_119']?></a></div>
+			<div class="place"><img class="ico" src="/img/dumm/icon-kz.png" alt=""><?=$i['field_118']?></div>
+			<div class="date">Дата размещения:  <?=$this->strings->date($i['field_103'])?></div>
+			<?if (!empty($i['field_104']) && ($i['field_104']!='0000-00-00')){?>
+			<div class="date">Дата обновления:  <?=$this->strings->date($i['field_104'])?>  <i class="icon-arrow-up icon-grey"></i></div>
+			<?}?>
+		</div>
+		<div class="contacts">
+			<div class="price"><?=$i['field_115']?> <span><?=$this->money[$i['field_116']]?></span></div>
+			<div class="presence"><?=$this->is_got[$i['field_117']]?></div>
+			<div class="phones" data-toggle="phones">
+				<img class="ico phone-ico" src="/img/phone.png" alt="">
+				<div class="all">
+					<span><?=$this->companyTel($i['field_161'])?></span>
+				</div>
+				<div class="order-call"><a class="dashed" href="#modal-call-<?=$i['object_id']?>" data-toggle="modal">Заказать звонок</a></div>
+				<div class="all-contacts"><a class="dashed" href="#modal-contacts-<?=$i['object_id']?>" data-toggle="modal">Контакты поставщика</a></div>
+			</div>
+		</div>
+		<?=$i['field_211']=='1'?'<div class="hot">Горячее предложение!</div>':''?>
+		<div id="modal-call-<?=$i['object_id']?>" class="modal hide fade promzona-modal">
+			<form action="" class="phone-order" method="post">
+			<div class="modal-header">
+				<button type="button" class="close red" data-dismiss="modal">×</button>
+				<h3>Заказ обратного звонка</h3>
+			</div>
+			<div class="modal-body">
+				<div class="mb-20">
+					<div class="d-ib mr-20 va-t">
+						<a href="#"><img class="modal-img" src="<?=!empty($i['field_163'])?_UPLOADS_.'/'.$i['field_163']:'/img/nophoto-small.png'?>" alt=""></a>
+					</div>
+					<div class="d-ib">
+						<h3 class="header"><a class="as-text bd-grey" href="#"><?$i['field_107']?></a></h3>
+						<div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#"><?=$i['field_119']?></a></div>
+						<div class="place"><img class="ico" src="/img/dumm/icon-kz.png" alt=""><?=$i['field_118']?></div>
+					</div>
+				</div>
+				<div>
+					<div class="input-group">
+						<div class="inputs-desc">
+							<b>Оставьте ваш номер телефона</b><br>
+							и с вами свяжется представитель компании поставщика:
+						</div>
+						<div class="inputs-self phones-separated-group">
+							<input type="text" class="one" name="phone[0]" value="+7"><input type="text" name="phone[1]" class="two"><input type="text" class="three" name="phone[2]">
+						</div>
+					</div>
+					<div class="input-group">
+						<div class="inputs-desc sorter">
+							<b>Можете также указать время,</b><br>
+							в которое вам будет удобно
+							принять звонок:
+						</div>
+						<div class="inputs-self time-separated-input">
+							<label><input type="radio" name="order-call-time-id1" checked value="anytime"> В любое время</label>
+							<label><input type="radio" name="order-call-time-id1" value="Время"> <input type="text" maxlength="2" class="onlyNum" value="10" name="time[0][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[0][m]"> — <input type="text" maxlength="2" class="onlyNum" value="19" name="time[1][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[1][m]"></label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?if (isset($this->companies[$i['field_161']])){?>
+				<input type="hidden" name="email" value="<?=$this->companies[$i['field_161']]['Email']?>">
+			<?}else{?>
+				<input type="hidden" name="email" value="asd_2000@mail.ru">
+			<?}?>
+			<div class="modal-footer ta-l">
+				<button class="btn btn-grey btn-grand mr-15" name="order_call" value="1">Заказать звонок</button>
+				<button class="btn btn-white btn-grand" data-dismiss="modal">Отменить</button>
+			</div>
+			</form>
+		</div>
+		<div id="modal-contacts-<?=$i['object_id']?>" class="modal hide fade promzona-modal w-690">
+			<div class="modal-header">
+				<button type="button" class="close red" data-dismiss="modal">×</button>
+				<h3>Контактная информация поставщика</h3>
+			</div>
+			<div class="modal-body">
+				<div class="mb-20 clearfix">
+					<div class="pull-left w-120 mr-30 va-t">
+						<a href="#"><img class="modal-img" src="<?=!empty($i['field_163'])?_UPLOADS_.'/'.$i['field_163']:'/img/nophoto-small.png'?>" alt=""></a>
+					</div>
+					<div>
+						<h3 class="header"><a class="as-text bd-grey" href="#"><?=$i['field_107']?></a></h3>
+						<div class="price"><?=$i['field_115']?> <span><?=$this->money[$i['field_116']]?></span></div>
+						<div class="presence"><?=$this->is_got[$i['field_117']]?></div>
+					</div>
+				</div>
+				<?if (isset($this->companies[$i['field_161']])){?>
+				<ul class="contacts-list reset">
+					<li>
+						<div>Компания:</div>
+						<div><a class="bd-beige bold" href="#"><?=$this->companies[$i['field_161']]['Название компании']?></a></div>
+					</li>
+					<li>
+						<div>Регион:</div>
+						<div><img class="ico" src="/img/dumm/icon-kz.png" alt=""><b><?=$i['field_118']?></b></div>
+					</li>
+					<li>
+						<div>Контактное лицо:</div>
+						<div><b><?=$this->companies[$i['field_161']]['Имя контактного лица']?>,</b> <?=$this->companies[$i['field_161']]['Должность']?></div>
+					</li>
+					<li>
+						<div>Телефоны:</div>
+						<?$phones = explode("\n",$this->companies[$i['field_161']]['Телефон'])?>
+						<div><b><?=join(",",$phones)?></b></div>
+					</li>
+					<li>
+						<div>Адрес:</div>
+						<div><?=$this->companies[$i['field_161']]['Регион']?>, <?=$this->companies[$i['field_161']]['Адрес']?></div>
+					</li>
+					<li>
+						<div>Электронная почта:</div>
+						<div><a class="bd-beige" href="#"><?=$this->companies[$i['field_161']]['Email']?></a></div>
+					</li>
+					<li>
+						<div>Сайт компании:</div>
+						<div><a class="bd-beige" href="http://<?=$this->companies[$i['field_161']]['Сайт компании']?>"><?=$this->companies[$i['field_161']]['Сайт компании']?></a></div>
+					</li>
+				</ul>
+				<?}?>
+			</div>
+		</div>
+	</div>
+		<?if ((($k+1)%3) == 0){?>
+		<div class="catalog-banner">
+			<a href="#"><img src="/img/dumm/top-banner.png" alt=""></a>
+		</div>
+		<?}?>
+	<?}?>
+
+<?}else{?>
+	<div class="search-response-empty">
+		<p>Убедитесь, что все слова написаны без ошибок.</p>
+		<p>Попробуйте использовать другие ключевые слова.</p>
+	</div>
+<?}?>
