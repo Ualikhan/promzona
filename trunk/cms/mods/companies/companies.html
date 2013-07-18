@@ -1,0 +1,227 @@
+<?if ($this->category){?>
+<div class="public-breadcrumbs ml-30 mb-10">
+    <a class="bd-beige bold" href="/companies/">Каталог компаний</a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+</div>
+<?}?>
+
+<h1 class="ml-30 mb-15"><?=$this->title?></h1>
+
+<?if (empty($this->category)){?>
+<div class="ml-50 mb-20 catalog-lists clearfix">
+	<?if ($spec_cats = $this->getCats(258)){?>
+    <div class="toggle-block pull-left clearfix">
+        <a href="javascript:void(0);" class="link-toggle"><span>Спецтехника</span></a>
+        <ul class="list reset toggle">
+            <?foreach($spec_cats as $cat){?>
+            <?$count = $this->getComsCountByCat($cat['id']);?>
+            <li class="item"><a href="/companies/<?=$cat['id']?>/" class="bd-beige pseudo <?=$count == 0 ? 'empty' : ''?>"><span><?=$cat['Название']?></span>&nbsp;<sup class="grey"><?=$count?></sup></a></li>
+            <?}?>
+        </ul>
+    </div>
+	<?}?>
+	<?if ($ob_cats = $this->getCats(261)){?>
+    <div class="toggle-block pull-left clearfix">
+        <a href="javascript:void(0);" class="link-toggle"><span>Оборудование</span></a>
+        <ul class="list reset toggle">
+            <?foreach($ob_cats as $cat){?>
+            <?$count = $this->getComsCountByCat($cat['id']);?>
+            <li class="item"><a href="/companies/<?=$cat['id']?>/" class="bd-beige pseudo <?=$count == 0 ? 'empty' : ''?>"><span><?=$cat['Название']?></span>&nbsp;<sup class="grey"><?=$count?></sup></a></li>
+            <?}?>
+        </ul>
+    </div>
+	<?}?>
+</div>
+<?}?>
+
+<div class="ml-30 mr-30 mb-30 catalog-filter form-inline" style="border-width:2px;">
+	<div class="header">Фильтр:</div>
+	<form class="shown clearfix">
+		<label class=" mr-5 pull-left">
+			<span>Регион:</span></label>
+                        <input type="text" name="region" class="typeaheaded" data-typeaheaded="region" placeholder="Все регионы" autocomplete="off" value="<?=$this->region?>"/>
+			<!--select class="ml-30 region autoSubmitForm" name="region">
+				<option value="0">Все регионы</option>
+				<?foreach ($this->regions as $r){
+					echo '<option value="'.$r['Название'].'" '.($this->region==$r['Название']?'selected':'').'>'.$r['Название'].'</option>';
+				}?>
+			</select-->		
+        <div class="pager pull-right">
+            <select class="span1 autoSubmitForm" name="on_page">
+                <option <?=$this->on_page == '10' ? 'selected' : ''?>>10</option>
+                <option <?=$this->on_page == '25' ? 'selected' : ''?>>25</option>
+                <option <?=$this->on_page == '50' ? 'selected' : ''?>>50</option>
+            </select>
+            на страницу
+        </div>
+    </form>
+</div>            
+
+<div class="company-block">
+	<div class="company-block-title clearfix">
+		<h3 class="pull-left"><?=$this->getComsCount()?> компаний</h3>
+	</div>
+	<div class="company-list main-catalog">
+	<?if ($this->companies) {?>
+		<table class="table">
+			<colgroup>
+				<col width="120" />
+				<col width="*" />
+				<col width="180" />
+			</colgroup>
+			<tbody>
+				<?foreach ($this->companies as $k=>$com){?>
+				<tr class="item">
+					<td>
+						<?=!empty($com['Логотип'])?'<img src="'._UPLOADS_.'/'.$com['Логотип'].'" />':''?>
+					</td>
+					<td>
+						<div class="company-item">
+							<div class="company-name">
+								<a href="<?=$this->getComURL($com)?>" class="as-text bd-grey"><b><?=$com['Название компании']?></b></a>
+							</div>
+							<div class="company-category">
+								<a href="#" class="bd-beige pseudo"><span><?=$com['Тип деятельности']?></span></a>
+							</div>
+							<div class="company-location">
+								<?=$this->getFlag($com['Регион'])?> <?=$com['Регион']?>
+							</div>
+							<div class="company-date">
+								Дата регистрации: <?=$this->strings->date(date("Y-m-d",$com['sort']),"sql","textdate")?>
+							</div>
+						</div>                                    
+					</td>
+					<td>
+						<div class="company-contacts">
+							<div class="phones" data-toggle="phones">
+								<img class="ico phone-ico" src="/img/phone.png" />
+								<?$phones = explode("\n",$com['Телефон']);?>
+								<?if (isset($phones[1])){?>
+								<a class="as-text bd-grey dashed toggle" href="#"><?=$phones[0]?></a>
+								<div class="all hide">
+									<?foreach ($phones as $p){?>
+									<span><?=$p?></span>
+									<?}?>
+								</div>
+								<?}else{?>
+									<span class="as-text bd-grey"><?=$phones[0]?></span>
+								<?}?>
+								<div class="order-call"><a class="dashed" href="#modal-call-<?=$com['id']?>" data-toggle="modal">Заказать звонок</a></div>
+								<div class="all-contacts"><a class="dashed" href="#modal-contacts-<?=$com['id']?>" data-toggle="modal">Контакты поставщика</a></div>
+								<div id="modal-call-<?=$com['id']?>" class="modal hide fade promzona-modal">
+									<form action="" class="phone-order">
+									<div class="modal-header">
+										<button type="button" class="close red" data-dismiss="modal">&times;</button>
+										<h3>Заказ обратного звонка</h3>
+									</div>
+									<div class="modal-body">
+										<div class="mb-20">
+											<div class="d-ib mr-20 va-t">
+												<a href="<?=$this->getComURL($com)?>"><img class="modal-img" src="<?=!empty($com['Логотип'])?_UPLOADS_.'/'.$com['Логотип']:'/img/nophoto-small.png'?>" alt=""></a>
+											</div>
+											<div class="d-ib">
+												<h3 class="header"><a class="as-text bd-grey" href="<?=$this->getComURL($com)?>"><?=$com['Название компании']?></a></h3>
+												<!-- <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#">ООО «Технолекс Интернешнл»</a></div> -->
+												<div class="place"><?=$this->getFlag($com['Регион'])?><?=$com['Регион']?></div>
+											</div>
+										</div>
+										<div>
+											<div class="input-group">
+												<div class="inputs-desc">
+													<b>Оставьте ваш номер телефона</b><br>
+													и с вами свяжется представитель компании поставщика:
+												</div>
+												<div class="inputs-self phones-separated-group">
+													<input type="text" class="one" name="phone[0]" value="+7"><input type="text" name="phone[1]" class="two"><input type="text" class="three" name="phone[2]">
+												</div>
+											</div>
+											<div class="input-group">
+												<div class="inputs-desc sorter">
+													<b>Можете также указать время,</b><br>
+													в которое вам будет удобно
+													принять звонок:
+												</div>
+												<div class="inputs-self time-separated-input">
+													<label><input type="radio" name="order-call-time-id1" checked value="anytime"> В любое время</label>
+							<label><input type="radio" name="order-call-time-id1" value="Время"> <input type="text" maxlength="2" class="onlyNum" value="10" name="time[0][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[0][m]"> — <input type="text" maxlength="2" class="onlyNum" value="19" name="time[1][h]"> : <input type="text" maxlength="2" class="onlyNum" value="00" name="time[1][m]"></label>
+												</div>
+											</div>
+										</div>
+									</div>
+				<input type="hidden" name="email" value="<?=$com['Email']?>">
+									<div class="modal-footer ta-l">
+										<button class="btn btn-grey btn-grand mr-15" name="order_call" value="1">Заказать звонок</button>
+										<button class="btn btn-white btn-grand" data-dismiss="modal">Отменить</button>
+									</div>
+									</form>
+								</div>
+								<div id="modal-contacts-<?=$com['id']?>" class="modal hide fade promzona-modal w-690">
+									<div class="modal-header">
+										<button type="button" class="close red" data-dismiss="modal">&times;</button>
+										<h3>Контактная информация поставщика</h3>
+									</div>
+									<div class="modal-body">
+										<div class="mb-20 clearfix">
+											<div class="pull-left w-120 mr-30 va-t">
+												<a href="<?=$this->getComURL($com)?>"><img class="modal-img" src="<?=!empty($com['Логотип'])?_UPLOADS_.'/'.$com['Логотип']:'/img/nophoto-small.png'?>" alt=""></a>
+											</div>
+											<div>
+												<h3 class="header"><a class="as-text bd-grey" href="<?=$this->getComURL($com)?>"><?=$com['Название компании']?></a></h3>
+												<!-- <div class="price">33 237 508 250 <span>KZT</span></div>
+												<div class="presence">В наличии</div> -->
+											</div>
+										</div>
+										<ul class="contacts-list reset">
+											<li>
+												<div>Компания:</div>
+												<div><a class="bd-beige bold" href="<?=$this->getComURL($com)?>"><?=$com['Название компании']?></a></div>
+											</li>
+											<li>
+												<div>Регион:</div>
+												<div><?=$this->getFlag($com['Регион'])?><b><?=$com['Регион']?></b></div>
+											</li>
+											<li>
+												<div>Контактное лицо:</div>
+												<div><b><?=$com['Имя контактного лица']?>,</b> <?=$com['Должность']?></div>
+											</li>
+											<li>
+												<div>Телефоны:</div>
+												<div><b><?=join(", ",explode("\n",$com['Телефон']))?></b></div>
+											</li>
+											<li>
+												<div>Адрес:</div>
+												<div><?=$com['Адрес']?></div>
+											</li>
+											<li>
+												<div>Электронная почта:</div>
+												<div><a class="bd-beige" href="mailto:<?=$com['Email']?>"><?=$com['Email']?></a></div>
+											</li>
+											<?if (!empty($com['Сайт компании'])){?>
+											<li>
+												<div>Сайт компании:</div>
+												<div><a class="bd-beige" href="http://<?=$com['Сайт компании']?>">http://<?=$com['Сайт компании']?></a></div>
+											</li>
+											<?}?>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<?}?>
+			</tbody>
+		</table>
+	<?}?>
+	</div>
+	<?if ($this->pages['count_pages']>1){?>
+	<div class="pagination pagination-centered pagination-promzona">
+		<ul>
+			<li <?=!$this->pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->pgHref($this->pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+			<?for ($i=1; $i<intval($this->pages['count_pages'])+1;$i++){?>
+			<li <?=($i==$this->pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->pgHref($i)?>><?=$i?></a></li>
+			<?}?>
+			<li <?=!$this->pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->pgHref($this->pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+		</ul>
+	</div>
+	<?}?>
+</div>

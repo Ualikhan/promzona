@@ -1,0 +1,36 @@
+#active-screen{
+	padding-left:20px;
+}
+
+.button{
+	font:normal 14px Arial;
+	padding:10px 5px;
+	margin-right:10px;
+}
+
+.approve{
+	color:#0F8F19;
+}
+
+.cancel{
+	color:#CC0000;
+}
+
+.input-row{
+	margin-bottom:10px;
+	padding:5px;
+}
+
+.input-row .title{
+	font:bold 13px Arial;
+	color:black;
+}
+
+.wrong-input{
+	border:1px solid red;
+}
+
+.small-button{	
+	font:normal 11px Arial;
+	padding:5px 10px;
+}

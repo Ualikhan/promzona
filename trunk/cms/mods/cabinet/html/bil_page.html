@@ -1,0 +1,146 @@
+<?if ($this->subject['Роль']=='company'){?>
+<div class="fz-16 pull-right mr-30 cur-p mt-5" rel="popover" data-content="&lt;p class='bold'&gt;В пакете «Стартовый» &lt;br&gt; &lt;span class='orange'&gt;у вас нет возможности пополнять баланс&lt;/span&gt;&lt;/p&gt;" data-original-title="">
+    <b><span class="grey-lighter-bit">Текущий баланс:</span>&nbsp;0 кр.</b>
+</div>
+<?}else{?>
+<div class="fz-16 pull-right mr-20 mt-5">
+    <b><span class="grey-lighter-bit">Текущий баланс:</span>&nbsp;<?=$this->subject['Кредиты']?> кр.</b>
+    <a href="/cabinet/refill/" class="btn btn-orange ml-20">Пополнить</a>
+</div>
+<?}?>
+
+<h1 class="ml-30"><a href="/cabinet/invoices/" class="as-text bd-grey d-ib" style="height:26px;"><!--#page-title#--></a></h1>
+
+<h2 class="ml-30"><i class="<?=$this->ac->object['Оплачен']==0 ? 'icon-time icon-yellow' : ($this->ac->object['Оплачен'] == 1 ? 'icon-ok icon-grey' : 'icon-remove icon-grey')?> mt-5"></i>&nbsp;Счёт № PZ <?=$this->ac->object['Номер']?> от <?=$this->strings->date(date('Y-m-d',$this->ac->object['sort']))?>. <?=$this->ac->object['Название']?></h2>
+
+<table class="bill-table ml-30 mr-30">
+    <colgroup>
+        <col width="30">
+        <col width="400">
+        <col width="100">
+        <col width="150">
+        <col width="40">
+    </colgroup>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Наименование</th>
+            <th></th>
+            <th>Сумма</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td><?=$this->ac->object['Название']?></td>
+            <td></td>
+            <td><b><?=$this->ac->object['Сумма']?></b></td>
+            <td><span class="fz-11">KZT</span></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>Итого:</b></td>
+            <td><b class="fz-24"><?=$this->ac->object['Сумма']?></b></td>
+            <td><span class="fz-11">KZT</span></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="dashed ml-30 mr-30 mb-20"></div>
+
+<?if ($this->ac->object['Оплачен']==1){?>
+<div class="ml-50 mr-30">
+    <div class="pull-right bold"><i class="icon-ok icon-grey"></i>&nbsp;Оплачен</div>
+    <b class="ml-20">Счёт для <?=$this->ac->object['Юридическое лицо']==1?'юридического':'физического'?> лица.</b>
+</div>
+
+<table class="ml-50 mb-50 bill-info-table">
+    <colgroup>
+        <col width="180">
+        <col width="">
+    </colgroup>
+    <tbody>
+    <tr>
+        <td>Плательщик: <span class="fz-20 red">*</span></td>
+        <td><b><?=$this->ac->object['Плательщик']?></b></td>
+    </tr>
+    <?if($this->ac->object['Юридическое лицо']==1){?>
+    <tr>
+        <td>Юридический адрес:</td>
+        <td><b><?=$this->ac->object['Адрес']?></b></td>
+    </tr>
+    <?}?>
+    <tr>
+        <td>БИН/ИИН:</td>
+        <td><b><?=$this->ac->object['РНН']?></b></td>
+    </tr>
+    <tr>
+        <td>Счёт сформирован:</td>
+        <td><b><?=date("d.m.Y H:i", $this->ac->object['sort'])?></b></td>
+    </tr>
+    <tr>
+        <td>Счёт оплачен:</td>
+        <td><b><?=$this->ac->object['Время оплаты']?></b></td>
+    </tr>
+    </tbody>
+</table>
+
+<?}else{?>
+
+<div class="ml-50 mr-30">
+    <div class="pull-right bold orange"><?=$this->ac->object['Оплачен']==0? '<i class="icon-time icon-yellow"></i>&nbsp;Ожидает оплаты</div>' : '<i class="icon-remove icon-grey"></i>&nbsp;Аннулирован</div>' ?>
+    <b class="ml-20">Счёт для <?=$this->ac->object['Юридическое лицо']==1?'юридического':'физического'?> лица.</b>
+</div>
+
+<table class="ml-50 mb-30 bill-info-table">
+    <colgroup>
+        <col width="180">
+        <col width="">
+    </colgroup>
+    <tbody>
+    <tr>
+        <td>Плательщик: <span class="fz-20 red">*</span></td>
+        <td><b><?=$this->ac->object['Плательщик']?></b></td>
+    </tr>
+    <?if($this->ac->object['Юридическое лицо']==1){?>
+    <tr>
+        <td>Юридический адрес:</td>
+        <td><b><?=$this->ac->object['Адрес']?></b></td>
+    </tr>
+    <?}?>
+    <tr>
+        <td>БИН/ИИН:</td>
+        <td><b><?=$this->ac->object['РНН']?></b></td>
+    </tr>
+    <tr>
+        <td>Счёт сформирован:</td>
+        <td><b><?=date("d.m.Y H:i", $this->ac->object['sort'])?></b></td>
+    </tr>
+    <?if (!empty($this->ac->object['Время оплаты'])){?>
+    <tr>
+        <td>Счёт оплачен:</td>
+        <td><b><?=$this->ac->object['Время оплаты']?></b></td>
+    </tr>
+    <?}?>
+    </tbody>
+</table>
+
+<form action="" method="post">
+<div class="ml-30 mb-20">
+    <button type="button" class="btn mr-10" onclick="openWindow('/print.php?action=invoices&n=<?=$this->ac->object['id']?>',900,700);"><i class="icon-print"></i>&nbsp;Распечатать счёт на оплату</button>
+    <button class="btn" type="submit" name="deleteBill" value="1"><i class="icon-trash"></i>&nbsp;Удалить счёт</button>
+</div>
+</form>
+
+<?if (($this->ac->object['Тип'] == '0') && ($this->ac->object['Оплачен'] == '0')){?>
+<div class="fz-13 grey mb-50 ml-10">
+    <p class="mb-10">Пакет «Бизнес» будет активирован в течении 1-3 рабочих дней с момента оплаты данного счёта.</p>
+    <p>Если с момента оплаты счёта прошло более 3 рабочих дней, а пакет «Бизнес» так и не активирован — обратитесь в
+        <a class="bd-beige" href="/cabinet/support/">службу поддержки</a>.
+    </p>
+</div>
+<?}?>
+<?}?>

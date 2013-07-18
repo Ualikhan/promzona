@@ -1,0 +1,745 @@
+<?$mod = isset($_GET['mod']) ? $_GET['mod'] : 'buy'?>
+<div class="index-list-wrapper clearfix">
+<h2 class="grey">Категории объявлений:</h2>
+<?if ($roots = $cats->getRoots()){?>
+<ul class="nav nav-tabs index-list-tab">
+	<?foreach ($roots as $k=>$o){
+		echo '
+		<li '.($k==0?'class="active"':'').'>
+			<a href="#'.$o['id'].'-list" class="pseudo dashed" data-toggle="tab"><span>'.$o['Название'].'</span></a>
+		</li>
+		';
+	}?>
+	<?/*<li class="active">
+		<a href="#machinery-list" class="pseudo dashed" data-toggle="tab"><span>Спецтехника</span></a>
+	</li>
+	<li>
+		<a href="#equipment-list" class="pseudo dashed" data-toggle="tab"><span>Оборудование</span></a>
+	</li>*/?>
+</ul>
+<?}?>
+
+<div class="tab-content">
+
+	<div id="<?=$roots[0]['id']?>-list" class="tab-pane active">
+
+		<div class="tab-header"><span><?=(int)$cats->adsCountByType(-1, $cats->getTypeByMod($mod), 258)?></span> объявлений <?=$cats->title?> <a href="#258-list" class="as-text bd-grey">спецтехники</a></div>
+
+		<div class="lists-wrapper">
+
+			<ul class="col-1">
+
+		<?if ($list = $cats->objects->getFullObjectsListByClass($roots[0]['id'],$cats->class_id)){?>
+		<?$ads_type = $cats->getTypeByMod($mod);?>
+
+			<?foreach ($list as $k=>$o){?>
+				<li class="item">
+					<?
+					$subcats = $cats->objects->getFullObjectsListByClass($o['id'],$cats->class_id);
+					// $adsCount = !empty($subcats) ? $cats->adsCountInSubCats($subcats, $ads_type) : 0;
+					?>
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-<?=$cats->getIconByName($o['Название'])?>"></i><a href="/<?=$mod?>/catalog/<?=$o['id']?>/" class="bd-beige <?/*empty($adsCount)?'empty':''*/?>"><?=$o['Название']?></a><sup><?/*=$adsCount*/?></sup>
+						</div>
+						<?if ($subcats){?>
+						<ul>
+							<?foreach ($subcats as $key=>$cat){?>
+								<?$subCount = $cats->adsCountInSubCats(array($cat), $ads_type);?>
+								<li><a href="/<?=$mod?>/catalog/<?=$cat['id']?>/" class="as-text bd-grey <?=$subCount < 1 ?'empty':''?>"><?=$cat['Название']?></a></li>
+								<?if ($key == 4){?>
+								<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+								</ul>
+								<ul class="hidden">
+								<?}if ($key == (count($subcats)-1) && (count($subcats) >= 5)){?>
+								<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+								<?}?>
+							<?}?>
+						</ul>
+						<?}?>
+					</div>
+				</li>
+				<?if ($k == ceil((count($list)-1)/2)){?>
+					</ul>
+					<ul class="col-2"> 
+				<?}?>
+			<?}?>
+		<?}?>
+
+				<!-- <li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-bus"></i><a href="#" class="bd-beige">Автобусы</a><sup>300</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Автобусы городские</a></li>
+							<li><a href="#" class="as-text bd-grey">Автобусы туристические</a></li>
+							<li><a href="#" class="as-text bd-grey">Микроавтобусы</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="as-text bd-grey">Прочее</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-truck"></i><a href="#" class="bd-beige">Грузовой автотранспорт</a><sup>21218</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Автовозы</a></li>
+							<li><a href="#" class="as-text bd-grey">Автовышки</a></li>
+							<li><a href="#" class="as-text bd-grey">Автопоезда</a></li>
+							<li><a href="#" class="as-text bd-grey">Автоцистерны</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-paver"></i><a href="#" class="bd-beige">Дорожная техника</a><sup>2751</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Асфальтоукладчики</a></li>
+							<li><a href="#" class="as-text bd-grey">Катки</a></li>
+							<li><a href="#" class="as-text bd-grey">Дорожные фрезы</a></li>
+							<li><a href="#" class="as-text bd-grey">Ратраки</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-quarry-truck"></i><a href="#" class="bd-beige">Карьерная и горнодобывающая техника</a><sup>5540</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Горнодобывающая техника</a></li>
+							<li><a href="#" class="as-text bd-grey">Камнеперерабатывающая техника</a></li>
+							<li><a href="#" class="as-text bd-grey">Карьерная техника</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="as-text bd-grey">Прочее</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-garbage-truck"></i><a href="#" class="bd-beige">Коммунальные машины</a><sup>367</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Ассенизаторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Снегоуборочные и уборочные машины</a></li>
+							<li><a href="#" class="as-text bd-grey">Мусоровозы</a></li>
+							<li><a href="#" class="as-text bd-grey">Машины вакуумные, илососы</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-conveyor"></i><a href="#" class="bd-beige">Конвейеры, транспортеры</a><sup>2925</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Конвейеры</a></li>
+							<li><a href="#" class="as-text bd-grey">Транспортеры</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="as-text bd-grey">Прочее</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-crane"></i><a href="#" class="bd-beige">Краны и грузоподъемные машины</a><sup>1576</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Автокраны</a></li>
+							<li><a href="#" class="as-text bd-grey">Гусеничные краны</a></li>
+							<li><a href="#" class="as-text bd-grey">Железнодорожные краны</a></li>
+							<li><a href="#" class="as-text bd-grey">Машины вакуумные, илососы</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li> 
+
+			</ul>
+
+			<ul class="col-2">
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-forestry"></i><a href="#" class="bd-beige">Лесозаготовительная техника</a><sup>2362</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Харвестеры</a></li>
+							<li><a href="#" class="as-text bd-grey">Форвардеры</a></li>
+							<li><a href="#" class="as-text bd-grey">Лесовозы</a></li>
+							<li><a href="#" class="as-text bd-grey">Погрузчики леса</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="as-text bd-grey">Трелевочные машины</a></li>
+							<li><a href="#" class="as-text bd-grey">Валочно-пакетирующие машины</a></li>
+							<li><a href="#" class="as-text bd-grey">Лесопильное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="as-text bd-grey">Прочее</a></li>
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-escalator"></i><a href="#" class="bd-beige">Лифты, подъемники, эскалаторы</a><sup>3332</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Пассажирские лифты</a></li>
+							<li><a href="#" class="as-text bd-grey">Грузовые лифты и подъемники</a></li>
+							<li><a href="#" class="as-text bd-grey">Эскалаторы, траволаторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Запчасти, комплектующие</a></li>
+							<li><a href="#" class="as-text bd-grey">Прочее</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-excavator"></i><a href="#" class="bd-beige">Машины для земляных работ</a><sup>2189</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Экскаваторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Экскаваторы-погрузчики</a></li>
+							<li><a href="#" class="as-text bd-grey">Экскаваторы траншейные, роторные</a></li>
+							<li><a href="#" class="as-text bd-grey">Экскаваторы-планировщики</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-tractor"></i><a href="#" class="bd-beige">Сельскохозяйственная техника</a><sup>502</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Тракторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Комбайны</a></li>
+							<li><a href="#" class="as-text bd-grey">Посевная техника</a></li>
+							<li><a href="#" class="as-text bd-grey">Почвообрабатывающая техника</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-hoist"></i><a href="#" class="bd-beige">Складская техника</a><sup>1125</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Грузозахватные устройства, навесное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Лебедки, тяговые механизмы</a></li>
+							<li><a href="#" class="as-text bd-grey">Краны-штабелеры</a></li>
+							<li><a href="#" class="as-text bd-grey">Погрузчики вилочные</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-truck-mixer"></i><a href="#" class="bd-beige">Техника для работы с бетоном</a><sup>6302</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Бетоносмесители (миксеры)</a></li>
+							<li><a href="#" class="as-text bd-grey">Бетононасосы</a></li>
+							<li><a href="#" class="as-text bd-grey">Бетонные заводы</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для обработки бетона</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li> -->
+
+			</ul>
+
+		</div>
+
+	</div>
+
+	<div id="261-list" class="tab-pane">
+		<?/*
+		<div class="tab-header"><span><?=(int)$cats->adsCountByType(-1, $cats->getTypeByMod($mod), 261)?> </span> объявлений <?=$cats->title?> <a href="#" class="as-text bd-grey">оборудования</a></div>
+		*/?>
+
+		<?/*<div class="lists-wrapper">
+
+			<ul class="col-1">
+
+		<?/*if ($list = $cats->objects->getFullObjectsListByClass($roots[1]['id'],$cats->class_id)){?>
+
+			<?foreach ($list as $k=>$o){?>
+				<li class="item">
+					<?$subcats = $cats->objects->getFullObjectsListByClass($o['id'],$cats->class_id)?>
+					<?$adsCount = !empty($subcats) ? $cats->adsCountInSubCats($subcats) : 0;?>
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-<?=$cats->getIconByName($o['Название'])?>"></i><a href="/<?=$mod?>/catalog/<?=$o['id']?>/" class="bd-beige <?=empty($adsCount)?'empty':''?>"><?=$o['Название']?></a><sup><?=!empty($subcats) ? $adsCount : '0' ?></sup>
+						</div>
+						<?if ($subcats){?>
+						<ul>
+							<?foreach ($subcats as $key=>$cat){?>
+								<?$subCount = $cats->adsCountInSubCats(array($cat), $ads_type);?>
+								<li><a href="/<?=$mod?>/catalog/<?=$cat['id']?>/" class="as-text bd-grey <?=$subCount < 1 ?'empty':''?>"><?=$cat['Название']?></a></li>
+								<?if ($key == 4){?>
+								<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+								</ul>
+								<ul class="hidden">
+								<?}if ($key == (count($subcats)-1) && (count($subcats) >= 5)){?>
+								<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+								<?}?>
+							<?}?>
+						</ul>
+						<?}?>
+					</div>
+				</li>
+				<?if ($k == ceil((count($list)-1)/2)){?>
+					</ul>
+					<ul class="col-2"> 
+				<?}?>
+			<?}?>
+		<?}*/?>
+
+				<?/* <li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-brush"></i><a href="#" class="bd-beige">Оборудование для бытового обслуживани</a><sup>300</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для химчисток и прачечных</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для фотостудий</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для парикмахерских и салонов красоты</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-chip"></i><a href="#" class="bd-beige">Оборудование для казино, баров, дискотек</a><sup>212</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Световое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Звуковое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Музыкальные инструменты</a></li>
+							<li><a href="#" class="as-text bd-grey">Запасные части, комплектующие</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-circular-saw"></i><a href="#" class="bd-beige">Деревообрабатывающее оборудование</a><sup>275</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для нанесения краски и лака</a></li>
+							<li><a href="#" class="as-text bd-grey">Ножи / пилы / заточное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства двп, дсп и гофрокартона</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-medkit"></i><a href="#" class="bd-beige">Медицинское оборудование</a><sup>5540</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для акушерства и гинекологии</a></li>
+							<li><a href="#" class="as-text bd-grey">Анестезиологическое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Мебель и расходные материалы</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-sewing-machine"></i><a href="#" class="bd-beige">Оборудование для легкой промышленности</a><sup>367</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Вязальные машины</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для изготовления обувных изделий</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для обработки кожи и меха</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-recycle"></i><a href="#" class="bd-beige">Оборудование для переработки отходов</a><sup>2925</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для очистки воды и стоков</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для переработки пищевых отходов</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для фильтрации воздуха</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-spoon-fork"></i><a href="#" class="bd-beige">Пищевое оборудование</a><sup>1576</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для антибактериальной обработки продуктов</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для изготовления крахмала, глюкозы</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства изделий из рыбы и морепродуктов</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-carrot"></i><a href="#" class="bd-beige">С/х оборудование и лесотехника</a><sup>2362</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для животноводства</a></li>
+							<li><a href="#" class="as-text bd-grey">Лесотехника</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для обработки и защиты посевов</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-printer"></i><a href="#" class="bd-beige">Полиграфическое оборудование</a><sup>3332</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Допечатное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Копировальная техника</a></li>
+							<li><a href="#" class="as-text bd-grey">Литографическое оборудование</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-blank-list"></i><a href="#" class="bd-beige">Оборудование для производства бумаги и картона </a><sup>2189</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства картона</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства бумаги</a></li>
+							<li><a href="#" class="as-text bd-grey">Комплектующие к оборудованию для производства бумаги и картона</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-bricks"></i><a href="#" class="bd-beige">Оборудование для производства строительных материалов</a><sup>502</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства изделий из цемента, песка, гипса и бетона</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства керамической плитки и кирпича</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства металлических стройматериалов</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+			</ul>
+
+			<ul class="col-2">
+
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-fuel-dispenser"></i><a href="#" class="bd-beige">Оборудование для АЗС и автосервиса</a><sup>502</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для автосервиса</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для азс</a></li>
+							<li><a href="#" class="as-text bd-grey">Комплектующие к оборудованию для азс и автосервиса</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-microscope"></i><a href="#" class="bd-beige">Лабораторное оборудование</a><sup>6302</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Аквадисляторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Анализаторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Водосборники</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-warehouse"></i><a href="#" class="bd-beige">Складское оборудование</a><sup>6302</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для склада</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для механической погрузки и разгрузки</a></li>
+							<li><a href="#" class="as-text bd-grey">Вспомогательное оборудование</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-fridge"></i><a href="#" class="bd-beige">Холодильное оборудование</a><sup>801</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Воздухоохладители</a></li>
+							<li><a href="#" class="as-text bd-grey">Вспомогательное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Компрессоры</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-pipes"></i><a href="#" class="bd-beige">Строительное оборудование</a><sup>7587</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для канализации и водоснабжения</a></li>
+							<li><a href="#" class="as-text bd-grey">Климатическое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Кровельное оборудование</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-wine"></i><a href="#" class="bd-beige">Оборудование для производства напитков и табака</a><sup>128</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для виноделия</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для газирования минеральной воды</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для очистки и обработки воды</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-teller"></i><a href="#" class="bd-beige">Торговое оборудование</a><sup>1088</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Контрольное, кассовое и весовое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Торговое оборудование для магазинов</a></li>
+							<li><a href="#" class="as-text bd-grey">Торговое оборудование для уличной торговли</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-bulb"></i><a href="#" class="bd-beige">Оборудование для химической промышленности</a><sup>215</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства изделий из резины</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства и переработки пластмасс</a></li>
+							<li><a href="#" class="as-text bd-grey">Оборудование для производства изделий из пластика</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-oil-derrick"></i><a href="#" class="bd-beige">Нефтегазовое и торфяное оборудование</a><sup>21191</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Буровое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Нефтегазовое оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Торфяное оборудование</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-oil-electricity"></i><a href="#" class="bd-beige">Электрооборудование</a><sup>1088</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Аккумуляторы</a></li>
+							<li><a href="#" class="as-text bd-grey">Высоковольтное оборудование</a></li>
+							<li><a href="#" class="as-text bd-grey">Контрольно-измерительные приборы</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-phone"></i><a href="#" class="bd-beige">Оргтехника и оборудование для офиса</a><sup>1088</sup>
+						</div>
+						<ul>
+							<li><a href="#" class="as-text bd-grey">Копировальная техника и оргтехника</a></li>
+							<li><a href="#" class="as-text bd-grey">Мини атс, телефоны, факсы</a></li>
+							<li><a href="#" class="as-text bd-grey">Презентационное оборудование</a></li>
+							<li><a href="#" class="dashed bd-beige triggerShow">Ещё категории…</a></li>
+						</ul>
+						<ul class="hidden">
+							<li><a href="#" class="dashed bd-beige triggerHide">Скрыть</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li class="item">
+					<div class="wrapper">
+						<div class="overflow">
+							<i class="icon-tech-loop"></i><a href="#" class="bd-beige">Прочее оборудование</a><sup>5832</sup>
+						</div>
+					</div>
+				</li> */?>
+
+			<?/*</ul>
+
+		</div>*/?>
+
+	</div>
+
+</div>
+
+</div>

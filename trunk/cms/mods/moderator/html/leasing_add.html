@@ -1,0 +1,116 @@
+<h1 class="ml-30 mb-10"><?=$this->title?></h1>
+
+<div class="add-company-form">
+
+  <form class="required-container" method="post" action="">
+
+    <div class="step-b">
+      <h3><i class="step-number">2</i>Информация о компании:</h3>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerCompanyName">
+          Название компании: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="required w-440 required-inp" type="text" id="registerCompanyName" value="" name="f[Название]" />
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerActivity">
+          Тип деятельности: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <select class="required w-320 required-inp" name="f[Тип деятельности]" id="registerActivity">
+          <option value="false">Выберите тип деятельности</option>
+          <?foreach ($this->ac->doTypes as $k=>$t){?>
+          <option value="<?=$k?>"><?=$t?></option>
+          <?}?>
+        </select>                
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left">
+          Логотип:
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <div class="logoUploader"></div>
+      </div>
+      <div class="ml-220 input-group logoUploaderResponse logo-uploader-response hide">
+        <a class="pseudo dashed red fz-12 delLogo" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a>
+        <input type="hidden" name="f[Логотип]" />
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="companyDesc">
+          Описание компании: <sup class="red">*</sup>
+        </label>
+        <textarea class="required w-440 required-inp" id="companyDesc" maxlength="800" name="f[Описание]"></textarea>
+        <div class="middle-tip-b">
+          Максимум 800 символов. <span id="companyDescCount" class="black hide">Осталось символов: <span>400</span>.</span>
+        </div>
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left">
+          Прикреплённые файлы:
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <div id="filesUploader"></div>
+        <ul class="filesResponse unstyled" style="display:none;"></ul>
+      </div>
+    </div>
+
+    <div class="step-b">
+      <h3><i class="step-number">3</i>Контактная инфомация:</h3>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerContactPerson">
+          Контактное лицо: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="required w-440 required-inp" type="text" id="registerContactPerson" name="f[Контактное лицо]" />                
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerRegion">
+          Регион: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="required w-440 required-inp typeaheaded" autocomplete="off" data-typeaheaded="region" type="text" id="registerRegion" name="f[Регион]" value="" />
+        <div class="middle-tip-b">
+          Начните вводить название города, затем выберите его из списка.
+        </div>
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerAddress">
+          Адрес: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="required w-440 required-inp" name="f[Адрес]" type="text" id="registerAddress" />                
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerEmail">
+          Электронная почта: <sup class="red">*</sup>
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="required w-440 required-inp" name="f[Электронная почта]" type="text" id="registerEmail" />
+      </div>
+      <div class="phones-input-group">
+        <div class="input-group clearfix">
+          <label class="left" for="registerPhone1">
+            Телефоны: <sup class="red">*</sup>
+            <i class="icon-question-sign icon-yellow helper-popup"></i>
+          </label>
+          <input class="w-160 required phoneInput required-inp" type="text" id="registerPhone1" name="f[phone][0]" />
+          <button class="btn btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон </button>
+          <div class="middle-tip-b"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+        </div>
+      </div>
+      <div class="input-group clearfix ">
+        <label class="left" for="registerSite">
+          Сайт компании:
+          <i class="icon-question-sign icon-yellow helper-popup"></i>
+        </label>
+        <input class="w-440" type="text" id="registerSite" name="f[Сайт компании]" />
+      </div>
+      <div class="submit-group ">                
+        <button type="submit" name="add" value="1" class="btn btn-grey btn-grand required-btn" disabled>Добавить компанию</button>
+      </div>
+    </div>            
+
+  </form>
+
+</div>

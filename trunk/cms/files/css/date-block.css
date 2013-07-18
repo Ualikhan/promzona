@@ -1,0 +1,34 @@
+.date-block{
+	float:left;
+	text-align:left;
+	color:orange;
+	margin-top:-7px;
+}
+
+.date-block .text-part{
+	float:left;
+	font:140% Arial;
+	margin-top:6px;
+	margin-right:5px;
+}
+
+.date-block .day{
+	font:240% Arial;
+	float:left;
+	margin-right:2px;
+}
+
+.date-block .month-and-year{
+	float:left;
+	margin-right:5px;
+	margin-top:1px;
+	text-align:right;
+}
+
+.date-block .month-and-year .month{
+	font:85% Arial;
+}
+
+.date-block .month-and-year .year{
+	font:100% Arial;
+}

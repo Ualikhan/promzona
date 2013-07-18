@@ -1,0 +1,190 @@
+<h1 class="ml-30 mb-25"><!--#page-title#--></h1>
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<form action="" id="contacts-edit" class="form-inline ml-10 listenThisForm" method="post">
+	
+    <div class="step-b">
+
+        <h3 class="ml--20 mb-20">Редактировать контактную информацию:</h3>
+
+		<div class="input-group">
+			<label class="left" for="contactName">
+				Имя контактного лица: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[889]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactName" name="f[Имя контактного лица]" value="<?=$this->subject['Имя контактного лица']?>">
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactPosition">
+				Должность: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[891]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactPosition" name="f[Должность]" value="<?=$this->subject['Должность']?>">
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactLocation">
+				Регион: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[893]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440 typeaheaded" autocomplete="off" data-typeaheaded="region" type="text" id="contactLocation" name="f[Регион]" value="<?=$this->subject['Регион']?>">
+			<div class="middle-tip-b">Начните вводить название города, затем выберите его из списка.</div>
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="contactAddress">
+				Адрес: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[895]?>
+					</div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="contactAddress" name="f[Адрес]" value="<?=$this->subject['Адрес']?>">
+		</div>
+
+		<div class="phones-input-group">
+			<?if (count($this->ac->phones) <= 1) {?>
+			<div class="input-group clearfix ">
+				<label class="left" for="registerPhone">
+					Телефоны: <sup class="red">*</sup>
+					<i class="icon-question-sign icon-yellow helper-popup">
+						<div class="left-tip-b">
+							<?=$this->vars[897]?>
+						</div>
+					</i>
+				</label>
+				<input class="w-160 required phoneInput" type="text" id="registerPhone" name="f[phone][0]" value="<?=$this->subject['Телефон']?>">
+				<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+			</div>
+			<?}else{
+				foreach($this->ac->phones as $k=>$phone){
+					if ($k==0) {
+						echo '
+							<div class="input-group clearfix ">
+								<label class="left" for="registerPhone">
+									Телефоны: <sup class="red">*</sup>
+									<i class="icon-question-sign icon-yellow helper-popup"></i>
+								</label>
+								<input class="w-160 required phoneInput" type="text" id="registerPhone" name="f[phone][0]" value="'.$phone.'">
+								<button class="btn btn-white btn-smaller ml-10 removeFirstPhoneInput" type="button"><i class="icon-remove"></i></button>
+							</div>
+						';
+					}elseif ($k == (count($this->ac->phones)-1)){
+						echo '
+							<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone]['.$k.']" value="'.$phone.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+								<div class="middle-tip-b ml-0"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+							</div>
+						';
+					}else{
+						echo '
+							<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone]['.$k.']" value="'.$phone.'">
+							<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+							</div>
+						';
+					}
+				}
+			}?>
+		</div>
+
+
+<!-- 		<div class="phones-input-group">
+			<div class="input-group clearfix ">
+				<label class="left" for="registerPhone">
+					Телефоны: <sup class="red">*</sup>
+					<i class="icon-question-sign icon-yellow helper-popup"></i>
+				</label>
+				<input class="w-160 required phoneInput" type="text" id="registerPhone" name="f[phone[0]]" value="+7 777 123-43-51">
+				<button class="btn btn-white btn-smaller ml-10 removeFirstPhoneInput" type="button"><i class="icon-remove"></i></button>
+			</div>
+			<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone[1]]" value="+7 727 123-43-51 (вн. 404)">
+				<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+			</div>
+			<div class="input-group ml-220 clearfix"><input class="w-160 required phoneInput" type="text" name="f[phone[2]]" value="Факс: 444-33-22">
+				<button class="btn btn-white btn-smaller ml-10 removePhoneInput" type="button"><i class="icon-remove"></i></button>
+				<button class="btn btn-white btn-smaller ml-10 addPhoneInput" type="button"><i class="icon-plus-sign"></i> Добавить телефон</button>
+				<div class="middle-tip-b ml-0"> Рекомендуем писать телефонные номера в формате: +7 777 123-45-67</div>
+			</div>
+		</div> -->
+
+		<div class="input-group">
+			<label class="left" for="contactSite">
+				Сайт компании:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[899]?>
+					</div>
+				</i>
+			</label>
+			<input class="w-440" type="text" id="contactSite" name="f[Сайт компании]" value="<?=$this->subject['Сайт компании']?>">
+		</div>
+
+		<div class="input-group mb-50">
+			<label class="left" for="promzonaLink">
+				Адрес на Promzona.kz: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="left-tip-b">
+						<?=$this->vars[901]?>
+					</div>
+				</i>
+			</label>
+			<div class="input-prepend w-440">
+				<span class="add-on">http://promzona.kz/co/</span>
+				<input class="required" id="promzonaLink" type="text" name="f[url]" value="<?=!empty($this->subject['URL'])?$this->subject['URL']:$this->subject['id']?>">
+			</div>
+		</div>
+
+		<div class="ml--20 mb-25 d-ib disabled-el">
+			<label class="fz-16 bold mb-10">
+				Контактные лица:
+				<i class="icon-question-sign icon-yellow helper-popup"></i>
+			</label>
+			<div class="input-group ml-20">
+				<button type="button" class="btn">Добавить контактное лицо</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+
+		<div class="d-ib w-440 ta-c bold">
+			В пакете «Стартовый» <span class="orange">у вас нет возможности<br>
+			добавлять дополнительные контактные лица<br>
+			и филиалы компании.</span>
+		</div>
+
+		<div class="clearfix ml--20 mb-25 disabled-el">
+			<label class="fz-16 bold mb-10">
+				Филиалы:
+				<i class="icon-question-sign icon-yellow helper-popup"></i>
+			</label>
+			<div class="input-group ml-20">
+				<button type="button" class="btn">Добавить филиал</button>
+			</div>
+			<div class="blinds"></div>
+		</div>
+
+		<div class="submit-group mr-30">
+			<button type="submit" class="btn btn-grey btn-grand" disabled>Сохранить изменения</button>
+		</div>
+
+
+	</div>
+
+</form>

@@ -1,0 +1,31 @@
+<section id="content" class="clearfix">
+
+    <aside id="cabinet-left-b">
+
+        <div class="meta-b-wrapper">
+            <div class="meta-b">
+                <div><b class="white"><?=$this->subject['Фио']?></b></div>
+                <div class="email-wrap"><?=$this->subject['Email']?></div>
+                <a href="/login/out/" class="btn btn-orange">Выход</a>
+            </div>
+        </div>
+
+        <?if ($menu = $this->getMenuArr()){?>
+        <div id="cab-nav">
+            <ul class="reset">
+                <?foreach($menu as $k=>$o){?>
+                <li <?=(!isset($_GET['action']) && ($o['Ссылка']== '')) || (isset($_GET['action'])&&($o['Ссылка']==$_GET['action']))?'class="active"':''?>><a href="/moderator/<?=$o['Ссылка']?>"><?=$o['Название']?> <?=isset($o['count'])?'<sup '.($o['count']==0?'class="empty"':'').'>'.$o['count'].'</sup>':''?></a></li>
+                <?}?>
+            </ul>
+        </div>
+        <?}?>
+
+    </aside>
+
+    <section id="cabinet-right-b">
+
+      #CONTENT#
+
+    </section>
+
+</section>

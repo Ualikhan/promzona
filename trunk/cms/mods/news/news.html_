@@ -1,0 +1,28 @@
+<?echo $title;?>
+<ul class="reset">
+
+            <li>
+              <div class="mb-wrapper"><a href="#" class="as-text bd-grey fz-13">Группа “Русэлт” представляет свою новую продукцию в области систем электропитания.</a></div>
+              <a href="#" class="bd-beige"><b>ООО РусЭлт</b></a>
+              <img class="ico-flag" src="img/dumm/icon-kz.png" alt="" /><span class="grey fz-12">Семипалатинск</span>
+              <br />
+              <span class="grey fz-11">17.08.2012</span>
+            </li>
+
+            <li>
+              <div class="mb-wrapper"><a href="#" class="as-text bd-grey fz-13">Агроволокно как правильно выбрать для использования.</a></div>
+              <a href="#" class="bd-beige"><b>ООО «Волокно» текстильное</b></a>
+              <img class="ico-flag" src="img/dumm/icon-kz.png" alt="" /><span class="grey fz-12">Усть-Каменогорск</span>
+              <br />
+              <span class="grey fz-11">17.08.2012</span>
+            </li>
+
+            <li>
+              <div class="mb-wrapper"><a href="#" class="as-text bd-grey fz-13">Блокорезка для мясокомбината Обской.</a></div>
+              <a href="#" class="bd-beige"><b>ООО “ММК ГРУП”</b></a>
+              <img class="ico-flag" src="img/dumm/icon-kz.png" alt="" /><span class="grey fz-12">Астана</span>
+              <br />
+              <span class="grey fz-11">17.08.2012</span>
+            </li>
+
+          </ul>

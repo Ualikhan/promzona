@@ -1,0 +1,162 @@
+<?
+Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+Header("Cache-Control: no-cache, must-revalidate");
+Header("Pragma: no-cache");
+Header("Last-Modified: ".gmdate("D, d M Y H:i:s")."GMT");
+header("Content-Type: text/html; charset=utf-8");
+include('cms/public/api.php');
+
+
+
+if (@$_REQUEST["object-row"]){
+	$dataArray= $_REQUEST["object-row"];
+	// выкидываем первый элемент массива (который пришел из заголовка таблицы - тег TH)
+	array_shift($dataArray);
+	// обрабатываем массив
+	foreach($dataArray as $line=>$value) { // $line у нас будет содержать номер позиции
+		$value = str_replace('tPosition-', '', $value); // выкинем из значения ненужное, оставим только идентификаторы
+		$id  = (int)$value; // на всякий случай. "Вдруг монетка встанет на ребро" :)
+		// обновляем позиции в БД
+		exit($id);
+	}
+}
+
+if(isset($_REQUEST['vote']) && is_numeric($voting_id = $_REQUEST['vote'])){
+	if(isset($_REQUEST['a_id']) && is_numeric($a_id = $_REQUEST['a_id'])) $api->voteOne($voting_id, $a_id);
+	exit( $api->getVotingResults($voting_id, $_REQUEST['lang']) );
+}
+
+$go = $_REQUEST['go'];
+switch($go){
+	// case 'validate':
+		// if (isset($_REQUEST['formId'])){
+			// $formId = $_REQUEST['formId'];exit($formId);exit(json_encode$formId);
+		// }
+		// exit();
+	case 'auth':
+		#CONFIG
+		$auth_base_id = 14;
+
+		if( !preg_match("/^[\d\w\.-]+@([\d\w-]+)((\.[\w\d-]+)+)?\.\w{2,6}$/", ($mail=$_REQUEST['mail'])) )
+			exit('{"st": "bad", "text": "E-mail некорректен."}');
+		else if( !($u = $api->db->select("objects", "WHERE `head`='".$auth_base_id."' AND `name`='".$mail."' LIMIT 1")) )
+			exit('{"st":"bad", "text":"Такой пользователь не зарегистрирован."}');
+		else if( $u['active'] != 1 )
+			exit('{"st":"bad", "text":"Ваша учётная запись не активна. Дождитесь пожалуйста проверки администратором."}');
+		$lang = $api->lang;
+		$api->lang = 'ru';
+		$u = array_merge($u, $api->objects->getObjectFields($u['id'], $u['class_id']));
+		$api->lang = $lang;
+
+		if($u['Пароль']!=sha1($_REQUEST['pass'])) exit('{"st":"bad", "text":"Неверный пароль."}');
+
+		$out = array(
+			"st"=>'ok',
+			"id"=>$u['id'],
+			"head"=>$u['head'],
+			"name"=>$u['фио'],
+			"mail"=>$u['name']
+		);
+
+		$_SESSION['auth']['u'] = $out;
+
+		exit( $api->json($out) );
+	case 'exit':
+		unset($_SESSION['auth']['u']);
+		exit('ok');
+	case 'subscribe_add':
+		if( !preg_match("/^[\d\w\.-]+@([\d\w-]+)((\.[\w\d-]+)+)?\.\w{2,6}$/", ($mail=$_REQUEST['mail'])) )
+			exit('E-mail некорректен.');
+		else if( !!$api->db->select('objects', "WHERE `head`='11' AND `name`='".$mail."' LIMIT 1") )
+			exit('Вы уже подписаны.');
+
+		$out = array(
+			"head"=>11,
+			"sort"=>time(),
+			"name"=>$mail
+		);
+
+		$api->db->insert('objects', $out);
+		exit('Вы успешно подписались!');
+		break;
+	case 'getCount':
+		$total_count = 0;
+		$total_summ = 0;
+		if (is_array($_SESSION['rycle']))
+		{
+			foreach($_SESSION['rycle'] as $o)
+			{
+				if ($obj = $api->objects->getFullObject($o['id'], false))
+				{
+					if ($_REQUEST['city'] != $o['city']) continue; #Показ товара только из определенного города
+					$total_count++;
+					$total_summ += (intval($obj['Цена'])*$o['count']);
+				}
+			}
+		}
+		exit(json_encode($total_count));
+		break;
+	case 'getSumm':
+		$total_summ = 0;
+		if (is_array($_SESSION['rycle']))
+		{
+			foreach($_SESSION['rycle'] as $o)
+			{
+				if ($obj = $api->objects->getFullObject($o['id'], false))
+				{
+					if ($_REQUEST['city'] != $o['city']) continue; #Показ товара только из определенного города
+					$total_summ += (intval($obj['Цена'])*$o['count']);
+				}
+			}
+		}
+		exit(json_encode($total_summ));
+		break;
+	case 'buy':
+		if(!empty($_REQUEST['id']) && is_numeric($id = $_REQUEST['id']) && !empty($_REQUEST['count']) && is_numeric($count = $_REQUEST['count']) && !!($item = $api->objects->getFullObject($id))){
+			$lang = @$_REQUEST['lang'];
+			$city = @$_REQUEST['city'];
+			if(!isset($_SESSION['rycle'])) $_SESSION['rycle']= array();
+			$_SESSION['rycle'][$id]=array(
+				"id"=>$id,
+				"count"=>$count,
+				//"city"=>$_REQUEST['city'],
+				"pic"=>$item['Изображение'],
+				"price"=>$item['Цена'],
+				"name"=>$item['Название'],
+				"anons"=>$item['Анонс']
+			);
+			exit($api->v('Товар успешно добавлен в корзину.', $lang, $city));
+		}
+		exit('Ошибка в параметрах.');
+		break;
+	case 'order':
+	    if (!empty($_REQUEST['fields'])){
+		    include_once(_FILES_ABS_.'/mail.php');
+		    $fields = $_REQUEST['fields'];
+				    $smail = new mime_mail();
+				    $html = array();
+				    if(($obj=$api->objects->getFullObject(16)) && (trim($obj['Значение'])!='')){
+					    $smail->to=trim($obj['Значение']);
+				    }else{
+					    $smail->to='as@go-web.kz';
+				    }
+				    $smail->from 		= 'order@'.$_SERVER['HTTP_HOST'];
+				    $smail->subject		= 'Сообщение с сайта '.$_SERVER['HTTP_HOST'];
+				    foreach($fields as $k=>$f){
+					    if(empty($f)) continue;
+					    $html[]='<div><b>'.$k.'</b></div>';
+					    $html[]='<div>'.strip_tags($f).'</div>';
+					    $html[]='<br>';
+				    }
+				    $smail->body = join("", $html);
+
+				    # отправляем
+				    $smail->send($smail->to);
+		    exit('Ваше заявка успешно отправлена');
+	    }
+	break;
+	default:
+		echo '0';
+		break;
+}
+?>

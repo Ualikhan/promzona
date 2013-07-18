@@ -1,0 +1,35 @@
+@import "vars.scss";
+
+// IE8
+// -------------------------
+
+// Links
+a { color:$linkColor; text-decoration:none; border-bottom:.1em solid $linkColor; font-family:$linkFontFamily;
+    //  &:visited {color:$linkColorVisited; text-decoration:none; border-bottom-color:$linkColorVisited;}
+    &:hover { color:$linkColorHover; text-decoration:none; border-bottom-color:$linkColorHover; }
+    &.dashed { border-bottom-style:dashed; }
+    &.pseudo { border-bottom:none;
+        span { color:$linkColor; border-bottom:.1em solid $linkColor; }
+        &:visited span { color:$linkColorVisited; border-bottom:.1em dashed $linkColorVisited; }
+        &:hover span { color:$linkColorHover; border-bottom-color:$linkColorHover; }
+    }
+    &.dashed {
+        span { border-bottom-style:dashed; }
+    }
+}
+
+a.btn.btn-white { border-bottom-color:#a2a2a2; }
+
+// Nav
+#nav>ul>li>ul { border:1px solid $greyLight; border-top:none; }
+
+// Index
+.index-list-wrapper .lists-wrapper .item .wrapper.open { border:2px dashed $greyLight; border-left:none; border-top:none; }
+
+// Elements
+.disabled-el { z-index:1 !important;
+    * { color:#CDCDCD !important; border-color:#CDCDCD !important; }
+}
+
+// Footer
+#index-promo-b .item.last-child { margin-right:0; }

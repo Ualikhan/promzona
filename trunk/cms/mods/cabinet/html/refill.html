@@ -1,0 +1,24 @@
+<h1 class="ml-30 mb-20">Текущий баланс: <span class="orange"><?=$this->subject['Кредиты']?> кр.</span></h1>
+
+<div class="ml-50 mr-40 mb-20">Владельцам пакета «Бизнес» предоставляются платные услуги по продвижению объявлений на площадке Promzona.kz. Оплата этих услуг осуществляется кредитами.</div>
+
+<form action="" class="ml-30 form-inline listenThisForm" method="post">
+
+    <h2>Пополнить баланс на:</h2>
+
+    <div class="ml-20 mb-20">
+        <div class="input-append">
+            <input name="summ" type="text" class="w-100 input-grand required onlyNum sepThousands fz-16 bold"> <span class="add-on bold fz-16 btn-grand">кредитов</span>
+        </div>
+        <span class="help-inline">1 кредит = 1 тенге.</span>
+    </div>
+
+    <h2 class="mb-15">Выберите способ оплаты:</h2>
+
+    <div class="input-group mb-20 ml-20 required">
+        <label class="radio mb-10"><input type="radio" name="name" value="bank"> <b>Сформировать банковский счёт для безналичного рассчёта;</b></label>
+        <label class="radio"><input type="radio" name="name" value="qiwi"> <b>Оплатить через Qiwi-кошелёк или терминал.</b></label>
+    </div>
+    <button class="btn btn-grey btn-grand ml-20" disabled>Продолжить</button>
+
+</form>

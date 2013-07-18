@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script type="text/javascript">
+        var currentInfo = {
+            'typeahead': {
+            'countries': [<?=$this->getACCountiesList()?>],
+	    'regions': [<?=$this->getACRegionsList()?>]
+            }
+        };
+        var year = <?=date("Y")?>;
+    </script>
+</head>
+
+<body>
+
+<div id="layout">
+
+	<div id="top-stripe"></div>
+
+	<header id="header">
+
+		<section id="top-line">
+
+			<div id="logo-b">
+				<a href="/"><img src="/img/logo.png" alt="" /></a>
+			</div>
+
+		</section>
+
+	</header>

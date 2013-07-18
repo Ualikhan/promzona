@@ -1,0 +1,52 @@
+<?if ( ($list = $this->objects->getFullObjectsListByClass(-1,31,"AND o.active = '1' AND c.field_102 = '1' AND c.field_211 = '1' AND c.field_100 = '".$this->type."' ORDER BY o.sort DESC LIMIT 10")) && ($money = $this->objects->getFieldP3(116,31)) ){?>
+<h2 class="ml-20"><?echo $title?></h2>
+<div class="index-carousel-b">
+
+
+	<ul id="index-carousel" class="index-carousel clearfix">
+
+		<?foreach($list as $o){?>
+		<li>
+
+			<div class="slide">
+				<a href="/ads/<?=$o['id']?>/" class="as-text bd-grey pseudo">
+					<img src="<?=!empty($o['Изображение'])?_UPLOADS_.'/'.$o['Изображение']:'/img/nophoto-small.png'?>" alt="" />
+					<span><?=$o['Название']?></span>
+				</a>
+				<br />
+				<?if (!empty($o['Цена'])){?>
+				<b class="orange"><?=$o['Цена']?> </b><b class="fz-11"><?=$money[$o['Валюта']]?></b>
+				<?}else{?>
+				<b class="orange">Договорная</b>
+				<?}?>
+			</div>
+
+			<div class="hidden" style="display:none;">
+
+				<b>Поставщик:</b>
+				<br />
+
+				<a href="/ads/<?=$o['id']?>/" class="bd-beige"><?=$o['Поставщик оборудования']?></a>
+				<br />
+
+				<img class="ico-flag" src="/img/dumm/icon-kz.png" alt="" /><span class="grey fz-12"><?=$o['Местоположение товара']?></span>
+				<br />
+
+				<a href="/ads/<?=$o['id']?>/" class="as-text bd-grey pseudo">
+					<img src="<?=!empty($o['Изображение'])?_UPLOADS_.'/'.$o['Изображение']:'/img/nophoto-medium.png'?>" alt="" />
+					<span><b><?=$o['Название']?></b></span>
+				</a>
+
+				<div class="wrapper"><b class="orange"><?=$o['Цена']?> </b><b class="fz-11"><?=$money[$o['Валюта']]?></b></div>
+
+			</div>
+
+		</li>
+		<?}?>
+
+	</ul>
+
+</div>
+<?}?>
+
+

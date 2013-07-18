@@ -1,0 +1,430 @@
+// moderation
+
+#logo-b {
+    float:none;
+    margin:0 auto;
+}
+
+.pager {
+    margin:0 0 20px 0;
+    font-size:13px;
+    color:#898989;
+    width:230px;
+    select {
+        margin:0;
+    }
+}
+
+.btn-add-company {
+    margin:0 40px 15px 0;
+}
+
+.moderation-wellcome {
+    padding-top:6px;
+    margin:0 0 20px 30px;
+    .title {
+        margin-bottom:25px;
+        font-size:18px;
+    }
+    button {
+        font-weight:normal;
+        margin-right:12px;
+    }
+}
+
+.moderation-list {
+    margin:0 0 20px 30px;
+    h3 {
+        margin:0;
+    }
+    ul {
+      padding-left: 20px;
+      padding-top:5px;
+      margin:0 0 20px 0;
+      background: url(../img/yellow-strip-vertical.png) left repeat-y;
+    }
+}
+
+.moderation-form {
+    padding-bottom:40px;
+    margin:0 0 20px;
+    .title {
+        margin:0 0 20px 30px;
+    }
+    .empty {
+        text-align:center;
+        margin:80px 0;
+        p {
+            font-size:16px;
+            color:#ACACAC;
+        }
+    }
+    table {
+        th {
+            padding:5px 20px 2px;
+            background:#E6E6E6;
+            border-bottom:0;
+            label.checkbox {
+                float:left;
+                font-size:11px;
+                line-height:11px;
+                padding-left:40px !important;
+                margin-top:4px;
+                input[type="checkbox"] {
+                    margin-left:-20px !important;
+                }
+            }
+            button {
+                margin-left:20px;
+                margin-right:-15px;
+                font-weight:normal;
+            }
+        }
+        &.adv-list {
+            margin:0;
+            td {
+                border:0;
+                padding:20px 20px 0;
+                .item {
+                    margin-bottom:10px;
+                    .photo {
+                        margin-left:10px;
+                    }
+                    .desc {
+                        width:330px;
+                    }
+                    .checkbox {
+                        float:left;
+                        margin-top:10px;
+                    }                
+                    .btn-group {
+                        margin:10px 0 20px;
+                       .btn {
+                            font-weight:normal;
+                       } 
+                    }
+                }
+            }
+            tr {
+                &:first-child {
+                    td {
+                        .item:not(.item-hot), .item:not(.item-blue){
+                            border-top:0;
+                        }
+                        .item-hot {
+                            margin-top:10px;
+                        }
+                    }                            
+                }
+            }            
+        }
+        &.company-list {
+            td {
+                padding-top:14px;
+                padding-bottom:30px;
+            }
+            tr {
+                &:first-child {
+                    td {
+                        padding-top:30px;
+                        border-top:0;
+                    }                            
+                }
+            }            
+            .item {
+                margin:0;
+                padding:0;
+                border:0;
+                .btn-group {
+                    margin:10px 0 20px;
+                   .btn {
+                        font-weight:normal;
+                   } 
+                }
+            }
+            img {
+                max-width:100px;
+            }
+            .checkbox {
+                padding-left:32px;
+            }
+            .company-item {
+                .company-name {
+                    font-size:16px;
+                    margin-bottom:3px;
+                    padding-right:20px;
+                }
+                .company-category {
+                    margin-bottom:9px;
+                }
+                .company-location {
+                    margin-top:9px;
+                    margin-bottom:8px;
+                    font-size:13px;
+                    color:#898989;                
+                    img {
+                        float:left;
+                        margin:4px 5px 0 0;
+                    }
+                }
+                .company-date {
+                    font-size:13px;
+                    color:#898989;                
+                }
+                .btn {
+                    margin-top:5px;
+                }
+            }
+            .company-contacts {
+                .phones {
+                    font-size:13px;
+                }
+                .all {
+                    margin-top:-18px;
+                    margin-left:4px;
+                }
+            }
+        }
+
+        &.company-news-list {
+            td {
+                padding-top:14px;
+                padding-bottom:30px;
+            }
+            .checkbox {
+                padding-left:32px;
+            }
+            .date {
+                text-align:right;
+                font-size:12px;
+                margin-bottom:10px;
+            }
+            img {
+                max-width:100px;
+            }
+            .company-news-item {
+                color:#464646;
+                padding-right:20px;
+                .btn-group {
+                    margin:0 65px 0 0;
+                   .btn {
+                        font-weight:normal;
+                   } 
+                }
+                .company-name {
+                    font-size:14px;                
+                }
+                .company-location {
+                    font-size:13px;
+                    color:#898989;
+                    margin:0 0 8px;
+                }            
+            }
+            .company-news-item-name {
+                margin:0 0 10px;
+                font-size: 16px;
+            }
+            .company-news-item-in {
+                p {
+                    margin:0;
+                    font-size: 13px;
+                }
+            }
+        }
+
+        &.company-bills-list {
+            tr {
+                &:first-child {
+                    td {
+                        padding-top:20px;
+                        border-top:0;
+                    }                            
+                }
+            }            
+            .checkbox {
+                padding-left:32px;
+            }            
+        }
+    }
+}
+
+.moderation-modal {
+    width:530px;
+    .modal-header {
+        padding:9px 20px;
+    }
+    .modal-footer {
+        text-align:left;
+        padding:14px 25px 15px;
+        .btn {
+            margin-right:10px;
+        }
+    }
+    p {
+        font-size:14px;
+        margin:0 0 20px 10px;
+    }
+    .main-catalog {
+        padding:0;
+        margin:0;
+        .item {
+            margin:0;
+            padding:0;
+            border:0;
+            min-height:98px;    
+            .photo {
+                width:70px;
+                visibility:hidden;
+                img {
+                    visibility: visible;
+                    width:70px;
+                    height:50px;
+                }            
+            }
+            .desc {
+                float:none;
+                width:auto;
+                padding:7px 0 0;
+                margin:0 0 0 100px;
+                .header {
+                    margin-bottom:8px;
+                }
+            }
+            .company-location {
+                font-size: 13px;
+                color: #898989;
+                img {
+                    float:left;
+                    margin:5px 5px 0 0;
+                }
+            }     
+            &.company {
+                padding:7px 0 0 10px;
+                &.with-logo {
+                    padding-left:100px;
+                }
+                min-height:104px;
+                img.logo {
+                    float:left;
+                    width:70px;
+                    height:50px;
+                    margin:7px 10px 10px -90px;
+                }       
+                .company-name {
+                    font-size:16px;
+                    margin-bottom:10px;
+                }    
+            }
+            &.news {
+                padding:7px 0 0 10px;
+                &.with-logo {
+                    padding-left:100px;
+                }
+                min-height:104px;
+                img.logo {
+                    float:left;
+                    width:70px;
+                    height:50px;
+                    margin:7px 10px 10px -90px;
+                }       
+                .company-location {
+                    margin-bottom:10px;
+                }
+                .company-news-item-name {
+                    font-size:16px;
+                }                
+            }
+            &.orders {
+                padding-left:30px;
+                .bd-beige {
+                    display:inline-block;
+                    margin:0 0 10px 0;
+
+                }
+                .icon-time {
+                    margin-left:-20px;
+                }
+            }
+        }
+    }
+    .control-group {
+        margin:0 10px 10px;
+        .control-label {
+            margin-bottom:14px;
+        }
+        .controls {
+
+        }
+    }
+}
+
+.add-company-form {
+    margin:30px 0 20px 30px;
+    .submit-group {
+        margin:40px 25px 40px -40px;
+    }
+    .input-group {
+        select, textarea, input[type="text"] {
+            margin-bottom:0;
+        }        
+    }
+    textarea {
+        height:188px !important;
+        max-height:188px !important;
+        min-height:188px !important;
+    }
+    .addPhoneInput {
+        font-weight:normal;
+        margin-left:40px;
+    }
+    .w-440 {
+        width:430px;
+    }
+    .input-group {
+        &.added {
+            .addPhoneInput, .middle-tip-b {
+                display:none;
+            }
+        }
+    }
+    .filesResponse {
+        margin:13px 0 0 190px;
+        li {
+            margin:0 0 3px 0;
+            a {
+                &.link-remove {
+                    font-size:12px;
+                    margin-left:5px;
+                }
+            }
+            sup {
+                top:0;
+                font-size:14px;
+                color:#898989;
+            }
+        }
+    }
+}
+
+.bill-modal {
+    $modalWidth:    780px;
+    width:          $modalWidth;
+    margin-left:    -1* $modalWidth /2;
+    .modal-header {
+        .ml-30 {
+        }
+    }
+    .modal-body {
+        padding:    0;
+        .bill-table {
+        }
+        .bill-info-table {
+            margin: 0 0 20px 0 !important;
+        }
+        .ml-20 {
+        }
+    }
+    .modal-footer {
+
+    }
+}

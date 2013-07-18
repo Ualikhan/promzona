@@ -1,0 +1,316 @@
+<?$this->ac->vars = $this->vars?>
+<a href="/cabinet/add/" class="btn btn-orange pull-right btn-narrow mr-20"><b>Разместить объявление</b></a>
+<h1 class="ml-30 mb-30"><!--#page-title#--></h1>
+
+<?$adsCount = $this->ac->getAdsCount();?>
+<?if (!empty($adsCount)){?>
+
+<form action="" id="cabinet-filter-form" class="ml-30 mr-15">
+
+	<div id="cabinet-filter-b" class="clearfix form-horizontal">
+
+		<div class="pull-left name control-label">
+			<b>Фильтр объявлений:</b>
+		</div>
+
+		<div class="pull-right filters">
+			<div class="item">
+				<input value="all" type="radio" name="sort-filter" id="filter-all" <?=$this->ac->checked == 'all' ? 'checked' : ''?>/>
+				<label for="filter-all">Все <span><?=$adsCount?></span></label>
+			</div>
+			<?foreach ($this->ac->types as $k=>$t){
+				if ( (($k==0) || ($k==2)) && ($this->subject['Роль']=='user') ) continue;
+				else echo '
+					<div class="item">
+						<input type="radio" name="sort-filter" id="filter-'.$k.'" value="'.$k.'" '.(($this->ac->checked == $k) && is_numeric($this->ac->checked) ? 'checked' : '').' />
+						<label for="filter-'.$k.'">'.$t.' <span>'.$this->ac->getAdsCountByType($k).'</span></label>
+					</div>
+				';
+			}?>
+
+<!-- 		<div class="item">
+				<input type="radio" name="sort-filter" id="filter-all"/>
+				<label for="filter-all">Все <span>20</span></label>
+			</div>
+
+			<div class="item">
+				<input type="radio" name="sort-filter" id="filter-sell"/>
+				<label for="filter-sell">Продам <span>10</span></label>
+			</div>
+
+			<div class="item disabled" name="sort-filter">
+				<input type="radio" name="sort-filter" id="filter-buy"/>
+				<label for="filter-buy">Куплю <span>0</span></label>
+			</div>
+
+			<div class="item">
+				<input type="radio" name="sort-filter" id="filter-lease"/>
+				<label for="filter-lease">Сдам в аренду <span>9</span></label>
+			</div>
+
+			<div class="item disabled" name="sort-rent">
+				<input type="radio" name="sort-filter" id="filter-rent"/>
+				<label for="filter-rent">Возьму в аренду <span>0</span></label>
+			</div>
+
+			<div class="item">
+				<input type="radio" name="sort-filter" id="filter-sell-busines"/>
+				<label for="filter-sell-busines">Продам бизнес <span>1</span></label>
+			</div>
+
+			<div class="item disabled" name="sort-filter-business">
+				<input type="radio" name="sort-filter" id="filter-buy-busines"/>
+				<label for="filter-buy-busines">Куплю бизнес <span>0</span></label>
+			</div> -->
+
+		</div>
+
+	</div>
+
+	<div id="cabinet-category-b" class="clearfix form-horizontal">
+
+		<div class="control-label name pull-left">
+			<b>Раздел и категория:</b>
+		</div>
+
+		<div class="pull-right categories">
+
+			<select name="cat" class="span2">
+				<option value="all" <?=$this->ac->cat == 'all' ? 'selected="selected"' : ''?>>Все разделы</option>
+				<?foreach ($this->ac->cats as $c){
+					echo '<option value="'.$c['id'].'" '.($this->ac->cat==$c['id']?'selected="selected"':'').'>'.$c['Название'].'</option>';
+					}?>
+			</select>
+			<select name="subcat" class="span3">
+				<option value="all" <?=$this->ac->subcat == 'all' ? 'selected="selected"' : ''?>>Все категории</option>
+				<?foreach ($this->ac->subcats as $s){
+					echo '<option value="'.$s['id'].'" '.($this->ac->subcat==$s['id']?'selected="selected"':'').'>'.$s['Название'].'</option>';
+				}?>
+			</select>
+
+			<select name="on_page" class="span1">
+				<option value="25" <?=$this->ac->on_page==25?'selected="selected"':''?>>25</option>
+				<option value="50" <?=$this->ac->on_page==50?'selected="selected"':''?>>50</option>
+			</select>
+
+			<span class="help-inline grey fz-13">объявлений на стр.</span>
+
+		</div>
+
+	</div>
+
+</form>
+
+<form action="" id="cabinet-all-ads-edit" method="post">
+
+	<div class="form-inline ads-controls">
+		<input id="cabinet-check-all" type="checkbox" />
+		<label for="cabinet-check-all" class="help-inline fz-11"><span>Выбрать <br /> все</span></label>
+		<button type="button" class="btn  soft" data-type="modalArchiveAds"><i class="icon-inbox"></i> В архив</button>
+		<button type="button" class="btn  soft" data-type="modalDeleteAds"><i class="icon-trash"></i> Удалить</button>
+		<button <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> type="button" class="btn  soft" data-type="modalRiseAds" rel="popover" data-content="<p>Поднять объявлениена первые позициив поиске и категориях.</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Поднять <sup>100 кр.</sup></button>
+		<button <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> type="button" class="btn  soft" data-type="modalHighlightAds" rel="popover" data-content="<p><b>Услуга доступна пользователям с платным <a href='#' class='bd-beige'>пакетом «Бизнес»</a></b></p><p>Выделить и поместить объявление на <span class='inline-frame frame-green'>зелёный</span>, <span class='inline-frame frame-yellow'>жёлтый</span> или <span class='inline-frame frame-blue'>голубой</span> фон.</p><p>Объявление также будет поднято на первые позиции в поиске и категориях</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Выделить <sup>200 кр.</sup></button>
+		<button <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> type="button" class="btn  soft" data-type="modalHotAds" rel="popover" data-content="<p>Разместить объявление в <a href='#' class='bd-beige'>специальном разделе</a> сайта и добавить в ротацию на главной странице.</p><p>Объявление также будет выделено <span class='inline-frame frame-orange'>оранжевым</span> цветом и поднято на первые позиции в поиске и категориях.</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Горячее предложение <sup>300 кр.</sup></button>
+	</div>
+
+	<table id="ad-sort-controls" class="reset">
+
+		<colgroup>
+			<col width="30" />
+			<col width="80" />
+			<col width="100" />
+			<col width="190" />
+			<col width="140" />
+			<col width="130" />
+			<col width="110" />
+		</colgroup>
+
+		<thead>
+			<tr>
+				<th></th>
+				<th><a href="<?=$this->ac->sortHref('type')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'type' ? 'sortUp orange-tri' : ($this->ac->sort == 'type_desc' ? 'sortDown orange-tri' : '')?>"><span>Тип об.</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('img')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'img' ? 'sortUp orange-tri' : ($this->ac->sort == 'img_desc' ? 'sortDown' : '')?>"><span>Фотография</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('name')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'name' ? 'sortUp orange-tri' : ($this->ac->sort == 'name_desc' ? 'sortDown orange-tri' : '')?>"><span>Название, наличие</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('razdel')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'razdel' ? 'sortUp orange-tri' : ($this->ac->sort == 'razdel_desc' ? 'sortDown orange-tri' : '')?>"><span>Раздел, категория</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('price')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'price' ? 'sortUp orange-tri' : ($this->ac->sort == 'price_desc' ? 'sortDown orange-tri' : '')?>"><span>Цена, бюджет</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('date')?>" class="grey-light dashed pseudo bd-grey <?=$this->ac->sort == 'date' ? 'sortUp orange-tri' : ($this->ac->sort == 'date_desc' ? 'sortDown orange-tri' : '')?>"><span>Размещено</span></a></th>
+			</tr>
+		</thead>
+
+	</table>
+
+	<table id="my-ads-table" class="reset">
+
+		<colgroup>
+			<col width="20" />
+			<col width="80" />
+			<col width="100" />
+			<col width="190" />
+			<col width="140" />
+			<col width="130" />
+			<col width="100" />
+		</colgroup>
+
+		<tbody>
+
+		<?$pages = $this->ac->getPages()?>
+
+		<?if ($list = $this->ac->getAdsList($pages['start'],$pages['on_page'])){
+			foreach ($list as $ad){?>
+				<?$status = $this->ac->getAdStatus($ad);?>
+				<tr class="<?=isset($this->ac->colors[$ad['Цвет']])?$this->ac->colors[$ad['Цвет']]:''?> <?=$ad['Горячее предложение']==1?'tr-hot':''?>">
+					<td>
+						<input type="checkbox" id="<?=$ad['id']?>" name="ad[<?=$ad['id']?>]">
+					</td>
+					<td>
+						<label for="<?=$ad['id']?>"><?=$this->ac->types[$ad['Тип']]?></label>
+					</td>
+					<td>
+						<a href="/cabinet/edit/<?=$ad['id']?>"><img class="thumb" src="<?=!empty($ad['Изображение']) ? _IMGR_.'?w=70&h=50&image='._UPLOADS_.'/'.$ad['Изображение'] : '/img/nophoto-small.png'?>" alt="" /></a>
+					</td>
+					<td>
+						<div class="br">
+							<a href="/cabinet/edit/<?=$ad['id']?>/" class="as-text bd-grey"><b><?=$ad['Название']?></b></a>
+                            <span class="fz-13 ml-5 cur-p" rel="popover" data-content="Количество просмотров объявления."><i class="icon-eye-open icon-yellow"></i> <?=(int)$ad['Колличество просмотров']?></span>
+						</div>
+						<span class="fz-13 grey"><?=$this->subject['Роль']!='user'?$this->ac->is_got[$ad['Наличие товара']] : ''?></span>
+					</td>
+					<td>
+						<span class="fz-13"><?=$this->ac->cats[$ad['razdel_id']]['Название']?></span><br />
+                                                <a href="/cabinet/edit/<?=$ad['id']?>" class="bd-beige fz-13"><?=$this->ac->subcats[$ad['category_id']]['Название']?></a>
+					</td>
+					<td>
+						<?if (!empty($ad['Цена'])){?>
+						<b class="orange"><?=$ad['Цена']?></b> <span class="fz-11"><?=$this->ac->money[$ad['Валюта']]?></span>
+						<?}else{?>
+						<b class="orange">Договорная</b>
+						<?}?>
+					</td>
+					<td>
+						<div class="br cur-p" rel="popover" data-content="<?=$status[0]['content']?>">
+							<i class="<?=$status[0]['icon']?>"></i> <span class="fz-12 grey"><?=$status[0]['date']?></span>
+						</div>
+						<?=(isset($status[1]) ? 
+							'<div class="br cur-p">
+								<i class="'.$status[1]['icon'].'"></i> <span class="fz-12 grey">'.$status[1]['date'].'</span>
+							</div>'
+						: '')?>
+					</td>
+				</tr>
+			<?}
+		}?>
+
+<!--             <tr class="tr-blue">
+				<td>
+					<input type="checkbox" id="id1" />
+				</td>
+				<td>
+					<label for="id1">Продам</label>
+				</td>
+				<td>
+					<a href="#"><img class="thumb" src="/img/dumm/cabinet-ad-dumm-2.jpg" alt="" /></a>
+				</td>
+				<td>
+					<div class="br">
+						<a href="#" class="as-text bd-grey"><b>Вилочный погрузчик Toyota 7FB20</b></a>
+					</div>
+					<span class="fz-13 grey">В наличии</span>
+				</td>
+				<td>
+					<span class="fz-13">Спецтехника</span><br />
+					<a href="#" class="bd-beige fz-13">Складская техника</a>
+				</td>
+				<td>
+					<b class="orange">561 827</b> <span class="fz-11">KZT</span>
+				</td>
+				<td>
+					<div class="br" rel="popover" data-content="Объявление ожидает проверку модератором.">
+						<i class="icon-warning-sign icon-yellow"></i> <span class="fz-12 grey">20.09.2012</span>
+					</div>
+					<div class="br">
+						<i class="icon-chevron-up icon-grey"></i> <span class="fz-12 grey">01.10.2012</span>
+					</div>
+				</td>
+			</tr>
+
+			<tr class="tr-yellow">
+				<td>
+					<input type="checkbox" id="id2" />
+				</td>
+				<td>
+					<label for="id2">Сдам в аренду</label>
+				</td>
+				<td>
+					<a href="#"><img class="thumb" src="/img/nophoto-small.png" alt="" /></a>
+				</td>
+				<td>
+					<div class="br">
+						<a href="#" class="as-text bd-grey"><b>Вилочный погрузчик Toyota 7FB20</b></a>
+					</div>
+					<span class="fz-13 grey">В наличии</span>
+				</td>
+				<td>
+					<span class="fz-13">Спецтехника</span><br />
+					<a href="#" class="bd-beige fz-13">Складская техника</a>
+				</td>
+				<td>
+					<b class="orange">8000</b> <span class="fz-11">KZT</span><br />
+					<span class="fz-13 grey">в месяц</span>
+				</td>
+				<td>
+					<div class="br" rel="popover" data-content="Объявление ожидает проверку модератором.">
+						<i class="icon-warning-sign icon-yellow"></i> <span class="fz-12 grey">20.09.2012</span>
+					</div>
+				</td>
+			</tr>
+
+			<tr class="tr-green">
+				<td>
+					<input type="checkbox" id="id3" />
+				</td>
+				<td>
+					<label for="id3">Продам</label>
+				</td>
+				<td>
+					<a href="#"><img class="thumb" src="/img/dumm/cabinet-ad-dumm-1.jpg" alt="" /></a>
+				</td>
+				<td>
+					<div class="br">
+						<a href="#" class="as-text bd-grey"><b>Экскаватор гусеничный Hitachi ZX</b></a>
+					</div>
+					<span class="fz-13 grey">В наличии</span>
+				</td>
+				<td>
+					<span class="fz-13">Спецтехника</span><br />
+					<a href="#" class="bd-beige fz-13">Машины для земляных работ</a>
+				</td>
+				<td>
+					<b class="orange">9 863 965</b> <span class="fz-11">KZT</span><br />
+					<span class="fz-13 grey">в месяц</span>
+				</td>
+				<td>
+					<div class="br" rel="popover" data-content="Какая-то информация">
+						<i class="icon-ok icon-grey"></i> <span class="fz-12 grey">01.09.2012</span>
+					</div>
+				</td>
+			</tr> -->
+
+		</tbody>
+
+	</table>
+	<?if ($pages['count_pages']>1){?>
+	<div class="pagination pagination-centered pagination-promzona">
+		<ul>
+			<li <?=!$pages['prev'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($pages['curent_page'],'prev')?> class="pseudo soft">← <span>Предыдущая</span></a></li>
+			<?for ($i=1; $i<intval($pages['count_pages'])+1;$i++){?>
+			<li <?=($i==$pages['curent_page'] ? 'class="active"' : '')?>><a <?=$this->ac->pgHref($i)?>><?=$i?></a></li>
+			<?}?>
+			<li <?=!$pages['next'] ? 'class="disabled"' : 'class="pseudo soft"'?>><a <?=$this->ac->pgHref($pages['curent_page'],'next')?>><span>Следующая</span> →</a></li>
+		</ul>
+	</div>
+	<?}?>
+
+</form>
+<?}else{?>
+	<p>Объявлений нет</p>
+<?}?>

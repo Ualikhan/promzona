@@ -1,0 +1,66 @@
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <!-- <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4 class="alert-heading">Объявление успешно размещено.</h4>
+    <div class="lh-22">Объявление размещено на площадке и доступно по ссылке: http://promzona.kz/spec/2343242 Напоминаем, что ваше объявления пройдёт обязательную модерацию, о результатах которой мы оповестим вас по электронной почте.</div> -->
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<h1 class="ml-30 mb-25"><?=$this->ac->title?></h1>
+
+<div class="add-news-form">
+  <form action="" method="post" class="form-horizontal required-container">                  
+	<div class="control-group required">
+	  <div class="control-label"><span><b>Заголовок новости:</b></span> <i class="icon-question-sign icon-yellow helper-popup"></i></div>
+	  <div class="controls">
+		<input type="text" name="f[Название]" id="newsName" class="span5 required-inp" value="<?=$this->ac->object['Название']?>" />
+	  </div>
+	</div>              
+	<div class="control-group">
+	  <div class="control-label"><span><b>Фотография новости:</b></span> <i class="icon-question-sign icon-yellow helper-popup"></i></div>
+	  <div class="controls">
+          <div class="newsPhotoUploader">
+              <div id="uploadPhoto"></div>
+          </div>
+          <div class="photo-upload-response">
+		  <div class="photo">
+			<a class="pseudo dashed red fz-12 link-remove" href="javascript:void(0)" style="display:none;"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a>
+			<img src="/img/nophoto-medium.png" />
+              <input type="hidden" name="photo" value="">
+          </div>
+		</div>
+	  </div>
+	</div>              
+	<div class="control-group">
+	  <div class="control-label">
+		<span><b>Анонс:</b></span>
+		<div class="help-block">
+		  <p>Опишите в&nbsp;двух-трёх предложениях содержание новости.</p>
+		  <p>Анонс отображается только в&nbsp;списке новостей, и&nbsp;не&nbsp;выводится на&nbsp;странице самой новости.</p>
+		</div>                    
+	  </div>
+	  <div class="controls">
+		<textarea rows="7" class="span5" id="newsAnnouncement" name="f[Анонс]"><?=stripslashes($this->ac->object['Анонс'])?></textarea>
+	  </div>
+	</div>              
+	<div class="control-group group-max required">
+	  <div class="control-label"><span><b>Полный текст новости:</b></span></div>
+	  <div class="controls">
+		<textarea rows="12" class="span7 required-inp" id="newsDescription" name="f[Текст]"><?=stripslashes($this->ac->object['Текст'])?></textarea>
+	  </div>
+	</div>         
+	<div class="form-controls">
+	  <div class="control-group">
+		<div class="controls">
+		  <button type="submit" class="btn btn-grand btn-grey">Редактировать новость</button>
+          <button type="button" class="btn btn-grand required-btn btnNewsPreview">Предварительный просмотр</button>
+		  <p class="help-block">Новость пройдёт обязательную проверку модератором.</p>
+		</div>
+	  </div>
+	</div>     
+  </form>
+</div>
+
+<input type="hidden" id="company-name" value="<?=$this->subject['Название компании']?>">
+<input type="hidden" id="company-region" value="<?=$this->subject['Регион']?>">
+<input type="hidden" id="company-region-icon" value="<?=$this->getFlagUrl($this->subject['Регион'])?>">

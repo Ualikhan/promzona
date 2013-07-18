@@ -1,0 +1,451 @@
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <!-- <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4 class="alert-heading">Объявление успешно размещено.</h4>
+    <div class="lh-22">Объявление размещено на площадке и доступно по ссылке: http://promzona.kz/spec/2343242 Напоминаем, что ваше объявления пройдёт обязательную модерацию, о результатах которой мы оповестим вас по электронной почте.</div> -->
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<div class="pull-right mr-20">
+	<span class="ml-10 d-ib pull-right"><a href="#" class="bd-beige bold">Правила размещения <br>объявлений</a></span>
+	<i class="icon-info-sign icon-yellow"></i>
+</div>
+<h1 class="ml-30"><!--#page-title#--></h1>
+<h2 class="ml-30"><?=$this->ac->object['Название']?></h2>
+
+<div class="clearfix">
+	<div class="pull-right mr-30 mb-30 w-320">
+		<?$status = $this->ac->getStatus($this->ac->object)?>
+		<div class="mb-10"><b>Статус объявления: <i class="<?=$status['icon']?>"></i> <span class="<?=$status['color']?>"><?=$status['text']?></span></b></div>
+		<span class="grey fz-12"><?=$status['desc']?></span>
+	</div>
+	<div class="pull-left ml-30 mb-30 mt-10 w-320">
+		<div class="mb-10"><b>Адрес: </b><a href="/ads/<?=$this->ac->object['id']?>" class="bd-beige">http://<?=$_SERVER['HTTP_HOST']?>/ads/<?=$this->ac->object['id']?></a></div>
+		<div class="mb-10"><b>Дата размещения: </b><?=$this->strings->date($this->ac->object['Дата добавления'],'sql','date')?></div>
+        <div class="mb-10">
+            <b>Оставшийся срок размещения: </b> <span class="orange">14 дней</span>
+            <i class="icon-question-sign icon-yellow helper-popup">
+                <div class="soft fz-18">Подсказка</div>
+            </i>
+        </div>
+        <div><b>Количество просмотров: </b> <i class="icon-eye-open icon-yellow"></i> <?=(int)$this->ac->object['Колличество просмотров']?></div>
+    </div>
+</div>
+
+<form action="" id="singleAdEditControls" class="form-inline ads-controls ml-0 mb-25" method="post">
+	<div class="pull-right">
+		<button type="button" data-name="rise" <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> class="btn  soft" data-type="modalRiseAds" rel="popover" data-content="<p>Поднять объявлениена первые позициив поиске и категориях.</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Поднять <sup>100 кр.</sup></button>
+		<button type="button" data-name="highlight" <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> class="btn  soft" data-type="modalHighlightAds" rel="popover" data-content="<p><b>Услуга доступна пользователям с платным <a href='#' class='bd-beige'>пакетом «Бизнес»</a></b></p><p>Выделить и поместить объявление на <span class='inline-frame frame-green'>зелёный</span>, <span class='inline-frame frame-yellow'>жёлтый</span> или <span class='inline-frame frame-blue'>голубой</span> фон.</p><p>Объявление также будет поднято на первые позиции в поиске и категориях</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Выделить <sup>200 кр.</sup></button>
+		<button type="button" data-name="hot" <?=$this->subject['Роль']!='business' ? 'disabled' : ''?> class="btn  soft" data-type="modalHotAds" rel="popover" data-content="<p>Разместить объявление в <a href='#' class='bd-beige'>специальном разделе</a> сайта и добавить в ротацию на главной странице.</p><p>Объявление также будет выделено <span class='inline-frame frame-orange'>оранжевым</span> цветом и поднято на первые позиции в поиске и категориях.</p><a href='#' class='bd-beige'>Подробнее об услуге →</a>">Горячее предложение <sup>300 кр.</sup></button>
+	</div>
+	<?if ($this->ac->object['Статус'] == 2) {?>
+	<button type="submit" class="btn btn-white soft" name="restore" value="1"><i class="icon-inbox"></i> Восстановить</button>
+	<?}else{?>
+	<button type="button" class="btn  soft" data-type="modalArchiveAds"><i class="icon-inbox"></i> В архив</button>
+	<?}?>
+	<button type="button" class="btn  soft" data-type="modalDeleteAds"><i class="icon-trash"></i> Удалить</button>
+</form>
+
+<form id="ad-placement" class="form-inline ml-30" action="" method="post">
+
+	<div class="step-b" data-step="1">
+
+		<h3><i class="step-number">1</i>Тип объявления: <sup class="red">*</sup></h3>
+
+		<div class="input-group clearfix required adTypeGroup">
+			<?/*foreach ($this->ac->types as $k=>$t){
+				echo '
+					<label class="radio mr-20"><input name="adType" value="'.$k.'" type="radio" '.($k==$this->ac->object['Тип']?'checked':'').'>'.$t.'</label>
+				';
+			}*/?>
+ 			<label class="radio mr-20"><input value="0" name="adType" class="notRent notSearch" type="radio" <?=$this->ac->object['Тип']==0?'checked':''?>>Продам</label>
+			<label class="radio mr-20"><input value="1" name="adType" class="notRent search" type="radio" <?=$this->ac->object['Тип']==1 ? 'checked':''?>>Куплю</label>
+			<label class="radio mr-20"><input value="2" name="adType" class="rent notSearch" type="radio" <?=$this->ac->object['Тип']==2 ? 'checked':''?>>Сдам в аренду</label>
+			<label class="radio mr-20"><input value="3" name="adType" class="rent search" type="radio" <?=$this->ac->object['Тип']==3?'checked':''?>>Возьму в аренду</label>
+		</div>
+
+		<div class="blinds"></div>
+
+	</div>
+
+	<div class="step-b" data-step="2">
+
+		<h3><i class="step-number">2</i>Раздел для размещения объявления: <sup class="red">*</sup></h3>
+
+		<div class="input-group clearfix required productSectionGroup">
+			<?if ($list = $this->objects->getFullObjectsListByClass($this->ac->root_id,$this->ac->class_id_c)){
+				foreach ($list as $o){
+					if ($o['Бизнес пакет']==0) echo '
+					<div class="mb-5"><label class="radio"><input name="adCategory" data-root-id="'.$o['id'].'" type="radio" value="'.$o['id'].'" '.($o['id']==$this->ac->object['razdel_id']?'checked':'').'>'.$o['Название'].'</label></div>
+					';
+					else echo '
+						<div class="mb-5"><label class="radio"><input name="adCategory" type="radio">'.$o['Название'].'</label> <span class="ml-10">(доступно только обладателям пакета <a class="bd-beige bold psevdo" href="#">«<span>Бизнес</span>»</a>)</span></div>
+					';
+				}
+			}?>
+<!-- 			<div class="mb-5"><label class="radio"><input name="adCategory" data-root-id="261" checked type="radio">Спецтехника</label></div>
+			<div class="mb-5"><label class="radio"><input name="adCategory" data-root-id="258" type="radio">Оборудование</label></div>
+			<div class="mb-5"><label class="radio"><input name="adCategory" type="radio">Бизнес-магазин</label> <span class="ml-10">(доступно только обладателям пакета <a class="bd-beige bold psevdo" href="#">«<span>Бизнес</span>»</a>)</span></div> -->
+		</div>
+
+		<div class="blinds"></div>
+
+	</div>
+
+	<div class="step-b" data-step="3">
+
+		<h3><i class="step-number">3</i>Категория объявления: <sup class="red">*</sup></h3>
+
+		<div class="cat-selector-crumbs catSelectorPseudoCrumbs mb-10 mr-30">
+			<!-- <span class="append"><span>Коммунальные машины</span><span>Оборудование для АЗС и автосервиса</span><span>Оборудование для автосервиса</span><span class="obj">123</span></span> -->
+			<span class="append"><?echo $objectcats = $this->ac->getCategories()?></span>
+		</div>
+
+		<a class="btn  soft" href="#catSelectorModal" data-toggle="modal"><i class="icon-edit"></i> Изменить категорию</a>
+
+		<div id="catSelectorModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close red" data-dismiss="modal">×</button>
+				<h3 id="myModalLabel">Выберите категорию объявления</h3>
+			</div>
+			<div class="modal-body">
+				<div id="catSelector">
+					<span class="ml-10">Поиск по ключевому слову:</span>
+					<div class="input-append ml-10">
+						<input type="text" class="catSearchInput" placeholder="Например: экскаваторы">
+						<button type="button" class="btn  btn-smaller soft catSearchBtn">Найти категории</button>
+					</div>
+					<div class="render-wrapper">
+						<div class="catRender render clearfix">
+							<?if ($cats = $this->ac->getCategoriesListByParents()) {
+								$pars = $this->ac->getObjectsIds($this->ac->parents);
+								foreach ($cats as $c){
+									if (empty($c)) continue;
+									echo '<ul>';
+									foreach ($c as $o){
+										$empty = $this->objects->getObjectsListByClass($o['id'],30) ? true :false;
+										echo '<li id="'.$o['id'].'" '.($o['id']==$this->ac->object['head']?'class="active obj"':(in_array($o['id'],$pars)?'class="active"':(!$empty?'class="obj"':''))).'>
+											<span>'.$o['Название'].'</span>
+										</li>';
+									}
+									echo '</ul>';
+								}
+							}
+							// <ul>
+							// 	<li id="cat-1"><span>Автобусы</span></li>
+							// 	<li id="cat-2"><span>Грузовой автотранспорт</span></li>
+							// 	<li id="cat-3"><span>Дорожная техника</span></li>
+							// 	<li id="cat-4"><span>Карьерная и горнодобывающая техника</span></li>
+							// 	<li id="cat-5" class="active"><span>Коммунальные машины</span></li>
+							// 	<li id="cat-6"><span>Конвейеры, транспортеры</span></li>
+							// 	<li id="cat-7"><span>Краны и грузоподъемные машины</span></li>
+							// 	<li id="cat-8"><span>Лесозаготовительная техника</span></li>
+							// 	<li id="cat-9"><span>Лифты, подъемники, эскалаторы</span></li>
+							// 	<li id="cat-10"><span>Машины для земляных работ</span></li>
+							// </ul>
+							// <ul>
+							// 	<li id="cat-11"><span>Автобусы</span></li>
+							// 	<li id="cat-12"><span>Грузовой автотранспорт</span></li>
+							// 	<li id="cat-13"><span>Дорожная техника</span></li>
+							// 	<li id="cat-14" class="active obj"><span>Карьерная и горнодобывающая техника</span></li>
+							// 	<li id="cat-15"><span>Коммунальные машины</span></li>
+							// 	<li id="cat-16"><span>Конвейеры, транспортеры</span></li>
+							// 	<li id="cat-17"><span>Краны и грузоподъемные машины</span></li>
+							// 	<li id="cat-18"><span>Лесозаготовительная техника</span></li>
+							// 	<li id="cat-19"><span>Лифты, подъемники, эскалаторы</span></li>
+							// 	<li id="cat-20"><span>Машины для земляных работ</span></li>
+							// </ul>
+							?>
+						</div>
+					</div>
+					<input type="text" name="productCategory" class="hide required catHiddenInput modal" value="<?=$this->ac->object['head']?>">
+				</div>
+				<div class="cat-selector-crumbs">
+					<b>Выбранная категория:</b>
+					<!-- <span class="append"><span>Коммунальные машины</span><span>Оборудование для АЗС и автосервиса</span><span>Оборудование для автосервиса</span><span class="obj">123</span></span> -->
+					<span class="append"><?=$objectcats?></span>
+				</div>
+			</div>
+			<div class="modal-footer ta-l">
+				<button type="button" class="btn btn-grey catAccept">Изменить категорию</button>
+				<button type="button" class="btn " data-dismiss="modal">Отменить</button>
+			</div>
+		</div>
+
+		<div class="blinds"></div>
+
+	</div>
+
+	<div class="step-b" data-step="4">
+
+		<h3><i class="step-number">4</i>Информация о товаре:</h3>
+
+		<div class="input-group clearfix">
+			<label class="left bold" for="productName">
+				Наименование товара: <sup class="red">*</sup>
+			</label>
+			<input class="required w-440" type="text" id="productName" name="f[Название]" value="<?=$this->ac->object['Название']?>" />
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productCondiiton">
+				Состояние товара: <sup class="red">*</sup>
+			</label>
+			<select  class="required w-210" name="f[Состояние товара]" id="productCondiiton">
+				<?foreach ($this->ac->conditions as $k=>$c){
+					echo '
+						<option value="'.$k.'" '.($k==$this->ac->object['Состояние товара']?'selected':'').'>'.$c.'</option>
+					';
+				}?>
+				<!-- <option>Новое</option>
+				<option>Другое состояние</option>
+				<option>Ещё состояние</option> -->
+			</select>
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productBrand">
+				Марка: <sup class="red">*</sup>
+			</label>
+			<select class="required w-210" name="f[Марка]" id="productBrand">
+				<?foreach ($this->ac->marks as $m){
+					echo '<option '.($m['Название']==$this->ac->object['Марка']?'selected':'').'>'.$m['Название'].'</option>';
+				}?>
+				<!-- <option>Драглайн</option>
+				<option>Другая марка</option>
+				<option>Ещё марка</option> -->
+			</select>
+            <input type="text" name="selfmark" value="" class="ml-20" placeholder="Своя марка..." />
+        </div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productModel">
+				Модель:
+			</label>
+			<input class="w-210" type="text" name="f[Модель]" id="productModel" value="<?=$this->ac->object['Модель']?>" />
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productCountry">
+				Страна производитель: <sup class="red">*</sup>
+			</label>
+            <input class="required w-210 typeaheaded" autocomplete="off" data-typeaheaded="country" type="text" id="productCountry" name="f[Страна производитель]" value="<?=$this->ac->object['Страна производитель']?>" />
+            <div class="middle-tip-b">Начните вводить название страны, затем выберите её из списка.</div>
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productYear">
+				Год выпуска: <sup class="red">*</sup>
+			</label>
+			<?if ($years = $this->ac->yearsList()){?>
+			<select class="required w-80" name="f[Год]" id="productYear">
+				<?foreach ($years as $y){
+					echo '<option '.($y==$this->ac->object['Год']?'selected':'').'>'.$y.'</option>';
+				}?>
+			</select>
+			<span class="slash-sep forSearch">—</span>
+			<select name="" class="w-80 forSearch">
+				<option class="default">----</option>
+				<?foreach ($years as $y){
+					echo '<option '.($y==$this->ac->object['Год']?'selected':'').'>'.$y.'</option>';
+				}?>
+			</select>
+			<?}?>
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productDesc">
+				Описание товара: <sup class="red">*</sup>
+			</label>
+			<div class="left-tip-b">
+				<div>Детально опишите назначение товара, укажите комплектацию и любую информацию, которая заинтересует потенциального покупателя.</div><br>
+				<div>Подробное и грамотное описание значительно увеличивает шансы выбора клиентом именно вашего объявления.</div>
+			</div>
+			<textarea class="required w-440 mb-10" id="productDesc" name="f[Описание товара]"><?=$this->ac->object['Описание товара']?></textarea>
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productSpecs">
+				Технические характеристики:
+			</label>
+			<textarea class="w-440 mb-10" id="productSpecs" name="f[Технические характеристики]"><?=$this->ac->object['Технические характеристики']?></textarea>
+
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left">
+				Фотографии товара:
+				<i class="icon-question-sign icon-yellow helper-popup"></i>
+			</label>
+			<div class="photoUploader photo-uploader"></div>
+			<div class="w-200 mr-20 fz-12 pull-left">Фотографии товара значительно повышают интерес покупателей и товары продаются быстрее.</div>
+		</div>
+
+		<?if (!empty($this->ac->object['Изображение'])){?>
+		<div class="ml-220 input-group photoUploaderResponse clearfix photo-uploader-response">
+			<div class="item pull-left main clearfix">
+				<img src="<?=_UPLOADS_.'/'.$this->ac->object['Изображение']?>" alt="" class="mr-10 va-t pull-left">
+				<a class="pseudo dashed red fz-12 delPhoto mb-5 d-ib" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a><br>
+				<b class="ml-5">Основное фото</b>
+				<input type="hidden" name="mainPhoto" value="<?=$this->ac->object['Изображение']?>">
+			</div>
+			
+			<?if ($imgs = $this->ac->getDopPhotos($this->ac->object['id'])){
+				foreach ($imgs as $k=>$i){
+					echo '
+						<div class="item clearfix">
+							<img src="'._UPLOADS_.'/'.$i['Ссылка'].'" alt="" class="mr-10 va-t pull-left">
+							<a class="pseudo dashed red fz-12 delPhoto mb-5 d-ib" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a><br>
+							<a class="dashed ml-5 makeMain" href="javascript:void(0)">Сделать основным</a>
+							<input type="hidden" name="photo['.$k.']" value="'.$i['Ссылка'].'">
+						</div>
+					';
+				}
+			}?>
+		<input type="hidden" class="mainPhotoInput" name="mainPhoto" value="<?=$this->ac->object['Изображение']?>">
+		</div>
+			<?}else{?>
+        <div class="input-group clearfix noPhotoDummy">
+            <div class="w-200 mr-20 fz-12 pull-left">Фотографии товара значительно повышают интерес покупателейи товары продаются быстрее.</div>
+            <div class="pull-left mr-20 w-440 fz-12">
+                <img src="/img/nophoto-small.png" class="pull-left mr-20" alt="" style="margin-top:2px;">
+                <i>
+                    Рекомендуем добавить как минимум одну фотографию
+                    для товара, иначе рядом c описанием вашего товара будет картинка с текстом «Нет фотографии».
+                </i>
+            </div>
+        </div>
+        <?}?>
+<!-- 			<div class="item pull-left clearfix">
+				<img src="/img/dumm/car-3.jpg" alt="" class="mr-10 va-t pull-left">
+				<a class="pseudo dashed red fz-12 delPhoto mb-5 d-ib" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a><br>
+				<a class="dashed ml-5 makeMain" href="javascript:void(0)">Сделать основным</a>
+				<input type="hidden" name="photo[0]" value="fileName">
+			</div>
+			<div class="item pull-left clearfix">
+				<img src="/img/dumm/car-4.jpg" alt="" class="mr-10 va-t pull-left">
+				<a class="pseudo dashed red fz-12 delPhoto mb-5 d-ib" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a><br>
+				<a class="dashed ml-5 makeMain" href="javascript:void(0)">Сделать основным</a>
+				<input type="hidden" name="photo[1]" value="fileName">
+			</div>
+			<div class="item pull-left clearfix">
+				<img src="/img/dumm/car-5.jpg" alt="" class="mr-10 va-t pull-left">
+				<a class="pseudo dashed red fz-12 delPhoto mb-5 d-ib" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a><br>
+				<a class="dashed ml-5 makeMain" href="javascript:void(0)">Сделать основным</a>
+				<input type="hidden" name="photo[2]" value="fileName">
+			</div> -->
+
+			
+
+		<div class="input-group clearfix hide noPhotoDummy">
+			<div class="pull-left ml-220 mr-20 w-440 fz-12">
+				<img src="/img/nophoto-small.png" class="pull-left mr-20" alt="" style="margin-top:2px;">
+				<i>Рекомендуем добавить как минимум одну фотографию для товара, иначе рядом c описанием вашего товара будет картинка с текстом «Нет фотографии».</i>
+			</div>
+		</div>
+
+        <div class="input-group clearfix">
+            <label class="left bold" for="productPrice">
+                <span class="forSearch hide">Бюджет:</span><span class="notForSearch">Цена:</span> <sup class="red">*</sup>
+            </label>
+            <div class="mb-10">
+                <label class="radio mr-20"><input type="radio" name="f[priceType]" class="notContractual" <?=!empty($this->ac->object['Цена'])?'checked':''?> value="0">  <span>Указать цену:</span></label>
+                <label class="radio mr-20"><input type="radio" name="f[priceType]" value="1" class="contractual" <?=empty($this->ac->object['Цена'])?'checked':''?>>  <span>Договорная цена</span></label>
+            </div>
+            <div class="ml-220">
+                <input class="required w-210 bold sepThousands onlyNum notForContractual" disabled type="text" id="productPrice" name="f[Цена]" value="<?=$this->ac->object['Цена']?>">
+                <select name="f[Валюта]" id="productCurrency" class="w-120 notForContractual">
+                    <?foreach ($this->ac->money as $k=>$m){
+                        echo '
+                            <option '.($k==$this->ac->object['Валюта']).' value="'.$k.'">'.$m.'</option>
+                        ';
+                    }?>
+                </select>
+                <span class="slash-sep forRent fz-18">/</span>
+                <select id="rentDuration" disabled name="" class="w-90 forRent notForContractual">
+                    <option>Месяц</option>
+                    <option>Неделя</option>
+                    <option>День</option>
+                </select>
+            </div>
+        </div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productAvailability">
+				Наличие товара: <sup class="red">*</sup>
+			</label>
+			<select class="required w-210" name="f[Наличие товара]" id="productAvailability">
+				<?foreach ($this->ac->is_got as $k=>$i){
+					echo '
+						<option '.($k==$this->ac->object['Наличие товара']?'selected':'').' value="'.$k.'">'.$i.'</option>
+					';
+				}?>
+				<!-- <option>В наличии</option>
+				<option>Не так</option>
+				<option>Другое</option>
+				<option>Ещё</option> -->
+			</select>
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left bold" for="productLocation">
+				Местоположение товара: <sup class="red">*</sup>
+			</label>
+            <input class="required w-210 typeaheaded" autocomplete="off" data-typeaheaded="region" type="text" id="productLocation" name="f[Местоположение товара]" value="<?=$this->ac->object['Местоположение товара']?>" />
+            <div class="middle-tip-b">Начните вводить название города, затем выберите его из списка.</div>
+		</div>
+
+		<div class="blinds"></div>
+
+	</div>
+
+	<div class="step-b" data-step="5">
+
+		<h3><i class="step-number">5</i>Дополнительная информация:</h3>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productDistributor">
+				Поставщик оборудования:
+			</label>
+			<input class="w-440" type="text" id="productDistributor" value="<?=$this->ac->object['Поставщик оборудования']?>" name="f[Поставщик оборудования]" />
+		</div>
+
+		<div class="input-group clearfix">
+			<label class="left" for="productDistributorSite">
+				Сайт поставщика:
+			</label>
+			<input class="w-440" type="text" id="productDistributorSite" value="<?=$this->ac->object['Сайт поставщика']?>" name="f[Сайт поставщика]" />
+		</div>
+
+		<div class="submit-group pl-40 mr-30">
+			<div class="margin-wrapper">
+				<!--  <div class="btn-group pull-right">
+					 <button type="button" class="btn btn-grand dropdown-toggle mb-0" data-toggle="dropdown">Действия с объявлением <span class="caret"></span></button>
+					 <ul class="dropdown-menu">
+						 <li><a href="#">Ссылка</a></li>
+					 </ul>
+				 </div> -->
+				<button type="submit" class="btn btn-grey btn-grand submitAd" disabled>Сохранить изменения</button>
+                <button type="button" class="btn btn-grand previewAdBtn">Предварительный просмотр</button>
+			</div>
+			<div class="fz-12 grey btn-grand ">После внесения изменений объявление пройдёт повторную проверку модератором.</div>
+		</div>
+
+		<div class="blinds"></div>
+
+	</div>
+
+</form>
+
+<input type="hidden" id="company-name" value="<?=$this->subject['Название компании']?>">
+<input type="hidden" id="company-email" value="<?=$this->subject['Email']?>">
+<input type="hidden" id="company-type" value="<?=$this->subject['Тип деятельности']?>">
+<input type="hidden" id="company-description" value="<?=$this->subject['Описание']?>">
+<input type="hidden" id="company-logo" value="<?=$this->subject['Логотип']?>">
+<input type="hidden" id="company-contactName" value="<?=$this->subject['Имя контактного лица']?>">
+<input type="hidden" id="company-region" value="<?=$this->subject['Регион']?>">
+<input type="hidden" id="company-region-icon" value="<?=$this->getFlagUrl($this->subject['Регион'])?>">
+<input type="hidden" id="company-address" value="<?=$this->subject['Адрес']?>">
+<input type="hidden" id="company-phone" value="<?=$this->subject['Телефон']?>">
+<input type="hidden" id="company-site" value="<?=$this->subject['Сайт компании']?>">
+<input type="hidden" id="company-link" value="<?=$this->getComUrl($this->subject)?>">

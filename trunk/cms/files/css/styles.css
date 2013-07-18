@@ -1,0 +1,97 @@
+@import url("content.css");
+@import url("date-block.css");
+html, body{
+	margin:0px;
+	padding:0px;
+	font:normal 13px Arial;
+	text-align:justify;
+}
+
+body{
+	background:url(../i/bg-page.png) repeat-x top left;
+	padding:30px 40px;
+}
+
+h1, .h1{
+	font:normal 185% Arial;
+	text-align:left;
+	margin:0px;
+	padding:0px;
+}
+
+h2, .h2{
+	font:normal 140% Arial;
+	text-align:left;
+	margin:0px;
+	padding:0px;
+}
+
+h3, .h3{
+	font:bold 110% Arial;
+	text-align:left;
+	margin:0px;
+	padding:0px;
+}
+
+h4, .h4{
+	font:italic 130% Times;
+	color:#666;
+	text-align:left;
+	margin:0px;
+	padding:0px;
+}
+
+a:link, a:visited{
+	font:normal 100% Arial;
+	color:#0099FF;
+	border-color:#0099FF;
+	text-decoration:underline;
+}
+
+a.inside:link, a.inside:visited{
+	text-decoration:none;
+	border-bottom:1px dashed;
+}
+
+a:hover{
+	color:red;
+	border-color:red;
+}
+
+.error{
+	background:url(../js/jquery.ui/images/ui-bg_diagonals-thick_18_b81900_40x40.png) repeat top left;
+	font:normal 14pt Arial;
+	color:white;
+	border:1px solid #CC0000;
+	padding:15px;
+}
+
+.hint{
+	font:100% verdana;
+	color:#999;
+}
+
+.hint-block{
+	padding:10px 20px;
+	font:italic 100% Arial;
+	background-color:#CCC;
+	color:white;
+}
+
+.clear{
+	clear:both;
+}
+
+.page-links{
+	margin-top:20px;
+}
+
+.page-links span{
+	padding:5px 10px;
+	color:#999;
+	background-color:#EEE;
+}
+
+.page-links a:link, .page-links a:visited{
+	padding:10px;
+}

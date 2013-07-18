@@ -1,0 +1,52 @@
+<div class="pull-right mr-20">
+		<a class="btn btn-white btn-narrow mr-5" href="/cabinet/news_add/">Добавить новость</a>
+		<a class="btn btn-orange btn-narrow" href="/cabinet/add/">Разместить объявление</a>
+</div>
+<h1 class="ml-30 mb-25"><?=$this->ac->title?></h1>
+<div class="edit-news-form">
+	<form id="editNewsForm" action="" method="post" class="interrelated-container">
+		<table class="table">
+			<colgroup>
+				<col width="70" />
+				<col width="120" />
+				<col width="*" />
+				<col width="120" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="4">
+						<label class="checkbox"><input type="checkbox" class="interrelated-amount-checkbox"> Выбрать<br /> все</label>
+						<button type="button" class="btn btn-remove"><i class="icon icon-trash"></i> Удалить новость</button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?foreach ($this->ac->news as $k=>$n){?>
+				<tr>
+					<td>
+						<label class="checkbox"><input type="checkbox" name="n[<?=$n['id']?>]" class="interrelated-checkbox"></label>
+					</td>
+					<td>
+						<img src="<?=!empty($n['Изображение'])?_UPLOADS_.'/'.$n['Изображение']:'/img/nophoto-medium.png'?>" />
+					</td>
+					<td>
+						<div class="news-item">
+							<div class="news-item-name">
+								<a href="/cabinet/company_news/<?=$n['id']?>/" class="as-text bd-grey"><b><?=stripslashes($n['Название'])?></b></a>&nbsp;<span class="reviews"><i class="icon-eye-open icon-yellow"></i>&nbsp;<?=(int)$n['Просмотры']?></span>                            
+							</div>
+							<div class="news-item-in">
+								<p><?=stripslashes($n['Анонс'])?></p>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="fz-12 grey">
+							<?=$this->ac->getStatus($n['Статус'])?> <?=$this->strings->date($n['Дата'],'sql','date')?>
+						</div>
+					</td>
+				</tr>
+				<?}?>
+			</tbody>
+		</table>
+	</form>
+</div>

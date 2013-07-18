@@ -1,0 +1,96 @@
+<?$this->ac->object = $this->subject?>
+<?if (!empty($this->ac->msg)){?>
+<div class="alert alert-block alert-success fade in ml-30 mr-30">
+    <?=$this->ac->msg?>
+</div>
+<?}?>
+<div class="pull-right mr-20">
+	<?=$this->subject['Роль']=='business'?'<a class="btn btn-white btn-narrow mr-5" href="/cabinet/news_add/">Добавить новость</a>':''?>
+	<a class="btn btn-orange btn-narrow" href="/cabinet/add/">Разместить объявление</a>
+</div>
+<h1 class="ml-30 mb-20">Информация о компании</h1>
+<div class="ml-50 mb-10 mr-30"><b>Статус вашей компании: <?=$this->ac->companyStatus()?></b></div>
+<?/*if ($this->subject['active']==0){?>
+                    <div class="soft fz-18"><?=$this->subject['Роль']=='company'?$this->vars['881']:''?></div>
+<div class="ml-50 grey fz-12 mr-30 mb-20"><??></div>
+<?}*/?>
+
+<div class="ml-50 mb-20"><b>Адрес сайта на площадке:</b> <a href="<?=$this->getCompanyUrl($this->subject)?>" class="bd-beige mr-5">http://<?=$_SERVER['HTTP_HOST'].$this->getCompanyUrl($this->subject)?></a> <a class="btn btn-white btn-inline soft" href="/cabinet/contacts#contacts-edit">Изменить адрес</a></div>
+
+<?if ($this->subject['Роль']=='company'){?>
+<div class="pack-promo-b">
+    <?=$this->vars[611]?>
+</div>
+ <?}?>
+
+<form id="company-edit" class="form-inline ml-10 listenThisForm" action="" method="post">
+
+	<div class="step-b">
+
+		<h3 class="ml--20">Редактировать информацию о компании:&nbsp;<sup class="red">*</sup></h3>
+
+		<div class="input-group">
+			<label class="left" for="companyName">
+				Название компании: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="soft fz-18"><?=$this->vars['877']?></div>
+				</i>
+			</label>
+			<input class="required w-440" type="text" id="companyName" name="f[Название компании]" value="<?=$this->subject['Название компании']?>">
+		</div>
+
+		<div class="input-group">
+			<label class="left" for="companyActivity">
+				Тип деятельности: <sup class="red">*</sup>
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="soft fz-18"><?=$this->vars['877']?></div>
+				</i>
+			</label>
+			<select name="f[Тип деятельности]" id="companyActivity" class="required w-320">
+				<?foreach ($this->ac->types as $t){
+					echo '
+						<option value="'.$t['Значение'].'" '.($t['Значение']==$this->subject['Тип деятельности']?'selected':'').'>'.$t['Значение'].'</option>
+					';
+				}?>
+				<!-- <option value="">Производство оборудования</option>
+				<option value="">Какой-то тип</option> -->
+			</select>
+		</div>
+
+		<div class="input-group">
+			<label class="left">
+				Логотип:
+				<i class="icon-question-sign icon-yellow helper-popup">
+					<div class="soft fz-18"><?=$this->vars['885']?></div>
+				</i>
+			</label>
+			<div class="logoUploader"></div>
+		</div>
+
+		<div class="ml-220 input-group logoUploaderResponse logo-uploader-response <?=empty($this->subject['Логотип'])?'hide':''?>">
+			<img src="<?=_UPLOADS_.'/'.$this->subject['Логотип']?>" alt="" class="mr-10 va-t">
+			<a class="pseudo dashed red fz-12 delLogo" href="javascript:void(0)"><i class="icon-trash icon-red"></i> <span>Удалить фото</span></a>
+			<input type="hidden" name="comapnyLogo" value="<?=$this->subject['Логотип']?>">
+		</div>
+
+		<div class="input-group">
+			<label for="companyDescription" class="left">Описание компании: <sup class="red">*</sup></label>
+			<div class="left-tip-b">
+				<?=$this->vars['887']?>
+			</div>
+			<textarea class="required w-440" id="companyDescription" name="f[Описание]" maxlength="10000"><?=trim($this->subject['Описание'])?></textarea>
+			<div class="middle-tip-b">
+				Максимум 10 000 символов. <span id="companyDescCount" class="black hide">Осталось символов: <span></span>.</span>
+			</div>
+		</div>
+
+		<div class="submit-group mr-30 ml--20">
+			<div class="margin-wrapper">
+				<button type="submit" disabled class="btn btn-grey btn-grand ml--20">Сохранить изменения</button>
+			</div>
+			<div class="fz-12 grey ml--20">После внесения изменений компания пройдёт повторную проверку модератором.</div>
+		</div>
+
+	</div>
+
+</form>

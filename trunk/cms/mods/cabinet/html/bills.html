@@ -1,0 +1,62 @@
+<?if ($this->subject['Роль']=='company'){?>
+<div class="fz-16 pull-right mr-30 cur-p mt-5" rel="popover" data-content="&lt;p class='bold'&gt;В пакете «Стартовый» &lt;br&gt; &lt;span class='orange'&gt;у вас нет возможности пополнять баланс&lt;/span&gt;&lt;/p&gt;" data-original-title="">
+    <b><span class="grey-lighter-bit">Текущий баланс:</span>&nbsp;0 кр.</b>
+</div>
+<?}else{?>
+<div class="fz-16 pull-right mr-20 mt-5">
+	<b><span class="grey-lighter-bit">Текущий баланс:</span>&nbsp;<?=(int)$this->subject['Кредиты']?> кр.</b>
+	<a href="/cabinet/refill/" class="btn btn-orange ml-20">Пополнить</a>
+</div>
+<?}?>
+<h1 class="ml-30 mb-20"><!--#page-title#--></h1>
+<form class="cabinet-bills-filter ml-30 mr-30 mb-20">
+	<div class="statuses mb-5">
+		<div>
+			<input type="radio" name="sort-filter" id="all-bills" value="all" <?=!is_numeric($this->ac->filter)?'checked':''?>>
+			<label for="all-bills"><a class="bd-beige">Все счета</a></label>
+		</div>
+		<div>
+			<input type="radio" name="sort-filter" id="waiting-bills" value="0" <?=$this->ac->filter=='0'?'checked':''?>>
+			<label for="waiting-bills"><i class="icon-time icon-yellow"></i> <a class="bd-beige">Ожидают оплаты</a></label>
+		</div>
+		<div>
+			<input type="radio" name="sort-filter" id="paid-bills" value="1" <?=$this->ac->filter=='1'?'checked':''?>>
+			<label for="paid-bills"><i class="icon-ok icon-grey"></i> <a class="bd-beige">Оплаченные</a></label>
+		</div>
+	</div>
+
+	<table>
+		<colgroup>
+			<col width="270">
+			<col width="110">
+			<col width="140">
+			<col width="200">
+		</colgroup>
+		<thead>
+			<tr>
+				<th><a href="<?=$this->ac->sortHref('name')?>" class="grey pseudo dashed <?=$this->ac->sort=='name'?'sortUp':($this->ac->sort=='name_desc'?'sortDown':'')?> as-text-tri"><span>Номер и название счёта</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('summ')?>" class="grey pseudo dashed <?=$this->ac->sort=='summ'?'sortUp':($this->ac->sort=='summ_desc'?'sortDown':'')?> as-text-tri"><span>Сумма</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('date1')?>" class="grey pseudo dashed <?=$this->ac->sort=='date1'?'sortUp':($this->ac->sort=='date1_desc'?'sortDown':'')?> as-text-tri"><span>Дата формиров.</span></a></th>
+				<th><a href="<?=$this->ac->sortHref('date2')?>" class="grey pseudo dashed <?=$this->ac->sort=='date2'?'sortUp':($this->ac->sort=='date2_desc'?'sortDown':'')?> as-text-tri"><span>Дата оплаты</span></a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?if (!empty($this->ac->bills) && is_array($this->ac->bills)){
+				foreach ($this->ac->bills as $k=>$o){
+					echo '
+						<tr>
+							<td>
+								<i class="'.($o['Оплачен']==0 ? 'icon-time icon-yellow' : ($o['Оплачен'] == 1 ? 'icon-ok icon-grey' : 'icon-remove icon-grey')).' fz-13"></i> 
+								<a class="'.($o['Оплачен']==0 ? 'bd-beige' : 'grey').'" href="/cabinet/invoices/'.$o['id'].'/">№'.$o['Номер'].'. '.$o['Название'].'</a>
+							</td>
+							<td> <b>'.$o['Сумма'].'</b> <span class="fz-11">KZT</span></td>
+							<td><span class="fz-13">'.date("d.m.Y H:i", $o['sort']).'</span></td>
+							<td><span class="fz-13 grey">'.(!empty($o['Время оплаты'])?$o['Время оплаты']:'—').'</span></td>
+						</tr>
+					';
+				}
+			}?>
+		</tbody>
+	</table>
+
+</form>

@@ -1,0 +1,167 @@
+<div id="search-b">
+	<form method="get" action="/search/" onsubmit="">
+		<div class="input-append">
+			<input id="" class="input-grand" name="what" type="text" placeholder="Поиск по объявлениям..." value="<?=!empty($_GET['what'])?$_GET['what']:''?>" />
+			<button class="btn btn-grand" type="submit">Найти</button>
+		</div>
+	</form>
+	<div class="wrapper">
+		<div class="extend-search" style="display:none;">
+			<button class="close" type="button">&times;</button>
+			<form action="/search/" class="form-horizontal form-with-reset">
+				<div class="input-append">
+				  <input id="" class="input-grand inp-search-query" type="text" placeholder="Поиск по объявлениям..." name="what" value="<?=!empty($_GET['what'])?$_GET['what']:''?>"/>
+				  <button class="btn btn-white btn-grand" type="submit">Найти</button>
+				</div>
+				<h4>Расширенный поиск:</h4>
+				<div class="extend-search-in">
+					<div class="control-group">
+						<div class="control-label">Тип объявления:</div>
+						<div class="controls">
+							<div class="btn-group btn-group-radio" data-toggle="buttons-radio">
+								<label class="radio btn btn-white <?=!isset($_GET['type']) || !is_numeric($_GET['type'])?'active':''?>"><input type="radio" name="type" value="all" <?=!isset($_GET['type']) || !is_numeric($_GET['type'])?'checked':''?>>Все</label>
+								<label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']=='0')?'active':''?>"><input type="radio" name="type" value="0" <?=isset($_GET['type']) && ($_GET['type']==0)?'checked':''?>>Продам</label>
+								<label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==1)?'active':''?>"><input type="radio" name="type" name="type" value="1" <?=isset($_GET['type']) && ($_GET['type']==1)?'checked':''?>>Куплю</label>
+								<label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==2)?'active':''?>"><input type="radio" name="type" name="type" value="2" <?=isset($_GET['type']) && ($_GET['type']==2)?'checked':''?>>Сдам в аренду</label>
+								<label class="radio btn btn-white <?=isset($_GET['type']) && ($_GET['type']==3)?'active':''?>"><input type="radio" name="type" name="type" value="3" <?=isset($_GET['type']) && ($_GET['type']==3)?'checked':''?>>Возьму в аренду</label>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="control-label">Раздел:</div>
+						<div class="controls">
+							<div class="btn-group btn-group-radio section-radio" data-toggle="buttons-radio">
+								<label class="radio btn btn-white <?=empty($_GET['section']) || !is_numeric($_GET['section'])?'active':''?>"><input type="radio" name="section" value="0" <?=empty($_GET['section']) || !is_numeric($_GET['section'])?'checked':''?>>Все</label>
+								<label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==258)?'active':''?>"><input type="radio" name="section" value="258" <?=isset($_GET['section']) && ($_GET['section']==258)?'checked':''?>>Спецтехника</label>
+								<label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==261)?'active':''?>"><input type="radio" name="section" value="261" <?=isset($_GET['section']) && ($_GET['section']==261)?'checked':''?>>Оборудование</label>
+								<?/*<label class="radio btn btn-white <?=isset($_GET['section']) && ($_GET['section']==267)?'active':''?>"><input type="radio" name="section" value="267" <?=isset($_GET['section']) && ($_GET['section']==267)?'checked':''?>>Бизнес-магазин</label>*/?>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="control-label">Категории:</div>
+						<div class="controls">
+							<div class="dropdown dropdown-category">
+								<input type="hidden" name="category" value="" />
+								<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><span class="text">Все категории</span> <span class="caret"></span></button>
+								<?if ($roots = $this->objects->getFullObjectsListByClass(228,30)){?>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+									<?foreach($roots as $r){
+									if ($list = $this->objects->getFullObjectsListByCLass($r['id'],30)) {
+									foreach ($list as $o){?>
+									<li class="dropdown-submenu">
+										<a tabindex="-1" href="#" alt="<?=$o['id']?>"><?=$o['Название']?></a>
+										<?if ($sublist = $this->objects->getFullObjectsListByClass($o['id'],30)){?>
+										<ul class="dropdown-menu">
+											<?foreach ($sublist as $i){?>
+											<li><a href="#" alt="<?=$i['id']?>"><?=$i['Название']?></a></li>
+											<?}?>
+										</ul>
+										<?}?>
+									</li>
+									<?}}}?>
+								</ul>
+								<?}?>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix">
+						<div class="column-1 pull-left">
+							<div class="control-group">
+								<div class="control-label">Регион:</div>
+								<div class="controls">
+									<select class="region" name="region">
+										<option value="0">Все регионы</option>
+										<?//if ($list = $this->objects->getFullObjectsListByClass(257,32)){
+										if ($list = $this->db->select("regions", "")){
+											foreach ($list as $o){
+												echo '<option value="'.$o['index'].'">'.$o['index'].'</option>';
+											}
+										}?>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="control-label">Год выпуска:</div>
+								<div class="controls form-inline">
+									<input id="filter-date-from" name="y1" type="text" value="<?=isset($_GET['y1']) && is_numeric($_GET['y1'])?$_GET['y1']:''?>" class="year" /> &mdash; <input id="filter-date-to" type="text" value="<?=isset($_GET['y2']) && is_numeric($_GET['y2'])?$_GET['y2']:''?>" class="year" name="y2" />
+								</div>
+								<div class="controls form-inline">
+									<div class="links">
+										<input name="itemAge" class="pseudo-radio-link" id="less-than-3" type="radio" value="<?=intval(date('Y'))-3?>"><label for="less-than-3"><a class="bd-beige dashed">до 3 лет</a></label>
+										<input name="itemAge" class="pseudo-radio-link" id="less-than-7" type="radio" value="<?=intval(date('Y'))-5?>"><label for="less-than-7"><a class="bd-beige dashed">до 7</a></label>
+										<input name="itemAge" class="pseudo-radio-link" id="more-than-7" type="radio" value="<?=intval(date('Y'))-8?>"><label for="more-than-7"><a class="bd-beige dashed">старше 7</a></label>
+									</div>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="control-label">Цена:</div>
+								<div class="controls form-inline">
+									<input id="filter-price-from" type="text" value="<?=isset($_GET['price1'])?$_GET['price1']:''?>" class="price" name="price1" /> &mdash; <input id="filter-price-to" type="text" value="<?=isset($_GET['price2'])?$_GET['price2']:''?>" class="price" name="price2" />
+									<?if ($moneys = $this->objects->getFieldP3(116,31))?>
+									<select class="span1 currency" name="money">
+										<?foreach ($moneys as $k=>$m){?>
+										<option value="<?=$k?>"><?=$m?></option>
+										<?}?>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="control-label">&nbsp;</div>
+								<div class="controls">
+									<button type="submit" class="btn btn-grey btn-search">Найти объявления</button>
+									<button type="button" class="btn btn-white btn-reset-filter" disabled>Сбросить выбор</button>
+								</div>
+							</div>
+						</div>
+						<div class="column-2 pull-left">
+							<?if ($marks = $this->objects->getFullObjectsListByClass(255,2)){?>
+							<div class="control-group">
+								<div class="control-label">Марка:</div>
+								<div class="controls form-inline">
+									<select class="manufacturer" name="mark">
+										<option>Все марки</option>
+										<?foreach ($marks as $k=>$m){
+										echo '<option value="'.$m['Название'].'" '.(isset($_GET['mark'])&&($_GET['mark']==$m['Название'])? 'selected' : '').'>'.$m['Название'].'</option>';
+										}?>
+									</select>
+									<label class="checkbox"><input type="checkbox" value="1" name="with_photo" <?=isset($_GET['with_photo'])&&($_GET['with_photo']=='1') ? 'checked':''?>> С фото</label>
+								</div>
+							</div>
+							<?}?>
+							<div class="control-group">
+								<div class="control-label">Состояние:</div>
+								<div class="controls form-inline">
+									<select class="condition" name="condition">
+										<option value="all">В любом состоянии</option>
+									<?if($conditions = $this->objects->getFieldP3(108,31)){
+										foreach ($conditions as $k=>$c){
+											echo '
+												<option value="'.$k.'" '.(isset($_GET['condition']) && ($k==$_GET['condition'])?'selected':'').'>'.$c.'</option>
+											';
+										}
+									}?>
+									</select>
+								</div>
+							</div>
+							<div class="control-group group-country">
+								<div class="control-label">Страна производитель:</div>
+								<div class="controls form-inline">
+									<select class="country" name="country">
+										<option value="0">Любая</option>
+										<?if ($list = $this->objects->getFullObjectsLIstBYClass(256,7)){
+											foreach ($list as $k=>$o){
+												echo '<option value="'.$o['Значение'].'" '.(isset($_GET['country']) && ($_GET['country']==$o['Значение'])?'selected':'').'>'.$o['Значение'].'</option>';
+											}
+										}?>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>                    
+		</div>                
+		<a href="javascript:void(0);" onclick="showEntendSearch();" class="as-text fz-13 tsha-white-down dashed">Расширенный поиск</a>
+	</div>
+</div>

@@ -1,0 +1,53 @@
+<h1 class="ml-30"><!--#page-title#--></h1>
+
+<h2 class="grey-lighter-bit ml-30 mb-15">Оформление заказа:</h2>
+
+<table class="bill-table ml-30 mr-30">
+    <colgroup>
+        <col width="30">
+        <col width="400">
+        <col width="100">
+        <col width="150">
+        <col width="40">
+    </colgroup>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Наименование</th>
+            <th></th>
+            <th>Сумма</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td><?=$this->ac->title?></td>
+            <td></td>
+            <td><b><?=$this->ac->summ?></b></td>
+            <td><span class="fz-11">KZT</span></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>Итого:</b></td>
+            <td><b class="fz-24"><?=$this->ac->summ?></b></td>
+            <td><span class="fz-11">KZT</span></td>
+        </tr>
+    </tfoot>
+</table>
+<div class="dashed ml-30 mr-30 mb-30"></div>
+
+<h2 class="ml-30">Выберите способ оплаты:</h2>
+
+<form action="" class="ml-20" method="post">
+    <div class="input-group mb-20 ml-30">
+        <label class="radio"><input type="radio" name="name" value="bank" checked> <b>Сформировать банковский счёт для безналичного рассчёта;</b></label>
+        <?if (!empty($_GET['mod']) && ($_GET['mod'] == 'business')){?>
+        <label class="radio"><input type="radio" name="name" value="qiwi"> <b>Оплатить через Qiwi-кошелёк или терминал.</b></label>
+        <?}?>
+    </div>
+    <button type="submit" class="btn btn-grey btn-grand ml-50">Продолжить</button>
+</form>

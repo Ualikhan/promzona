@@ -1,0 +1,126 @@
+#current-lang{
+	font:normal 13px Arial;
+	padding:0px;
+	margin:0px;
+}
+
+.parents-div{
+	margin:20px 0px;
+}
+
+.object-item{
+	padding:10px;
+	padding-left:0px;
+}
+
+.object-item .name{
+	font:bold 14px Arial;
+}
+
+.object-item .info{
+	font:normal 13px Arial;
+	color:#999;
+}
+
+.object-item .menu{
+	position:relative;
+	width:25px;
+	height:26px;
+	background:url(../../../i/c2.gif) no-repeat left top;
+}
+
+.object-item .menu .menu-items {
+	position:absolute;
+	top:0px;
+	left:15px;
+	border:1px solid #CCC;
+	background:#EEE url(../../../i/popup_menu_bg.jpg) repeat-y left top;
+	text-align:left;
+}
+
+.object-item .menu .menu-items a:link, .object-item .menu .menu-items a:visited{
+	display:block;
+	font:normal 12px Arial;
+	padding:7px 15px;
+	padding-left:30px;
+	text-decoration:none;
+	color: black;
+}
+
+.object-item .menu .menu-items a:hover{
+	background:#999 url(../../../i/popup_menu_bg_a.jpg) repeat-y left top;
+	color:white;
+}
+
+.object-item table.object-row{
+	border-collapse:collapse;
+}
+
+.object-item table.object-row th{
+	padding:10px 20px;
+	border:1px solid #CCC;
+	background:url(../../../i/bgt.jpg) repeat-x top left;
+	color:#999;
+	text-align:center;
+	font:normal 14px Arial;
+}
+
+.object-item table.object-row td{
+	padding:5px 10px;
+	margin:0px;
+	border:1px solid #CCC;
+	text-align:center;
+	font:normal 13px Arial;
+}
+
+.object-item table.object-row td.children-td a:link, .object-item table.object-row td.children-td a:visited{
+	font:normal 14px Arial;
+}
+
+.object-item table.object-row td.class-name{
+	color:#CCC;
+}
+
+.object-item table.object-row td.sort a:link, .object-item table.object-row td.sort a:visited{
+	text-decoration:none;
+	font:normal 16pt Arial;
+}
+
+.object-item table.object-row tr:hover{
+	background-image:url('../i/bg_blue.png');
+} 
+
+.object-item table.object-row tr:hover .nowrap-hidden-line img{
+	display: none;
+}
+
+.object-item table.object-row tr.cutted td{
+	background-color:#DDD;
+	color:#777;
+}
+.object-item table.object-row tr.selected td{
+	background-image:url('../i/bg_blue.png');
+	color:#777;
+	border: 1px solid #26A0DA;
+}
+.object-item table.object-row tr.selected{
+	
+}
+.object-item table.object-row tr.copied td{
+	background-color:#EEE;
+	color:#999;
+}
+.object-item table.object-row tr.not-active td{
+	color:#999;
+}
+.moveanddeletespan{display: none;}
+.internal{border: 1px solid #CCC; border-collapse: collapse; margin-bottom: 7px; margin-top: 7px;}
+.internal{padding: 0;}
+.internal td{text-align: center; border: 1px solid #CCC; padding: 2px 5px;}
+.heading{background-color: #EEE;}
+.btn_delete, .btn_new{width:20px;height:20px;cursor:pointer;}
+
+.object-item table.object-row td.sort{
+	border:0px !important;
+	background:white !important;
+}

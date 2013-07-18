@@ -1,0 +1,30 @@
+RewriteRule   ^((\w+)/)?map/?$ map.php?lang=$2&bread=117
+RewriteRule   ^((\w+)/)?news/?$ news.php?lang=$2&bread=132
+RewriteRule   ^((\w+)/)?articles/?$ articles.php?lang=$2&bread=124
+RewriteRule   ^((\w+)/)?ask/?$ ask.php?lang=$2&bread=125&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?changePass/?$ changePass.php?lang=$2&bread=127
+RewriteRule   ^((\w+)/)?confirm/?$ confirm.php?lang=$2&bread=128&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?contacts/?$ contacts.php?lang=$2&bread=129
+RewriteRule   ^((\w+)/)?edit/?$ edit.php?lang=$2&bread=130&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?forgot/?$ forgot.php?lang=$2&bread=127&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?register/?$ register.php?lang=$2&bread=133
+RewriteRule   ^((\w+)/)?rev/?$ rev.php?lang=$2&bread=134&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?rycle/?$ rycle.php?lang=$2&bread=135
+RewriteRule   ^((\w+)/)?search/?$ search.php?lang=$2&bread=136
+RewriteRule   ^((\w+)/)?subscribe/?$ subscribe.php?lang=$2&bread=137&%{QUERY_STRING}
+RewriteRule   ^((\w+)/)?catalog/?$ cat.php?lang=$2&bread=126
+RewriteRule   ^((\w+)/)?order/?$ order.php?lang=$2&bread=152
+RewriteRule   order.php?$ order.php?lang=$2&bread=152
+
+RewriteRule   ^((\w+)/)?news/((\d+)-)((\w+)/)?$ news.php?lang=$2&id=$4
+RewriteRule   ^((\w+)/)?news/pg/((\w+)/)?$ news.php?lang=$2&pg=$4&bread=132
+RewriteRule   ^((\w+)/)?articles/((\d+)-)((\w+)/)?$ articles.php?lang=$2&id=$4
+RewriteRule   ^((\w+)/)?articles/pg/((\w+)/)?$ articles.php?lang=$2&pg=$4
+RewriteRule   ^((\w+)/)?catalog/((\d+)-)((\w+)/)?$ cat.php?lang=$2&cat=$4
+RewriteRule   ^((\w+)/)?catalog/((\d+)-)((\w+)/)pg/((\d+)/)?$ cat.php?lang=$2&cat=$4&pg=$8
+RewriteRule   ^((\w+)/)?catalog/((\d+)-)((\w+)/)((\d+)-)((\w+)/)?$ cat.php?lang=$2&cat=$4&id=$8
+RewriteRule   ^(\w+).html$ $1.html [L]
+RewriteRule   ^((\w+)/)?((\d+)-)(\w+)?\.html$ page.php?lang=$2&id=$4
+RewriteRule   ^((\w+)/)?((\d+)-)(\w+)/pg/((\d+))?\.html$ page.php?lang=$2&id=$4&pg=$6
+RewriteRule   ^(ru|en|kz)/$ index.php?lang=$1&bread=131
+RewriteRule   ^(ru|en|kz)/(\w+)/$ $2.php?lang=$1

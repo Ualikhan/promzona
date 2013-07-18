@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+  <title>Promzona.kz</title>
+
+  <!-- Meta block -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+  <!-- ie8 -->
+    <!--[if lt IE 9]><link href="../css/ie.css" rel="stylesheet" /><![endif]-->
+    <!--[if lt IE 9]><script src="../js/libs/html5shiv.js"></script><![endif]-->
+
+  <!-- jQuery UI -->
+    <link href="../js/libs/css/smoothness/jquery-ui-1.9.0.custom.min.css" rel="stylesheet" />
+
+  <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+
+
+  <!-- Jcrop -->
+    <link href="../js/libs/css/jquery.Jcrop.min.css" rel="stylesheet" />
+
+  <!-- CSS -->
+    <link href="../css/common.css" rel="stylesheet" />
+    <link href="../css/register.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+  <div id="layout">
+
+    <div class="banner-w1000">
+      <a href="#"><img src="../img/dumm/top-banner.png" alt="" /></a>
+    </div>
+
+    <div id="top-stripe"></div>
+
+    <header id="header">
+
+      <section id="top-line">
+
+        <div id="logo-b">
+          <a href="/"><img src="../img/logo.png" alt="" /></a>
+        </div>
+
+        <div id="search-b">
+            <form action="">
+              <div class="input-append">
+                  <input id="" class="input-grand" type="text" placeholder="Поиск по объявлениям...">
+                  <button class="btn btn-white btn-grand" type="button">Найти</button>
+              </div>
+            </form>
+            <div class="wrapper">
+                <div class="extend-search" style="display:none;">
+                    <button class="close" type="button">&times;</button>
+                    <form action="" class="form-horizontal">
+                        <div class="input-append">
+                          <input id="" class="input-grand inp-search-query" type="text" placeholder="Поиск по объявлениям..." />
+                          <button class="btn btn-white btn-grand" type="button">Найти</button>
+                        </div>
+                        <h4>Расширенный поиск:</h4>
+                        <div class="extend-search-in">
+                            <div class="control-group">
+                                <div class="control-label">Раздел:</div>
+                                <div class="controls">
+                                    <div class="btn-group btn-group-radio" data-toggle="buttons-radio">
+                                        <label class="radio btn btn-white active"><input type="radio" name="section" checked>Все</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="section">Спецтехника</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="section">Оборудование</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="section">Бизнес-магазин</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="control-label">Тип объявления:</div>
+                                <div class="controls">
+                                    <div class="btn-group btn-group-radio" data-toggle="buttons-radio">
+                                        <label class="radio btn btn-white active"><input type="radio" name="type" checked>Все</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="type">Продам</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="type">Куплю</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="type">Сдам в аренду</label>
+                                        <label class="radio btn btn-white"><input type="radio" name="type">Возьму в аренду</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="column-1 pull-left">
+                                    <div class="control-group">
+                                        <div class="control-label">Регион:</div>
+                                        <div class="controls">
+                                            <select class="region">
+                                                <option>Все регионы</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="control-label">Год выпуска:</div>
+                                        <div class="controls form-inline">
+                                            <input type="text" value="" class="year" /> &mdash; <input type="text" value="" class="year" />
+                                        </div>
+                                        <div class="controls form-inline">
+                                            <div class="links">
+                                                <input name="itemAge" class="pseudo-radio-link" id="less-than-3" type="radio"><label for="less-than-3"><a class="bd-beige dashed">до 3 лет</a></label>
+                                                <input name="itemAge" class="pseudo-radio-link" id="less-than-7" type="radio"><label for="less-than-7"><a class="bd-beige dashed">до 7</a></label>
+                                                <input name="itemAge" class="pseudo-radio-link" id="more-than-7" type="radio"><label for="more-than-7"><a class="bd-beige dashed">старше 7</a></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="control-label">&nbsp;</div>
+                                        <div class="controls">
+                                            <button type="button" class="btn btn-grey">Найти объявления</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column-2 pull-left">
+                                    <div class="control-group">
+                                        <div class="control-label">Производитель:</div>
+                                        <div class="controls form-inline">
+                                            <select class="manufacturer">
+                                                <option>Все производители</option>
+                                            </select>
+                                            <label class="checkbox"><input type="checkbox" value=""> С фото</label>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="control-label">Состояние:</div>
+                                        <div class="controls form-inline">
+                                            <select class="condition">
+                                                <option>В любом состоянии</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="control-group group-country">
+                                        <div class="control-label">Страна производитель:</div>
+                                        <div class="controls form-inline">
+                                            <select class="country">
+                                                <option>Любая</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>                    
+                </div>                
+                <a href="javascript:void(0);" onclick="showEntendSearch();" class="as-text fz-13 tsha-white-down dashed">Расширенный поиск</a>
+            </div>
+        </div>
+
+        <div id="auth-b">
+          <div class="input-append">
+            <button class="btn btn-white btn-grand"><i class="icon-lock"></i> Вход</button>
+            <button class="btn btn-grey btn-grand">Регистрация</button>
+          </div>
+          <div id="cart-b">
+            <div class="icon-cart"><span class="tsha-white-down">0</span></div>
+            <a href="#" class="as-text bd-grey-outside">Корзина заказов</a>
+          </div>
+        </div>
+
+      </section>
+
+      <nav id="nav">
+        <ul>
+          <li><a href="#">Купить</a></li>
+          <li><a href="#">Продать</a>
+            <ul class="unstyled">
+              <li><a href="#">Объявления о покупке</a></li>
+              <li><a href="#">Разместить объявление</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Аренда</a></li>
+          <li><a href="#">Бизнес-магазин</a></li>
+          <li><a href="#">Промзона</a>
+            <ul>
+              <li><a href="#">Новости проекта</a></li>
+              <li><a href="#">Каталог компаний</a></li>
+              <li><a href="#">Финансирование</a></li>
+              <li><a href="#">Логистика</a></li>
+              <li><a href="#">Оценка</a></li>
+              <li><a href="#">Форум</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Помощь</a></li>
+        </ul>
+      </nav>
+
+    </header>
+
+    <section id="content" class="clearfix">
+
+        <section id="content-left-b">
+
+            <div class="public-breadcrumbs ml-20 mb-20">
+                <a class="bd-beige bold" href="#">Продажа спецтехники</a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+            </div>
+            <h1 class="header ml-20 mb-20">Машины для земляных работ <sup class="ml-5 grey fz-14 mainFF">2189 объявлений</sup></h1>
+
+            <div class="ml-40 mb-20 catalog-lists clearfix">
+                <ul class="list reset">
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Экскаваторы</span> <sup class="grey">441</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Экскаваторы-погрузчики</span> <sup class="grey">276</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Экскаваторы траншейные, роторные</span> <sup class="grey">12</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Экскаваторы-планировщики</span> <sup class="grey">3</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Бульдозеры, рыхлители</span> <sup class="grey">284</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Фронтальные погрузчики</span> <sup class="grey">363</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Погрузчики с бортовым поворотом</span> <sup class="grey">54</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Автогрейдеры</span> <sup class="grey">65</sup></a></li>
+                </ul>
+                <ul class="list reset">
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Буровые машины</span> <sup class="grey">345</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Сваебойные машины</span> <sup class="grey">672</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Тоннельные машины</span> <sup class="grey">22</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Траншеекопатели</span> <sup class="grey">321</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Трубоукладчики</span> <sup class="grey">284</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Гидромолоты</span> <sup class="grey">5</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Запасные части, комплектующие</span> <sup class="grey">952</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span>Прочее</span> <sup class="grey">11</sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span></span> <sup class="grey"></sup></a></li>
+                    <li class="item"><a href="#" class="bd-beige pseudo"><span></span> <sup class="grey"></sup></a></li>
+                </ul>
+            </div>
+
+            <div class="ml-20 mr-30 mb-20 catalog-filter form-inline">
+                <div class="header">Фильтр:</div>
+                <a href="#" class="pull-right cur-p bd-beige pseudo dashed catalog-filter-toggle catalogFilterToggle">
+                    <span class="off">Ещё</span> <i class="icon-chevron-down icon-yellow"></i>
+                </a>
+                <form class="shown">
+                    <label class="w-200 mr-30">
+                        <span>Регион:</span>
+                        <select class="ml-30 region" name="">
+                            <option value="">Все регионы</option>
+                            <option value="">Все регионы</option>
+                        </select>
+                    </label>
+                    <label class="mr-10">
+                        <span class="d-ib w-100 mr-10">Производитель:</span>
+                        <select class="manufacturer" name="">
+                            <option value="">Все производители</option>
+                            <option value="">Все производители</option>
+                        </select>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        <span>С фото</span>
+                    </label>
+                </form>
+                <form class="extended hide clearfix">
+                    <div class="w-200 mr-30 period pull-left">
+                        <label for="filter-date-from" class="mb-5">Год выпуска:</label>
+                        <div class="mb-5">
+                            <input id="filter-date-from" class="year" type="text"> — <input class="year" type="text">
+                        </div>
+                        <input name="itemAge" class="pseudo-radio-link" id="less-than-3" type="radio"><label for="less-than-3"><a class="bd-beige dashed">до 3</a></label>
+                        <input name="itemAge" class="pseudo-radio-link" id="less-than-5" type="radio"><label for="less-than-5"><a class="bd-beige dashed">до 5</a></label>
+                        <input name="itemAge" class="pseudo-radio-link" id="more-than-7" type="radio"><label for="more-than-7"><a class="bd-beige dashed">старше 7</a></label>
+                        <div class="clearfix mt-10">
+                            <button class="btn soft">Найти объявления</button>
+                        </div>
+                    </div>
+                    <div class="pull-left ml-5 mt-10">
+                        <div class="mb-15">
+                            <label>
+                                <span class="d-ib w-100 mr-10">Состояние:</span>
+                                <select name="">
+                                    <option value="">В любом состоянии</option>
+                                    <option value="">В любом состоянии</option>
+                                </select>
+                            </label>
+                        </div>
+                        <label>
+                            <span class="d-ib w-160 mr-10">Страна производитель:</span>
+                            <select name="" class="w-160">
+                                <option value="">В любом состоянии</option>
+                                <option value="">В любом состоянии</option>
+                            </select>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <form class="catalog-sorter ml-20 mr-30 mb-20 form-inline">
+                <div class="pull-right">
+                    <label>
+                        <select name="" class="w-80">
+                            <option value="">10</option>
+                            <option value="" selected>25</option>
+                            <option value="">50</option>
+                        </select>
+                        <span class="fz-13 grey help-inline">объявлений на стр.</span>
+                    </label>
+                </div>
+                <div class="sort-by">
+                    <b>Сортировать по:</b>
+                    <a class="active" href="#">дате размещения <span class="orange">&darr;</span></a>
+                    <a class="active" href="#">цене <span class="orange">&uarr;</span></a>
+                    <a class="bd-beige dashed" href="#">году выпуска</a>
+                </div>
+            </form>
+
+            <h2 class="ml-20 mb-20">Найдено 2189 объявлений</h2>
+
+            <div class="main-catalog">
+
+                <div class="item item-blue item-hot clearfix">
+                    <div class="photo">
+                        <a href="#"><img src="../img/nophoto-medium.png" alt=""></a>
+                        6 фото + <b>видео</b>
+                    </div>
+                    <div class="desc">
+                        <h3 class="header"><a class="as-text bd-grey" href="#">Экскаватор-погрузчик JCB 4CX Sitemaster NR120</a></h3>
+                        <div class="category"><a class="bd-beige" href="#">Экскаваторы-погрузчики</a></div>
+                        <div class="condition">Китай, 1992 г., Б/У: отличное состояние</div>
+                        <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#">ООО «Технолекс Интернешнл»</a></div>
+                        <div class="place"><img class="ico" src="../img/dumm/icon-kz.png" alt="">Казахстан, Алматы</div>
+                        <div class="date">Дата размещения:	21 декабря 2012</div>
+                        <div class="date">Дата обновления:	23 декабря 2012  <i class="icon-arrow-up icon-grey"></i></div>
+                    </div>
+                    <div class="contacts">
+                        <div class="price">33 237 508 250 <span>KZT</span></div>
+                        <div class="presence">В наличии</div>
+                        <div class="phones" data-toggle="phones">
+                            <img class="ico phone-ico" src="../img/phone.png" alt="">
+                            <div class="all">
+                                <span>(+7 812) 980-52-02</span>
+                            </div>
+                            <div class="order-call"><a class="dashed" href="#modal-call-id1" data-toggle="modal">Заказать звонок</a></div>
+                            <div class="all-contacts"><a class="dashed" href="#modal-contacts-id1" data-toggle="modal">Контакты поставщика</a></div>
+                        </div>
+                    </div>
+                    <div class="hot">Горячее предложение!</div>
+                    <div id="modal-call-id1" class="modal hide fade promzona-modal">
+                        <form action="" class="phone-order">
+                        <div class="modal-header">
+                            <button type="button" class="close red" data-dismiss="modal">×</button>
+                            <h3>Заказ обратного звонка</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-20">
+                                <div class="d-ib mr-20 va-t">
+                                    <a href="#"><img class="modal-img" src="../img/nophoto-small.png" alt=""></a>
+                                </div>
+                                <div class="d-ib">
+                                    <h3 class="header"><a class="as-text bd-grey" href="#">Экскаватор-погрузчик JCB 4CX Sitemaster NR120</a></h3>
+                                    <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#">ООО «Технолекс Интернешнл»</a></div>
+                                    <div class="place"><img class="ico" src="../img/dumm/icon-kz.png" alt="">Казахстан, Алматы</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <div class="inputs-desc">
+                                        <b>Оставьте ваш номер телефона</b><br>
+                                        и с вами свяжется представитель компании поставщика:
+                                    </div>
+                                    <div class="inputs-self phones-separated-group">
+                                        <input type="text" class="one" value="+7"><input type="text" class="two"><input type="text" class="three">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <div class="inputs-desc sorter">
+                                        <b>Можете также указать время,</b><br>
+                                        в которое вам будет удобно
+                                        принять звонок:
+                                    </div>
+                                    <div class="inputs-self time-separated-input">
+                                        <label><input type="radio" name="order-call-time-id1" checked> В любое время</label>
+                                        <label><input type="radio" name="order-call-time-id1"> <input type="text" maxlength="2" class="onlyNum" value="10"> : <input type="text" maxlength="2" class="onlyNum" value="00"> — <input type="text" maxlength="2" class="onlyNum" value="19"> : <input type="text" maxlength="2" class="onlyNum" value="00"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer ta-l">
+                            <button class="btn btn-grey btn-grand mr-15">Заказать звонок</button>
+                            <button class="btn btn-white btn-grand" data-dismiss="modal">Отменить</button>
+                        </div>
+                        </form>
+                    </div>
+                    <div id="modal-contacts-id1" class="modal hide fade promzona-modal w-690">
+                        <div class="modal-header">
+                            <button type="button" class="close red" data-dismiss="modal">×</button>
+                            <h3>Контактная информация поставщика</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-20 clearfix">
+                                <div class="pull-left w-120 mr-30 va-t">
+                                    <a href="#"><img class="modal-img" src="../img/nophoto-small.png" alt=""></a>
+                                </div>
+                                <div>
+                                    <h3 class="header"><a class="as-text bd-grey" href="#">Экскаватор-погрузчик JCB 4CX Sitemaster NR120</a></h3>
+                                    <div class="price">33 237 508 250 <span>KZT</span></div>
+                                    <div class="presence">В наличии</div>
+                                </div>
+                            </div>
+                            <ul class="contacts-list reset">
+                                <li>
+                                    <div>Компания:</div>
+                                    <div><a class="bd-beige bold" href="#">ООО «Технолекс Интернешнл Лимитед Компани»</a></div>
+                                </li>
+                                <li>
+                                    <div>Регион:</div>
+                                    <div><img class="ico" src="../img/dumm/icon-kz.png" alt=""><b>Казахстан, Алматы</b></div>
+                                </li>
+                                <li>
+                                    <div>Контактное лицо:</div>
+                                    <div><b>Константин Константинопольский,</b> Менеджер по продажам</div>
+                                </li>
+                                <li>
+                                    <div>Телефоны:</div>
+                                    <div><b>+7 777 123-43-51, +7 727 123-43-51 (вн. 404), Факс: 444-33-22</b></div>
+                                </li>
+                                <li>
+                                    <div>Адрес:</div>
+                                    <div>Казахстан, г. Алматы, ул. Желтоксан, 81-18, офис 124</div>
+                                </li>
+                                <li>
+                                    <div>Электронная почта:</div>
+                                    <div><a class="bd-beige" href="#">cys.a@novator-avto.ru</a></div>
+                                </li>
+                                <li>
+                                    <div>Сайт компании:</div>
+                                    <div><a class="bd-beige" href="#">http://www.novator-avto.ru</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-hot item-green clearfix">
+                    <div class="photo">
+                        <a href="#"><img src="../img/nophoto-medium.png" alt=""></a>
+                        6 фото + <b>видео</b>
+                    </div>
+                    <div class="desc">
+                        <h3 class="header"><a class="as-text bd-grey" href="#">Экскаватор-погрузчик JCB 4CX Sitemaster NR120</a></h3>
+                        <div class="category"><a class="bd-beige" href="#">Экскаваторы-погрузчики</a></div>
+                        <div class="condition">Китай, 1992 г., Б/У: отличное состояние</div>
+                        <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#">ООО «Технолекс Интернешнл»</a></div>
+                        <div class="place"><img class="ico" src="../img/dumm/icon-kz.png" alt="">Казахстан, Алматы</div>
+                        <div class="date">Дата размещения:	21 декабря 2012</div>
+                        <div class="date">Дата обновления:	23 декабря 2012  <i class="icon-arrow-up icon-grey"></i></div>
+                    </div>
+                    <div class="contacts">
+                        <div class="price">33 237 508 250 <span>KZT</span></div>
+                        <div class="presence">В наличии</div>
+                        <div class="phones" data-toggle="phones">
+                            <img class="ico phone-ico" src="../img/phone.png" alt=""><a class="as-text bd-grey dashed toggle" href="#">(+7 812) 980-52-02</a>
+                            <div class="all hide">
+                                <span>(+7 812) 980-52-02</span>
+                                <span>+7 707 123-43-51</span>
+                                <span>(+7 727) 123-43-51</span>
+                            </div>
+                            <div class="order-call"><a class="dashed" href="#">Заказать звонок</a></div>
+                            <div class="all-contacts"><a class="dashed" href="#">Контакты поставщика</a></div>
+                        </div>
+                    </div>
+                    <div class="hot">Горячее предложение!</div>
+                </div>
+                <div class="item item-yellow clearfix">
+                    <div class="photo">
+                        <a href="#"><img src="../img/nophoto-medium.png" alt=""></a>
+                        6 фото + <b>видео</b>
+                    </div>
+                    <div class="desc">
+                        <h3 class="header"><a class="as-text bd-grey" href="#">Экскаватор-погрузчик JCB 4CX Sitemaster NR120</a></h3>
+                        <div class="category"><a class="bd-beige" href="#">Экскаваторы-погрузчики</a></div>
+                        <div class="condition">Китай, 1992 г., Б/У: отличное состояние</div>
+                        <div class="supplier"><b>Поставщик:</b> <a class="bd-beige" href="#">ООО «Технолекс Интернешнл»</a></div>
+                        <div class="place"><img class="ico" src="../img/dumm/icon-kz.png" alt="">Казахстан, Алматы</div>
+                        <div class="date">Дата размещения:	21 декабря 2012</div>
+                        <div class="date">Дата обновления:	23 декабря 2012  <i class="icon-arrow-up icon-grey"></i></div>
+                    </div>
+                    <div class="contacts">
+                        <div class="price">33 237 508 250 <span>KZT</span></div>
+                        <div class="presence">В наличии</div>
+                        <div class="phones" data-toggle="phones">
+                            <img class="ico phone-ico" src="../img/phone.png" alt=""><a class="as-text bd-grey dashed toggle" href="#">(+7 812) 980-52-02</a>
+                            <div class="all hide">
+                                <span>(+7 812) 980-52-02</span>
+                                <span>+7 707 123-43-51</span>
+                                <span>(+7 727) 123-43-51</span>
+                            </div>
+                            <div class="order-call"><a class="dashed" href="#">Заказать звонок</a></div>
+                            <div class="all-contacts"><a class="dashed" href="#">Контакты поставщика</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pagination pagination-centered pagination-promzona">
+                    <ul>
+                        <li class="disabled"><a href="#" class="pseudo soft">← <span>Предыдущая</span></a></li>
+                        <li class="disabled"><a href="#">1</a></li>
+                        <li class="disabled"><a href="#">2</a></li>
+                        <li class="active"><a href="#">3</a></li>
+                        <li><a href="#">…</a></li>
+                        <li><a href="#">24</a></li>
+                        <li><a href="#" class="pseudo soft"><span>Следующая</span> →</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+
+        <aside id="content-right-b">
+
+            <div class="banner-w240"><a href="#"><img src="../img/dumm/banner-2.png" alt=""/></a></div>
+
+            <h2>Пример выноски с заголовком:</h2>
+
+            <p class="ml-10">Начало координат, следовательно, отражает возрастающий математический анализ, таким образом сбылась мечта идиота — утверждение полностью доказано.</p>
+
+        </aside>
+
+    </section>
+
+    <footer id="footer">
+
+      <section class="inner">
+
+        <div class="lists-wrapper clearfix">
+
+          <ul class="w-220">
+            <li><a href="#" class="as-text bd-grey-outside">Пользовательское соглашение</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Политика конфиденциальности</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Возможности Промзоны</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Сравнение пакетов</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Реклама на Промзоне</a></li>
+          </ul>
+
+          <ul class="w-220">
+            <li><a href="#" class="as-text bd-grey-outside">Помощь</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Служба поддержки</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Правила размещения объявления</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Правила оформления объявления</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Отзывы о Промзоне</a></li>
+          </ul>
+
+          <ul class="w-160">
+            <li><a href="#" class="as-text bd-grey-outside">Для пользователей</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Финансирование</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Логистика</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Оценка</a></li>
+          </ul>
+
+          <ul class="w-120">
+            <li><a href="#" class="as-text bd-grey-outside">О проекте</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Новости проекта</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">О компании</a></li>
+          </ul>
+
+          <ul class="w-160">
+            <li><a href="#" class="as-text bd-grey-outside">Контактная информация</a></li>
+            <li><a href="#" class="as-text bd-grey-outside">Карта сайта</a></li>
+          </ul>
+
+          <div class="go-web">
+            <span>Создание сайта:</span>
+            <a class="pseudo" href="http://go-web.kz/" target="_blank"><img src="../img/go-web.png" alt="go-web.kz" /></a>
+          </div>
+
+          <div class="footer-copyright grey tsha-white-down">© «<u>Promzona.kz</u>», 2012</div>
+
+        </div>
+
+      </section>
+
+    </footer>
+
+  </div>
+
+  <!------- jQuery ------->
+    <!--<script src="ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>-->
+    <script src="../js/libs/jquery-1.8.1.min.js"></script>
+
+  <!------- jQuery UI ------->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>-->
+    <script src="../js/libs/jquery-ui-1.9.0.custom.min.js"></script>
+
+  <!------- Bootstrap ------->
+    <script src="../js/libs/bootstrap.min.js"></script>
+
+  <!------- Utilities ------->
+    <script src="../js/libs/jquery.easing.1.3.min.js"></script>
+    <script src="../js/libs/jquery.mousewheel.min.js"></script>
+
+  <!------- Plugins ------->
+    <script src="../js/libs/jquery.Jcrop.min.js"></script>
+    <script src="../js/libs/jquery.tablesorter.min.js"></script>
+    <script src="../js/libs/jquery.tinyscrollbar.min.js"></script>
+    <script src="../js/libs/jquery.fitvids.js"></script>
+    <script src="../js/libs/jquery.bxSlider.min.js"></script>
+
+  <!------- JS ------->
+    <script src="../js/common.js"></script>
+
+</body>
+</html>

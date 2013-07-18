@@ -1,0 +1,139 @@
+<div class="public-breadcrumbs ml-30 mb-10">
+    <a class="bd-beige bold" href="/<?=$_GET['mod']?>/"><?=$this->title?></a>&nbsp;<i class="icon-chevron-down icon-grey"></i>
+</div>
+
+<h1 class="ml-30 mb-10">Заявка на финансирование <?=isset($coms)?'выбранным компаниям':''?></h1>
+
+<div class="bid-form row-fluid">
+    <?if (isset($obj)){?>
+    <div class="company-info clearfix">
+        <?if (!empty($obj['Логотип'])){?>
+        <a href="/finance/<?=$obj['id']?>/" target="_blank" class="pull-left link-logo">
+           <img src="<?=_UPLOADS_.'/'.$obj['Логотип']?>" />
+        </a>
+        <?}?>
+        <a href="/finance/<?=$obj['id']?>/" class="link-company"><span><b><?=$obj['Название']?></b></span></a>
+        <div class="location">
+            <img src="/img/dumm/icon-kz.png" /> <?=$obj['Регион']?>
+        </div>
+    </div>
+    <?}?>
+    <form action="" class="required-container" method="post">
+        <div class="control-group required">
+            <div class="control-label"><span><b>Название вашей компании</b></span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span9" name="f[Название компании]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Ваши контактные данные</b></span></div>
+            <div class="controls">
+                <textarea class="required-inp span9" rows="2" name="f[Контактные данные]"></textarea>
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Правовая форма</b></span></div>
+            <div class="controls">
+                <select class="required-inp span5">
+                    <option>Выбрать правовую форму</option>
+                    <option>ИП</option>
+                    <option>ТОО</option>
+                    <option>ТДО</option>
+                    <option>АО</option>
+                    <option>Другое</option>
+                </select>
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Контактное лицо</b></span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span9" name="f[Контактное лицо]" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Тип деятельности</b></span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span9" name="f[Тип деятельности]" />
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Ссылка на объявление</b></span></div>
+            <div class="controls">
+                <input type="text" class="span9" name="f[Ссылка на объявление]" value="<?=!empty($_GET['ad_id'])?'http://'.$_SERVER['HTTP_HOST'].'/ads/'.$_GET['ad_id'].'/':''?>" />
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Название предмета лизинга или кредитования</b></span></div>
+            <div class="controls">
+                <input type="text" class="required-inp span9" name="f[Название предмета лизинга или кредитования]" value="" />
+            </div>
+        </div>                    
+        <div class="control-group">
+            <div class="control-label"><span><b>Условия лизинга или кредитования</b></span></div>
+            <input type="hidden" name="f[Условия лизинга или кредитования]" value="" />
+            <div class="controls">
+                <div class="form-horizontal row-fluid">
+                    <div class="control-group required">
+                        <div class="control-label"><span><b>Размер аванса:</b></span></div>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input type="text" class="span3 inp-required" name="f[Размер аванса(%)]" />
+                                <span class="add-on">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group required">
+                        <div class="control-label"><span><b>Валюта:</b></span></div>
+                        <div class="controls">
+                            <select class="span10" name="f[Валюта]">
+                                <option value="Тенге">Тенге</option>
+                                <option value="Рублей">Рублей</option>
+                                <option value="Долларов">Долларов</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group required">
+                        <div class="control-label"><span><b>Срок</b> (в меяцах):</span></div>
+                        <div class="controls">
+                            <input type="text" class="required-inp span8" name="f[Срок (в месяцах)]" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="control-group required">
+            <div class="control-label"><span><b>Первичный лизинг или кредит:</b></span></div>
+            <div class="controls">
+                <label class="radio inline"><input name="f[Первичный лизинг или кредит]" type="radio" value="Да" checked> Да</label>
+                <label class="radio inline"><input name="f[Первичный лизинг или кредит]" type="radio" value="Нет"> Нет</label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Обеспечение:</b></span></div>
+            <div class="controls">
+                <textarea class="span9" rows="3" name="f[Обеспечение]"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Информация о продавце:</b></span></div>
+            <div class="controls">
+                <textarea class="span9" rows="7" name="f[Информация о продавце]"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="control-label"><span><b>Ваши примечания:</b></span></div>
+            <div class="controls">
+                <textarea class="span9" rows="4" name="f[Примечания]"></textarea>
+            </div>
+        </div>
+        <div class="form-controls">
+            <label class="checkbox"><input type="checkbox" class="required-checkbox"> <b>Отправляя заявку, вы подтверждаете свою заинтересованность в покупке выбранной техники.</b></label>
+            <p>Банки/Лизинговые компании, получив запрос, определят условия ее кредитования. Чтобы получить исчерпывающий ответ на свою заявку, заполните все поля сообщения.</p>
+            <p>
+                <b>Все заявки обрабатываются сотрудниками банка и лизинговой компании, к которым вы можете обратиться за помощью в оформлении заказа по указанным контактам на странице компании.</b><br /> 
+                После того, как ваша заявка будет рассмотрена, с вами свяжется специалист по кредиту/лизингу. Если сообщение осталось без внимания, сообщите об этом в «Книгу жалоб» портала.
+            </p>
+            <button type="submit" class="btn btn-grey btn-grand required-btn" disabled>Отправить заявку на финансирование</button>
+        </div>
+    </form>
+</div>

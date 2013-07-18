@@ -1,0 +1,38 @@
+table.main-table{
+	width:100%;
+	border-collapse:collapse;
+	border:0;
+}
+
+table.main-table tr td{
+}
+
+table.main-table tr td.left-part{
+	vertical-align:top;
+	padding:0px;
+	margin:0px;
+	width:200px;
+}
+
+table.main-table tr td.central-part{
+	vertical-align:top;
+	padding:0px;
+	margin:0px;
+}
+
+#left-menu{
+	width:200px;
+}
+
+#left-menu a:link, #left-menu a:visited{
+	display:block;
+	padding:7px 20px;
+	margin:5px 0px;
+	width:200px;
+}
+
+#left-menu a.active:link, #left-menu a.active:visited{
+	color:white;
+	background:orange url(../i/menu-bg.png) right center no-repeat;
+	text-decoration:none;
+}
